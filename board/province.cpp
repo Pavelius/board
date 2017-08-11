@@ -7,6 +7,7 @@ struct province : gobject
 	const char*		name;
 	const char*		text;
 	gobject*		landscape;
+	gobject*		resource;
 	short			support[player_max];
 
 	xsfield* getmeta() const override;
@@ -26,9 +27,9 @@ struct province : gobject
 		return text;
 	}
 
-	int get(attributes id) const
+	aref<gobject*> getbonuses() const
 	{
-		return 0;
+		return {(gobject**)&resource, 1};
 	}
 
 };
