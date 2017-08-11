@@ -38,7 +38,7 @@ struct unit : gobject
 		}
 	}
 
-	aref<gobject*> getbonus() const override
+	aref<gobject*> getbonuses() const override
 	{
 		return {(gobject**)bonus, zlen(bonus)};
 	}

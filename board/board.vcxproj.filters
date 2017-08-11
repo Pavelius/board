@@ -40,6 +40,9 @@
     <ClCompile Include="crt_memory.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="hero.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

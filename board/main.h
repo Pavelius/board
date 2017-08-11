@@ -16,7 +16,7 @@ struct gobject
 	static gobject*				create(const xsfield* meta);
 	virtual int					get(attributes id) const { return 0; }
 	virtual const char*			getavatar() const { return ""; }
-	virtual aref<gobject*>		getbonus() const { return {0, 0}; }
+	virtual aref<gobject*>		getbonuses() const { return {0, 0}; }
 	virtual const char*			getid() const { return ""; }
 	virtual xsfield*			getmeta() const = 0;
 	virtual gobject*			getmoveto() const { return 0; }
