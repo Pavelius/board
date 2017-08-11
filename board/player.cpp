@@ -49,4 +49,4 @@ xsfield* player::getmeta() const
 	return player_type;
 }
 
-static adat<player, player_max> objects;
+static player objects[player_max];

@@ -114,17 +114,26 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="amem.h" />
+    <ClInclude Include="collection.h" />
+    <ClInclude Include="crt.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="xsbase.h" />
     <ClInclude Include="xsfield.h" />
     <ClInclude Include="xsref.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="amem.cpp" />
+    <ClCompile Include="collection.cpp" />
+    <ClCompile Include="crt.cpp" />
+    <ClCompile Include="crt_memory.cpp" />
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />
+    <ClCompile Include="xsbase.cpp" />
     <ClCompile Include="xsfield.cpp" />
     <ClCompile Include="xsref.cpp" />
   </ItemGroup>

@@ -25,6 +25,21 @@
     <ClCompile Include="gobject.cpp">
       <Filter>Support</Filter>
     </ClCompile>
+    <ClCompile Include="xsbase.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="amem.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="crt.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="collection.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="crt_memory.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -45,6 +60,18 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="xsref.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="xsbase.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="amem.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="crt.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="collection.h">
       <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>

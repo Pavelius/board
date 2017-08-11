@@ -53,4 +53,4 @@ xsfield* unit::getmeta() const
 	return unit_type;
 }
 
-static adat<unit, 256> objects;
+static unit objects[256];

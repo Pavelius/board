@@ -45,4 +45,4 @@ xsfield* province::getmeta() const
 	return province_type;
 }
 
-static adat<province, 256> objects;
+static province objects[256];

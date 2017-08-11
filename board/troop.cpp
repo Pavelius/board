@@ -55,4 +55,4 @@ xsfield* troop::getmeta() const
 	return troop_type;
 }
 
-static adat<troop, 256> objects;
+static troop objects[1024];
