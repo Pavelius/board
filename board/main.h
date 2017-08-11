@@ -21,7 +21,7 @@ struct gobject
 	int							get(const char* id, int index = 0) const;
 	virtual const char*			getavatar() const { return ""; }
 	virtual aref<gobject*>		getbonuses() const { return {0, 0}; }
-	virtual const char*			getid() const { return ""; }
+	const char*					getid() const { return (const char*)get("id", 0); }
 	int							getindex() const;
 	virtual xsfield*			getmeta() const = 0;
 	virtual gobject*			getmoveto() const { return (gobject*)get("moveto"); }
@@ -47,3 +47,4 @@ xsfield							province_type[];
 xsfield							player_type[];
 xsfield							troop_type[];
 xsfield							unit_type[];
+acol<gobject>					getcollection(const xsfield* fields);

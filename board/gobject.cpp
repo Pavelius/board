@@ -64,3 +64,11 @@ void gobject::addsupport(gobject* player, int value)
 {
 	set("support", getsupport(player) + value, player->getindex());
 }
+
+acol<gobject> getcollection(const xsfield* fields)
+{
+	auto m = xsbase::find(fields);
+	if(m)
+		return {(gobject*)m->data, m->count, m->size};
+	return {0, 0, 0};
+}

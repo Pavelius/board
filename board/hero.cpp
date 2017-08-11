@@ -10,11 +10,6 @@ struct hero : gobject
 
 	xsfield* getmeta() const override;
 
-	const char* getid() const override
-	{
-		return id;
-	}
-
 	const char* getname() const override
 	{
 		return name;

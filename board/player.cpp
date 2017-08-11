@@ -3,17 +3,12 @@
 struct player : gobject
 {
 
-	const char*	id;
-	const char*	name;
-	const char*	text;
-	int			gold;
+	const char*		id;
+	const char*		name;
+	const char*		text;
+	int				gold;
 
 	xsfield* getmeta() const override;
-
-	const char* getid() const override
-	{
-		return id;
-	}
 
 	const char* getname() const override
 	{
