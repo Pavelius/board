@@ -37,6 +37,7 @@ xsfield province_type[] = {
 	BSREQ(province, id, text_type),
 	BSREQ(province, name, text_type),
 	BSREQ(province, text, text_type),
+	BSREQ(province, support, number_type),
 	{0}
 };
 
