@@ -6,7 +6,9 @@ struct unit : gobject
 	const char*	id;
 	const char*	name;
 	const char*	text;
-	char		attack, raid, defend;
+	char		attack, raid, defence;
+
+	xsfield* getmeta() const override;
 
 	const char* getid() const override
 	{
@@ -29,11 +31,26 @@ struct unit : gobject
 		{
 		case Attack: return attack;
 		case Raid: return raid;
-		case Defence: return defend;
+		case Defence: return defence;
 		default: return 0;
 		}
 	}
 
 };
 
-static adat<unit, 1024> objects;
+xsfield unit_type[] = {
+	BSREQ(unit, id, text_type),
+	BSREQ(unit, name, text_type),
+	BSREQ(unit, text, text_type),
+	BSREQ(unit, attack, number_type),
+	BSREQ(unit, defence, number_type),
+	BSREQ(unit, raid, number_type),
+	{0}
+};
+
+xsfield* unit::getmeta() const
+{
+	return unit_type;
+}
+
+static adat<unit, 256> objects;

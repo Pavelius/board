@@ -1,10 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClInclude Include="main.h" />
+    <ClCompile Include="unit.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
+    <ClCompile Include="troop.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="xsfield.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="xsref.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="province.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="gobject.cpp">
+      <Filter>Support</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="unit.cpp" />
+    <Filter Include="Objects">
+      <UniqueIdentifier>{0cb3dfe6-1fd9-4303-bcda-86396b1e5f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Support">
+      <UniqueIdentifier>{09380389-9940-45dc-990a-03db9b2c0c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Database">
+      <UniqueIdentifier>{e8b33c78-f7d6-4423-8b6f-6d4bef2b62f9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="main.h">
+      <Filter>Support</Filter>
+    </ClInclude>
+    <ClInclude Include="xsfield.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="xsref.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
