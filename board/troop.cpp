@@ -55,4 +55,4 @@ xsfield* troop::getmeta() const
 	return troop_type;
 }
 
-static troop objects[1024];
+static troop troop_data[1024]; BSMETA(troop)

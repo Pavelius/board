@@ -53,4 +53,4 @@ xsfield* unit::getmeta() const
 	return unit_type;
 }
 
-static unit objects[256];
+static unit unit_data[256];  BSMETA(unit);

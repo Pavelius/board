@@ -45,4 +45,4 @@ xsfield* province::getmeta() const
 	return province_type;
 }
 
-static province objects[256];
+static province province_data[256]; BSMETA(province);

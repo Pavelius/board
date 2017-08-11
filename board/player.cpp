@@ -49,4 +49,4 @@ xsfield* player::getmeta() const
 	return player_type;
 }
 
-static player objects[player_max];
+static player player_data[player_max]; BSMETA(player);
