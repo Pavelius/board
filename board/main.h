@@ -1,5 +1,6 @@
 #include "aref.h"
 #include "adat.h"
+#include "crt.h"
 #include "xsbase.h"
 
 #pragma once
@@ -12,6 +13,7 @@ enum attributes : char {
 struct gobject
 {
 	void						add(const char* id, int value);
+	static gobject*				create(const xsfield* meta);
 	virtual int					get(attributes id) const { return 0; }
 	virtual const char*			getavatar() const { return ""; }
 	virtual aref<gobject*>		getbonus() const { return {0, 0}; }

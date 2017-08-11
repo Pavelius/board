@@ -7,6 +7,8 @@ struct unit : gobject
 	const char*	name;
 	const char*	text;
 	char		attack, raid, defence;
+	gobject*	bonus[5];
+	gobject*	penalty[5];
 
 	xsfield* getmeta() const override;
 
@@ -34,6 +36,16 @@ struct unit : gobject
 		case Defence: return defence;
 		default: return 0;
 		}
+	}
+
+	aref<gobject*> getbonus() const override
+	{
+		return {(gobject**)bonus, zlen(bonus)};
+	}
+
+	aref<gobject*> getpenalty() const override
+	{
+		return {(gobject**)penalty, zlen(bonus)};
 	}
 
 };
