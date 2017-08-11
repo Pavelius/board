@@ -1,3 +1,4 @@
+#include "acol.h"
 #include "adat.h"
 #include "aref.h"
 #include "crt.h"
@@ -15,6 +16,7 @@ struct gobject
 	void						add(const char* id, int value);
 	void						addsupport(gobject* player, int value);
 	static gobject*				create(const xsfield* meta);
+	static gobject*				create(const xsfield* meta, const char* id);
 	virtual int					get(attributes id) const { return 0; }
 	int							get(const char* id, int index = 0) const;
 	virtual const char*			getavatar() const { return ""; }
@@ -33,9 +35,11 @@ struct gobject
 	virtual aref<gobject*>		gettraits() const { return {0, 0}; }
 	void						set(const char* id, int value, int index = 0);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
+	void						set(const char* id, const char* value) { set(id, (int)value); }
 };
 namespace game
 {
+	acol<gobject>				getprovinces();
 	void						maketurn(gobject* player);
 }
 xsfield							event_type[];

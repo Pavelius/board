@@ -114,6 +114,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="acol.h" />
     <ClInclude Include="amem.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="crt.h" />

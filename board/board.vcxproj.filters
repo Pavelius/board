@@ -80,5 +80,8 @@
     <ClInclude Include="collection.h">
       <Filter>Database</Filter>
     </ClInclude>
+    <ClInclude Include="acol.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

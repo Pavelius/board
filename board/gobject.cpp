@@ -41,6 +41,20 @@ gobject* gobject::create(const xsfield* meta)
 	return (gobject*)m->add(0);
 }
 
+gobject* gobject::create(const xsfield* meta, const char* id)
+{
+	auto m = xsbase::find(meta);
+	if(!m)
+		return 0;
+	auto xr = m->find("id", id);
+	if(xr)
+		return (gobject*)xr.object;
+	xr.object = m->add(0);
+	xr.fields = meta;
+	xr.set("id", (int)id, 0);
+	return (gobject*)xr.object;
+}
+
 int gobject::getsupport(gobject* player) const
 {
 	return get("support", player->getindex());

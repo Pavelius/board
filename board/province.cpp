@@ -48,3 +48,8 @@ xsfield* province::getmeta() const
 }
 
 static province province_data[256]; BSMETA(province);
+
+acol<gobject> game::getprovinces()
+{
+	return {province_data, province_manager.count, sizeof(province)};
+}
