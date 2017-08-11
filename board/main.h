@@ -22,7 +22,7 @@ struct gobject
 	virtual const char*			getid() const { return ""; }
 	int							getindex() const;
 	virtual xsfield*			getmeta() const = 0;
-	virtual gobject*			getmoveto() const { return 0; }
+	virtual gobject*			getmoveto() const { return (gobject*)get("moveto"); }
 	virtual const char*			getname() const { return ""; }
 	virtual gobject*			getowner() const { return 0; }
 	virtual gobject*			getprovince() const { return 0; }
@@ -34,6 +34,10 @@ struct gobject
 	void						set(const char* id, int value, int index = 0);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 };
+namespace game
+{
+	void						maketurn(gobject* player);
+}
 xsfield							event_type[];
 xsfield							province_type[];
 xsfield							player_type[];
