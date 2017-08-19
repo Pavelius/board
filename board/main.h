@@ -24,27 +24,23 @@ struct gobject
 	const char*					getid() const { return (const char*)get("id", 0); }
 	int							getindex() const;
 	virtual xsfield*			getmeta() const = 0;
-	virtual gobject*			getmoveto() const { return (gobject*)get("moveto"); }
-	virtual const char*			getname() const { return ""; }
+	gobject*					getmoveto() const { return (gobject*)get("moveto"); }
+	virtual const char*			getname() const { return (const char*)get("name"); }
 	virtual gobject*			getowner() const { return 0; }
 	virtual gobject*			getprovince() const { return 0; }
 	virtual aref<gobject*>		getpenalty() const { return {0, 0}; }
 	virtual aref<gobject*>		getprovinces() const { return {0, 0}; }
 	int							getsupport(gobject* player) const;
-	virtual const char*			gettext() const { return ""; }
+	virtual const char*			gettext() const { return (const char*)get("text"); }
 	virtual aref<gobject*>		gettraits() const { return {0, 0}; }
 	void						set(const char* id, int value, int index = 0);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
 };
-namespace game
-{
-	acol<gobject>				getprovinces();
-	void						maketurn(gobject* player);
-}
 xsfield							event_type[];
 xsfield							province_type[];
 xsfield							player_type[];
 xsfield							troop_type[];
 xsfield							unit_type[];
-acol<gobject>					getcollection(const xsfield* fields);
+
+acol<gobject>					getcollection(const xsfield* fields); // Get collection by metadata

@@ -12,16 +12,6 @@ struct province : gobject
 
 	xsfield* getmeta() const override;
 
-	const char* getname() const override
-	{
-		return name;
-	}
-
-	const char* gettext() const override
-	{
-		return text;
-	}
-
 	aref<gobject*> getbonuses() const
 	{
 		return {(gobject**)&resource, 1};
@@ -43,8 +33,3 @@ xsfield* province::getmeta() const
 }
 
 static province province_data[256]; BSMETA(province);
-
-acol<gobject> game::getprovinces()
-{
-	return {province_data, province_manager.count, sizeof(province)};
-}

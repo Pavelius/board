@@ -12,16 +12,6 @@ struct unit : gobject
 
 	xsfield* getmeta() const override;
 
-	const char* getname() const override
-	{
-		return name;
-	}
-
-	const char* gettext() const override
-	{
-		return text;
-	}
-
 	int get(attributes id) const
 	{
 		switch(id)

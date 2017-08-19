@@ -30,11 +30,6 @@ struct troop : gobject
 		return province;
 	}
 
-	gobject* getmoveto() const override
-	{
-		return moveto;
-	}
-
 };
 
 xsfield troop_type[] = {

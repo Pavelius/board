@@ -43,6 +43,9 @@
     <ClCompile Include="hero.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="trait.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
