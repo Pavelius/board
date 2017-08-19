@@ -46,7 +46,10 @@
     <ClCompile Include="trait.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="event.cpp">
+    <ClCompile Include="enchantment.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="active_enchantment.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>
@@ -84,6 +87,12 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="acol.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="adat.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="aref.h">
       <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>

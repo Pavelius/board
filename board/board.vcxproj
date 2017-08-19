@@ -29,7 +29,7 @@
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
-    <CharacterSet>MultiByte</CharacterSet>
+    <CharacterSet>NotSet</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -71,6 +71,9 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <IncludePath>C:\Users\p.chistyakov\Documents\Visual Studio 2017\Projects;</IncludePath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath />
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -115,7 +118,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="acol.h" />
+    <ClInclude Include="adat.h" />
     <ClInclude Include="amem.h" />
+    <ClInclude Include="aref.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="crt.h" />
     <ClInclude Include="main.h" />
@@ -124,11 +129,12 @@
     <ClInclude Include="xsref.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="active_enchantment.cpp" />
     <ClCompile Include="amem.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_memory.cpp" />
-    <ClCompile Include="event.cpp" />
+    <ClCompile Include="enchantment.cpp" />
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="main.cpp" />

@@ -1,5 +1,4 @@
 #include "crt.h"
-#include "io.h"
 
 int	locale; // Current localization
 

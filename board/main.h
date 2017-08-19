@@ -38,6 +38,7 @@ struct gobject
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
 };
+xsfield							enchantment_type[];
 xsfield							event_type[];
 xsfield							province_type[];
 xsfield							player_type[];
