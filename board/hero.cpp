@@ -14,7 +14,12 @@ struct hero : gobject
 	{
 		auto result = 0;
 		for(auto e : gettraits())
+		{
+			if(!e)
+				break;
 			result += e->get(id);
+		}
+		result += getbonus(id);
 		return result;
 	}
 
@@ -29,6 +34,7 @@ xsfield hero_type[] = {
 	BSREQ(hero, id, text_type),
 	BSREQ(hero, name, text_type),
 	BSREQ(hero, text, text_type),
+	BSREQ(hero, traits, trait_type),
 	{0}
 };
 

@@ -3,10 +3,10 @@
 struct trait : gobject
 {
 
-	const char*		id;
-	const char*		name;
-	const char*		text;
-	char			attack, defend, raid;
+	const char*	id;
+	const char*	name;
+	const char*	text;
+	char		attack, defend, raid;
 
 	xsfield* getmeta() const override;
 
@@ -17,7 +17,7 @@ struct trait : gobject
 		case Attack: return attack;
 		case Defence: return defend;
 		case Raid: return raid;
-		defend: return 0;
+		default: return 0;
 		}
 	}
 

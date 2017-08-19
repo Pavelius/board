@@ -14,7 +14,8 @@ struct player : gobject
 	{
 		switch(id)
 		{
-		case Gold: return gold;
+		case Gold:
+			return gold;
 		default: return 0;
 		}
 	}

@@ -128,6 +128,7 @@
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_memory.cpp" />
+    <ClCompile Include="event.cpp" />
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="main.cpp" />

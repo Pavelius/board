@@ -20,6 +20,7 @@ struct gobject
 	virtual int					get(attributes id) const { return 0; }
 	int							get(const char* id, int index = 0) const;
 	virtual const char*			getavatar() const { return ""; }
+	int							getbonus(attributes id) const;
 	virtual aref<gobject*>		getbonuses() const { return {0, 0}; }
 	const char*					getid() const { return (const char*)get("id", 0); }
 	int							getindex() const;
@@ -27,8 +28,8 @@ struct gobject
 	gobject*					getmoveto() const { return (gobject*)get("moveto"); }
 	virtual const char*			getname() const { return (const char*)get("name"); }
 	virtual gobject*			getowner() const { return 0; }
-	virtual gobject*			getprovince() const { return 0; }
 	virtual aref<gobject*>		getpenalty() const { return {0, 0}; }
+	virtual gobject*			getprovince() const { return 0; }
 	virtual aref<gobject*>		getprovinces() const { return {0, 0}; }
 	int							getsupport(gobject* player) const;
 	virtual const char*			gettext() const { return (const char*)get("text"); }
@@ -40,6 +41,7 @@ struct gobject
 xsfield							event_type[];
 xsfield							province_type[];
 xsfield							player_type[];
+xsfield							trait_type[];
 xsfield							troop_type[];
 xsfield							unit_type[];
 

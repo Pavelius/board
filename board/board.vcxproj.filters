@@ -46,6 +46,9 @@
     <ClCompile Include="trait.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="event.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">

@@ -22,7 +22,7 @@ struct troop : gobject
 
 	int get(attributes id) const override
 	{
-		return parent->get(id);
+		return parent->get(id) + getbonus(id);
 	}
 
 	gobject* getprovince() const override
