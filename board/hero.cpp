@@ -10,7 +10,7 @@ struct hero : gobject
 
 	xsfield* getmeta() const override;
 
-	int get(attributes id) const
+	int get(const char* id) const override
 	{
 		auto result = 0;
 		for(auto e : gettraits())
@@ -21,6 +21,21 @@ struct hero : gobject
 		}
 		result += getbonus(id);
 		return result;
+	}
+
+	const char* getid() const override
+	{
+		return id;
+	}
+
+	const char* gettext() const override
+	{
+		return id;
+	}
+
+	const char* getname() const override
+	{
+		return name;
 	}
 
 	aref<gobject*> gettraits() const override

@@ -8,17 +8,6 @@ struct enchantment : gobject
 	const char*	text;
 	char		attack, defend, raid;
 
-	int get(attributes id) const
-	{
-		switch(id)
-		{
-		case Attack: return attack;
-		case Defence: return defend;
-		case Raid: return raid;
-		default: return 0;
-		}
-	}
-
 	xsfield* getmeta() const override;
 
 };

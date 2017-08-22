@@ -18,6 +18,14 @@ int	gobject::getindex() const
 	return m->indexof(this);
 }
 
+int	gobject::get(const char* id) const
+{
+	xsref e = {getmeta(), (void*)this};
+	if(!e)
+		return 0;
+	return e.get(id);
+}
+
 int	gobject::get(const char* id, int index) const
 {
 	xsref e = {getmeta(), (void*)this};

@@ -8,21 +8,18 @@
 
 const int player_max = 8;
 
-enum attributes : char {
-	Attack, Defence, Mouring, Movement, Raid, Gold, Support,
-};
 struct gobject
 {
 	void						add(const char* id, int value);
 	void						addsupport(gobject* player, int value);
 	static gobject*				create(const xsfield* meta);
 	static gobject*				create(const xsfield* meta, const char* id);
-	virtual int					get(attributes id) const { return 0; }
-	int							get(const char* id, int index = 0) const;
-	virtual const char*			getavatar() const { return ""; }
-	int							getbonus(attributes id) const;
+	virtual int					get(const char* id) const;
+	virtual int					get(const char* id, int index) const;
+	virtual const char*			getavatar() const { return (const char*)get("avatar");; }
+	int							getbonus(const char* id) const;
 	virtual aref<gobject*>		getbonuses() const { return {0, 0}; }
-	const char*					getid() const { return (const char*)get("id", 0); }
+	virtual const char*			getid() const { return (const char*)get("id"); }
 	int							getindex() const;
 	virtual xsfield*			getmeta() const = 0;
 	gobject*					getmoveto() const { return (gobject*)get("moveto"); }
@@ -31,7 +28,7 @@ struct gobject
 	virtual aref<gobject*>		getpenalty() const { return {0, 0}; }
 	virtual gobject*			getprovince() const { return 0; }
 	virtual aref<gobject*>		getprovinces() const { return {0, 0}; }
-	int							getsupport(gobject* player) const;
+	virtual int					getsupport(gobject* player) const;
 	virtual const char*			gettext() const { return (const char*)get("text"); }
 	virtual aref<gobject*>		gettraits() const { return {0, 0}; }
 	void						set(const char* id, int value, int index = 0);

@@ -10,17 +10,6 @@ struct trait : gobject
 
 	xsfield* getmeta() const override;
 
-	int get(attributes id) const
-	{
-		switch(id)
-		{
-		case Attack: return attack;
-		case Defence: return defend;
-		case Raid: return raid;
-		default: return 0;
-		}
-	}
-
 };
 
 xsfield trait_type[] = {

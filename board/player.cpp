@@ -10,16 +10,6 @@ struct player : gobject
 
 	xsfield* getmeta() const override;
 
-	int get(attributes id) const
-	{
-		switch(id)
-		{
-		case Gold:
-			return gold;
-		default: return 0;
-		}
-	}
-
 };
 
 xsfield player_type[] = {

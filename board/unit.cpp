@@ -12,17 +12,6 @@ struct unit : gobject
 
 	xsfield* getmeta() const override;
 
-	int get(attributes id) const
-	{
-		switch(id)
-		{
-		case Attack: return attack;
-		case Raid: return raid;
-		case Defence: return defence;
-		default: return 0;
-		}
-	}
-
 	aref<gobject*> getbonuses() const override
 	{
 		return {(gobject**)bonus, zlen(bonus)};

@@ -20,9 +20,14 @@ struct troop : gobject
 		return parent->gettext();
 	}
 
-	int get(attributes id) const override
+	int get(const char* id) const override
 	{
 		return parent->get(id) + getbonus(id);
+	}
+
+	gobject* getowner() const override
+	{
+		return owner;
 	}
 
 	gobject* getprovince() const override

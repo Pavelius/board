@@ -11,7 +11,7 @@ struct active_enchantment : gobject
 		return type != 0;
 	}
 
-	int get(attributes id) const
+	int get(const char* id) const override
 	{
 		return type->get(id);
 	}
@@ -33,7 +33,7 @@ xsfield* active_enchantment::getmeta() const
 
 static active_enchantment active_enchantment_data[256]; BSMETA(active_enchantment);
 
-int gobject::getbonus(attributes id) const
+int gobject::getbonus(const char* id) const
 {
 	auto result = 0;
 	for(unsigned i = 0; i < active_enchantment_manager.count; i++)
