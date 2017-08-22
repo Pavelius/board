@@ -30,7 +30,7 @@ struct hero : gobject
 
 	const char* gettext() const override
 	{
-		return id;
+		return text;
 	}
 
 	const char* getname() const override

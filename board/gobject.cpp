@@ -34,11 +34,11 @@ int	gobject::get(const char* id, int index) const
 	return e.get(id, index);
 }
 
-void gobject::set(const char* id, int value, int index)
+void gobject::set(const char* id, int value)
 {
 	xsref e = {getmeta(), this};
 	if(e)
-		e.set(id, value, index);
+		e.set(id, value);
 }
 
 gobject* gobject::create(const xsfield* meta)
@@ -61,16 +61,6 @@ gobject* gobject::create(const xsfield* meta, const char* id)
 	xr.fields = meta;
 	xr.set("id", (int)id, 0);
 	return (gobject*)xr.object;
-}
-
-int gobject::getsupport(gobject* player) const
-{
-	return get("support", player->getindex());
-}
-
-void gobject::addsupport(gobject* player, int value)
-{
-	set("support", getsupport(player) + value, player->getindex());
 }
 
 acol<gobject> getcollection(const xsfield* fields)

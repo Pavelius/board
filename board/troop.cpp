@@ -10,6 +10,11 @@ struct troop : gobject
 
 	xsfield* getmeta() const override;
 
+	const char* getid() const override
+	{
+		return 0;
+	}
+
 	const char* getname() const override
 	{
 		return parent->getname();
@@ -33,6 +38,11 @@ struct troop : gobject
 	gobject* getprovince() const override
 	{
 		return province;
+	}
+
+	gobject* getmoveto() const override
+	{
+		return moveto;
 	}
 
 };
