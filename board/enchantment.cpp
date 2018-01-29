@@ -1,7 +1,6 @@
 #include "main.h"
 
-struct enchantment : gobject
-{
+struct enchantment : gobject {
 
 	const char*	id;
 	const char*	name;
@@ -22,8 +21,7 @@ xsfield enchantment_type[] = {
 	{0}
 };
 
-xsfield* enchantment::getmeta() const
-{
+xsfield* enchantment::getmeta() const {
 	return enchantment_type;
 }
 

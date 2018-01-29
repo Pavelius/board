@@ -1,18 +1,15 @@
 #include "main.h"
 
-struct active_enchantment : gobject
-{
+struct active_enchantment : gobject {
 
 	gobject*	type;
 	gobject*	target;
 
-	operator bool() const
-	{
+	operator bool() const {
 		return type != 0;
 	}
 
-	int get(const char* id) const override
-	{
+	int get(const char* id) const override {
 		return type->get(id);
 	}
 
@@ -26,23 +23,20 @@ xsfield active_enchantment_type[] = {
 	{0}
 };
 
-xsfield* active_enchantment::getmeta() const
-{
+xsfield* active_enchantment::getmeta() const {
 	return active_enchantment_type;
 }
 
 static active_enchantment active_enchantment_data[256]; BSMETA(active_enchantment);
 
-int gobject::getbonus(const char* id) const
-{
+int gobject::getbonus(const char* id) const {
 	auto result = 0;
-	for(unsigned i = 0; i < active_enchantment_manager.count; i++)
-	{
+	for(unsigned i = 0; i < active_enchantment_manager.count; i++) {
 		auto& e = active_enchantment_data[i];
 		if(!e.target)
 			continue;
 		if(!((e.target == this)
-			|| (e.target->getmeta()==province_type && e.target==getprovince())))
+			|| (e.target->getmeta() == province_type && e.target == getprovince())))
 			continue;
 		result += e.get(id);
 	}

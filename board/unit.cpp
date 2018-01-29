@@ -1,7 +1,6 @@
 #include "main.h"
 
-struct unit : gobject
-{
+struct unit : gobject {
 
 	const char*	id;
 	const char*	name;
@@ -12,13 +11,11 @@ struct unit : gobject
 
 	xsfield* getmeta() const override;
 
-	aref<gobject*> getbonuses() const override
-	{
+	aref<gobject*> getbonuses() const override {
 		return {(gobject**)bonus, zlen(bonus)};
 	}
 
-	aref<gobject*> getpenalty() const override
-	{
+	aref<gobject*> getpenalty() const override {
 		return {(gobject**)penalty, zlen(bonus)};
 	}
 
@@ -34,8 +31,7 @@ xsfield unit_type[] = {
 	{0}
 };
 
-xsfield* unit::getmeta() const
-{
+xsfield* unit::getmeta() const {
 	return unit_type;
 }
 

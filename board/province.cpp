@@ -1,7 +1,6 @@
 #include "main.h"
 
-struct province : gobject
-{
+struct province : gobject {
 
 	const char*		id;
 	const char*		name;
@@ -12,8 +11,7 @@ struct province : gobject
 
 	xsfield* getmeta() const override;
 
-	aref<gobject*> getbonuses() const
-	{
+	aref<gobject*> getbonuses() const {
 		return {(gobject**)&resource, 1};
 	}
 
@@ -27,8 +25,7 @@ xsfield province_type[] = {
 	{0}
 };
 
-xsfield* province::getmeta() const
-{
+xsfield* province::getmeta() const {
 	return province_type;
 }
 

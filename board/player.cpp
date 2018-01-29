@@ -1,7 +1,6 @@
 #include "main.h"
 
-struct player : gobject
-{
+struct player : gobject {
 
 	const char*		id;
 	const char*		name;
@@ -20,8 +19,7 @@ xsfield player_type[] = {
 	{0}
 };
 
-xsfield* player::getmeta() const
-{
+xsfield* player::getmeta() const {
 	return player_type;
 }
 

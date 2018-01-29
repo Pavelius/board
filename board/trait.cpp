@@ -1,7 +1,6 @@
 #include "main.h"
 
-struct trait : gobject
-{
+struct trait : gobject {
 
 	const char*	id;
 	const char*	name;
@@ -22,8 +21,7 @@ xsfield trait_type[] = {
 	{0}
 };
 
-xsfield* trait::getmeta() const
-{
+xsfield* trait::getmeta() const {
 	return trait_type;
 }
 
