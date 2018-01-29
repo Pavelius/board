@@ -23,16 +23,6 @@ struct hero : gobject
 		return result;
 	}
 
-	const char* getid() const override
-	{
-		return id;
-	}
-
-	const char* gettext() const override
-	{
-		return text;
-	}
-
 	const char* getname() const override
 	{
 		return name;

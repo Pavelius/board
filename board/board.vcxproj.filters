@@ -22,9 +22,6 @@
     <ClCompile Include="province.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="gobject.cpp">
-      <Filter>Support</Filter>
-    </ClCompile>
     <ClCompile Include="xsbase.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -50,6 +47,12 @@
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="active_enchantment.cpp">
+      <Filter>Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="gobject.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="tactic.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>

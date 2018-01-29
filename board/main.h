@@ -11,26 +11,29 @@ const int player_max = 8;
 struct gobject
 {
 	void						add(const char* id, int value);
-	void						addsupport(gobject* player, int value) {}
+	void						add(const char* id, int value, int index);
+	void						addloyalty(gobject* province, gobject* player, int value);
 	static gobject*				create(const xsfield* meta);
 	static gobject*				create(const xsfield* meta, const char* id);
 	virtual int					get(const char* id) const;
 	virtual int					get(const char* id, int index) const;
-	virtual const char*			getavatar() const { return (const char*)get("avatar");; }
+	void*						getarray(const char* id) const;
+	const char*					getavatar() const { return (const char*)get("avatar");; }
 	int							getbonus(const char* id) const;
 	virtual aref<gobject*>		getbonuses() const { return {0, 0}; }
-	virtual const char*			getid() const { return (const char*)get("id"); }
+	const char*					getid() const { return (const char*)get("id"); }
 	int							getindex() const;
-	virtual xsfield*			getmeta() const = 0;
+	gobject*					getloyalty() const;
+	virtual xsfield*			getmeta() const { return 0; }
 	virtual gobject*			getmoveto() const { return 0; }
 	virtual const char*			getname() const { return (const char*)get("name"); }
-	virtual gobject*			getowner() const { return 0; }
+	gobject*					getowner() const { return (gobject*)get("owner"); }
 	virtual aref<gobject*>		getpenalty() const { return {0, 0}; }
-	virtual gobject*			getprovince() const { return 0; }
+	gobject*					getprovince() const { return (gobject*)get("province"); }
 	virtual aref<gobject*>		getprovinces() const { return {0, 0}; }
-	virtual int					getsupport(gobject* player) const { return 0; }
 	virtual const char*			gettext() const { return (const char*)get("text"); }
 	virtual aref<gobject*>		gettraits() const { return {0, 0}; }
+	bool						isoccupied() const;
 	void						set(const char* id, int value);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }

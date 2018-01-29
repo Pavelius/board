@@ -2,8 +2,7 @@
 
 #pragma once
 
-struct amem : collection
-{
+struct amem : collection {
 	void*				data;
 	unsigned			count;
 	unsigned			count_maximum;
