@@ -3,37 +3,29 @@
 const int xsfield_max_text = 8192 * 2; // Maximum text for field (for serialization)
 
 // Metadata field descriptor
-struct xsfield
-{
-	template<class T> struct info
-	{
+struct xsfield {
+	template<class T> struct info {
 		static constexpr int size = sizeof(T);
 		static constexpr int count = 1;
 	};
-	template<class T, unsigned N> struct info<T[N]>
-	{
+	template<class T, unsigned N> struct info<T[N]> {
 		static constexpr int size = sizeof(T);
 		static constexpr int count = N;
 	};
-	template<class T> struct info<T[]>
-	{
+	template<class T> struct info<T[]> {
 		static constexpr int size = sizeof(T);
 		static constexpr int count = 0;
 	};
-	template<class T> struct refi
-	{
+	template<class T> struct refi {
 		static constexpr int count = 0;
 	};
-	template<class T> struct refi<T*>
-	{
+	template<class T> struct refi<T*> {
 		static constexpr int count = 1 + refi<T>::count;
 	};
-	template<class T, int N> struct refi<T[N]>
-	{
+	template<class T, int N> struct refi<T[N]> {
 		static constexpr int count = refi<T>::count;
 	};
-	template<class T> struct refi<T[]>
-	{
+	template<class T> struct refi<T[]> {
 		static constexpr int count = refi<T>::count;
 	};
 	const char*			id; // field identifier

@@ -8,6 +8,10 @@
 
 const int player_max = 8;
 
+template<typename T, unsigned N> constexpr unsigned lenght(T (&)[N]) { return N; }
+template<typename T, T V> struct static_eval { static constexpr T value = V; };
+template<typename T> constexpr int reference(T N) { return 0; }
+
 struct gobject
 {
 	void						add(const char* id, int value);
