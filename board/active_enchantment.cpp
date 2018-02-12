@@ -2,8 +2,8 @@
 
 struct active_enchantment : gobject {
 
-	gobject*	type;
-	gobject*	target;
+	gobject* type;
+	gobject* target;
 
 	operator bool() const {
 		return type != 0;
@@ -36,7 +36,7 @@ int gobject::getbonus(const char* id) const {
 		if(!e.target)
 			continue;
 		if(!((e.target == this)
-			|| (e.target->getmeta() == province_type && e.target == getprovince())))
+			|| (e.target->is(province_type) && e.target == getprovince())))
 			continue;
 		result += e.get(id);
 	}

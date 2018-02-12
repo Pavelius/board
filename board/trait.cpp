@@ -2,10 +2,10 @@
 
 struct trait : gobject {
 
-	const char*	id;
-	const char*	name;
-	const char*	text;
-	char		attack, defend, raid;
+	const char* id;
+	const char* name;
+	const char* text;
+	char attack, defend, raid;
 
 	xsfield* getmeta() const override;
 

@@ -2,12 +2,12 @@
 
 struct unit : gobject {
 
-	const char*	id;
-	const char*	name;
-	const char*	text;
-	char		attack, raid, defence;
-	gobject*	bonus[5];
-	gobject*	penalty[5];
+	const char* id;
+	const char* name;
+	const char* text;
+	char attack, raid, defence;
+	gobject* bonus[5];
+	gobject* penalty[5];
 
 	xsfield* getmeta() const override;
 

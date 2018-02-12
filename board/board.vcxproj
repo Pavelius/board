@@ -140,7 +140,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
-    <ClCompile Include="tactic.cpp" />
+    <ClCompile Include="combat.cpp" />
     <ClCompile Include="trait.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />

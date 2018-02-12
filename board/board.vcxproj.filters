@@ -52,7 +52,7 @@
     <ClCompile Include="gobject.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="tactic.cpp">
+    <ClCompile Include="combat.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
   </ItemGroup>

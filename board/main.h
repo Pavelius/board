@@ -37,6 +37,7 @@ struct gobject
 	virtual aref<gobject*>		getprovinces() const { return {0, 0}; }
 	virtual const char*			gettext() const { return (const char*)get("text"); }
 	virtual aref<gobject*>		gettraits() const { return {0, 0}; }
+	bool						is(xsfield* type) const;
 	bool						isoccupied() const;
 	void						set(const char* id, int value);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }

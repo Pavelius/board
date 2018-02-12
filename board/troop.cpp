@@ -1,32 +1,27 @@
 #include "main.h"
 
-struct troop : gobject
-{
+struct troop : gobject {
 
-	gobject*	parent;
-	gobject*	owner;
-	gobject*	province;
-	gobject*	moveto;
+	gobject* parent;
+	gobject* owner;
+	gobject* province;
+	gobject* moveto;
 
 	xsfield* getmeta() const override;
 
-	const char* getname() const override
-	{
+	const char* getname() const override {
 		return parent->getname();
 	}
 
-	const char* gettext() const override
-	{
+	const char* gettext() const override {
 		return parent->gettext();
 	}
 
-	int get(const char* id) const override
-	{
+	int get(const char* id) const override {
 		return parent->get(id) + getbonus(id);
 	}
 
-	gobject* getmoveto() const override
-	{
+	gobject* getmoveto() const override {
 		return moveto;
 	}
 
@@ -40,8 +35,7 @@ xsfield troop_type[] = {
 	{0}
 };
 
-xsfield* troop::getmeta() const
-{
+xsfield* troop::getmeta() const {
 	return troop_type;
 }
 
