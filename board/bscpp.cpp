@@ -1,11 +1,10 @@
-#include "bsdata.h"
 #include "crt.h"
 #include "io.h"
 
 struct bscpp {
 
 	const char*	p;
-	char buffer[128 * 256];
+	char buffer[256 * 256];
 
 	bool islinefeed() const {
 		return *p == 13 || *p == 10;
@@ -13,14 +12,6 @@ struct bscpp {
 
 	void skip() {
 		p++;
-	}
-
-	bool skip(char sym) {
-		if(*p != sym)
-			return false;
-		p++;
-		skipws();
-		return true;
 	}
 
 	bool skip(const char* sym) {
