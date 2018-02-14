@@ -2,23 +2,25 @@
 
 #pragma once
 
-struct amem : collection {
-	void*				data;
-	unsigned			count;
-	unsigned			count_maximum;
-	unsigned			size;
+class amem : public collection {
+	void* data;
+	unsigned count;
+	unsigned count_maximum;
+	unsigned size;
+public:
 	amem(unsigned size = 0);
 	~amem();
-	void*				add(const void* element = 0) override;
-	char*				begin() const;
-	void				clear() override;
-	char*				end() const { return begin() + count*size; }
-	void*				get(int index) const override;
-	unsigned			getcount() const override;
-	int					indexof(const void* element) const override;
-	void*				insert(int index, const void* object);
-	void				remove(int index, int count = 1) override;
-	bool				reserve(unsigned count);
-	void				setup(unsigned size);
-	void				swap(int i1, int i2) override; // Swap elements
+	void* add() override;
+	char* begin() const { return (char*)data; }
+	void clear() override;
+	char* end() const { return (char*)data + count*size; }
+	void* get(int index) const override;
+	unsigned getcount() const override { return count; }
+	unsigned getmaxcount() const override { return count_maximum; }
+	unsigned getsize() const override { return size; }
+	int indexof(const void* element) const override;
+	void* insert(int index, const void* object);
+	void remove(int index, int count = 1) override;
+	void reserve(unsigned count);
+	void setup(unsigned size);
 };

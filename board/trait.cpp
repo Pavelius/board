@@ -7,11 +7,11 @@ struct trait : gobject {
 	const char* text;
 	char attack, defend, raid;
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 };
 
-xsfield trait_type[] = {
+bsreq trait_type[] = {
 	BSREQ(trait, id, text_type),
 	BSREQ(trait, name, text_type),
 	BSREQ(trait, text, text_type),
@@ -21,7 +21,7 @@ xsfield trait_type[] = {
 	{0}
 };
 
-xsfield* trait::getmeta() const {
+bsreq* trait::getmeta() const {
 	return trait_type;
 }
 

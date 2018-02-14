@@ -68,9 +68,6 @@ const char*							psidn(const char* p, char* result, char* result_end); // safe 
 inline const char*					psidn(const char* p, char* result) { return psidn(p, result, result + 128); }
 const char*							psnum(const char* p, int& value); // Parse number from string
 const char*							psstr(const char* p, char* value, char end_symbol = '\"'); // Parse string from string (like c format "Some\nstring")
-bool								rmblock(void* ptr); // Is memory ptr was previously allocated?
-int									rmblockcount(); // Get allocated memory block count. Can be used for allocation error detection.
-void*								rmreserve(void* ptr, unsigned size, bool force_to_size = false); // Resize memory block. Return new value.
 void								setsignature(char name[4], const char* s); // Set signature to name
 float								sqrt(const float x); // Return aquare root of 'x'
 void								szadd(char* result, const char* value, const char* title = "(", const char* separator = ", ");
@@ -130,7 +127,7 @@ template<class T> inline void		zcpy(T* p1, const T* p2, int max_count) { while(*
 template<class T> inline T*			zend(T* p) { while(*p) p++; return p; }
 template<class T> inline void		zcat(T* p1, const T e) { p1 = zend(p1); p1[0] = e; p1[1] = 0; }
 template<class T> inline void		zcat(T* p1, const T* p2) { zcpy(zend(p1), p2); }
-template<class T> inline int		zlen(T* p) { return zend(p) - p; }
+template<class T> inline unsigned	zlen(T* p) { return zend(p) - p; }
 template<class T> inline int		znormalize(T* pb, T* pe) { T* p0 = pb; T* ps = pb; while(pb < pe) { if(*pb) *ps++ = *pb; pb++; } if(ps < pe) *ps = 0; return ps - p0;}
 template<class T> inline int		zindex(const T* p, T e) { if(!p) return -1; const T* p1=p; while(*p) { if(*p++==e) return p-p1-1; } return -1; }
 template<class T> inline const T*	zfindi(const T* p, int id) { while(p->id) { if(p->id == id) return p; p++; } return 0; }

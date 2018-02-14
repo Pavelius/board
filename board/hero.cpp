@@ -7,7 +7,7 @@ struct hero : gobject {
 	const char*	text;
 	gobject*	traits[5];
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 	int get(const char* id) const override {
 		auto result = 0;
@@ -30,7 +30,7 @@ struct hero : gobject {
 
 };
 
-xsfield hero_type[] = {
+bsreq hero_type[] = {
 	BSREQ(hero, id, text_type),
 	BSREQ(hero, name, text_type),
 	BSREQ(hero, text, text_type),
@@ -38,8 +38,8 @@ xsfield hero_type[] = {
 	{0}
 };
 
-xsfield* hero::getmeta() const {
+bsreq* hero::getmeta() const {
 	return hero_type;
 }
 
-static hero hero_data[256];  BSMETA(hero);
+static hero hero_data[256]; BSMETA(hero);

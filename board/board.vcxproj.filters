@@ -10,31 +10,16 @@
     <ClCompile Include="troop.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="xsfield.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="xsref.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="province.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
-    <ClCompile Include="xsbase.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="amem.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="crt.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="collection.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="crt_memory.cpp">
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="hero.cpp">
@@ -55,6 +40,21 @@
     <ClCompile Include="combat.cpp">
       <Filter>Objects</Filter>
     </ClCompile>
+    <ClCompile Include="bsdata.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="bsreq.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="crt.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="crt_memory.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="crt_parse.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -66,24 +66,15 @@
     <Filter Include="Database">
       <UniqueIdentifier>{e8b33c78-f7d6-4423-8b6f-6d4bef2b62f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="System">
+      <UniqueIdentifier>{890dc64e-2963-4068-9497-7b7b3083ed0c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>Support</Filter>
     </ClInclude>
-    <ClInclude Include="xsfield.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="xsref.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="xsbase.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="amem.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="crt.h">
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="collection.h">
@@ -97,6 +88,15 @@
     </ClInclude>
     <ClInclude Include="aref.h">
       <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="bsdata.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="bsreq.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="crt.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

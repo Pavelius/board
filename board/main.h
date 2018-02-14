@@ -2,53 +2,51 @@
 #include "adat.h"
 #include "aref.h"
 #include "crt.h"
-#include "xsbase.h"
+#include "bsdata.h"
 
 #pragma once
 
 const int player_max = 8;
-
-template<typename T, unsigned N> constexpr unsigned lenght(T (&)[N]) { return N; }
-template<typename T, T V> struct static_eval { static constexpr T value = V; };
-template<typename T> constexpr int reference(T N) { return 0; }
 
 struct gobject
 {
 	void						add(const char* id, int value);
 	void						add(const char* id, int value, int index);
 	void						addloyalty(gobject* province, gobject* player, int value);
-	static gobject*				create(const xsfield* meta);
-	static gobject*				create(const xsfield* meta, const char* id);
+	static gobject*				create(const bsreq* meta);
+	static gobject*				create(const bsreq* meta, const char* id);
 	virtual int					get(const char* id) const;
 	virtual int					get(const char* id, int index) const;
+	static acol<gobject>		getcol(const bsreq* fields); // Get collection by metadata
 	void*						getarray(const char* id) const;
 	const char*					getavatar() const { return (const char*)get("avatar");; }
 	int							getbonus(const char* id) const;
-	virtual aref<gobject*>		getbonuses() const { return {0, 0}; }
+	virtual aref<gobject*>		getbonuses() const { return aref<gobject*>(); }
 	const char*					getid() const { return (const char*)get("id"); }
 	int							getindex() const;
 	gobject*					getloyalty() const;
-	virtual xsfield*			getmeta() const { return 0; }
+	virtual bsreq*			getmeta() const { return 0; }
 	virtual gobject*			getmoveto() const { return 0; }
 	virtual const char*			getname() const { return (const char*)get("name"); }
 	gobject*					getowner() const { return (gobject*)get("owner"); }
-	virtual aref<gobject*>		getpenalty() const { return {0, 0}; }
+	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
 	gobject*					getprovince() const { return (gobject*)get("province"); }
-	virtual aref<gobject*>		getprovinces() const { return {0, 0}; }
+	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
 	virtual const char*			gettext() const { return (const char*)get("text"); }
-	virtual aref<gobject*>		gettraits() const { return {0, 0}; }
-	bool						is(xsfield* type) const;
+	virtual aref<gobject*>		gettraits() const { return aref<gobject*>(); }
+	bool						is(bsreq* type) const;
+	virtual bool				isvalid() const { return true; }
 	bool						isoccupied() const;
 	void						set(const char* id, int value);
+	void						set(const char* id, int value, int index);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
 };
-xsfield							enchantment_type[];
-xsfield							event_type[];
-xsfield							province_type[];
-xsfield							player_type[];
-xsfield							trait_type[];
-xsfield							troop_type[];
-xsfield							unit_type[];
-
-acol<gobject>					getcollection(const xsfield* fields); // Get collection by metadata
+bsreq							enchantment_type[];
+bsreq							event_type[];
+bsreq							hero_type[];
+bsreq							province_type[];
+bsreq							player_type[];
+bsreq							trait_type[];
+bsreq							troop_type[];
+bsreq							unit_type[];

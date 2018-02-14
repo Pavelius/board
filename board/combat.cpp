@@ -1,76 +1,50 @@
 #include "main.h"
 
-struct parcipant {
-	gobject*	unit;
-	char		wounds;
-
-	parcipant() : unit(0), wounds(0) {
-	}
-
-	parcipant(gobject* unit) : unit(unit), wounds(unit->get("wounds")) {
-	}
-
-};
-
 struct combatside {
 
-	adat<parcipant, 32>	units;
-	char				roll_black, roll_red, black, red, critical, block;
+	adat<gobject*, 32> units;
+	gobject* general;
 
-	combatside() : black(0), red(0), critical(0), block(0) {
+	combatside(gobject* province, gobject* owner) {
+		// Get all units in province by one owner
+		for(auto e : gobject::getcol(troop_type)) {
+			if(!e.isvalid())
+				continue;
+			if(e.getowner() != owner)
+				continue;
+			if(e.getprovince() != province)
+				continue;
+			units.add(&e);
+		}
+		// Get all heroes in province and choose one best matched
+		for(auto e : gobject::getcol(hero_type)) {
+			if(!e.isvalid())
+				continue;
+			if(e.getowner() != owner)
+				continue;
+			if(e.getprovince() != province)
+				continue;
+			general = &e;
+			break;
+		}
 	}
 
 	operator bool() const {
 		return units.getcount();
 	}
 
-	void start() {
-		roll_black = roll_red = black = red = critical = block = 0;
+	int get(int (gobject::*proc)() const) const {
+		auto r = 0;
+		if(general)
+			r += (general->*proc)();
 		for(auto p : units)
-			roll_black += p.unit->get("black");
-		for(auto p : units)
-			roll_red += p.unit->get("red");
-	}
-
-	void roll_tactic() {
-		switch(xrand(1, 6)) {
-		case 1: block += 1; break;
-		case 2: block += 1; break;
-		case 3: critical += 1; break;
-		case 4: critical += 1; break;
-		case 5: block += 2; break;
-		case 6: critical += 2; break;
-		}
-	}
-
-	void roll_dice(char& value) {
-		switch(xrand(1, 6)) {
-		case 3: value += 1; break;
-		case 4: value += 1; break;
-		case 5: critical += 1; break;
-		case 6: roll_tactic(); break;
-		}
-	}
-
-	void rolling() {
-		for(int i = 0; i < roll_black; i++)
-			roll_dice(black);
-		roll_black = 0;
-		for(int i = 0; i < roll_red; i++)
-			roll_dice(red);
-		roll_red = 0;
-	}
-
-	static int compare_units(const void* p1, const void* p2) {
-		auto e1 = (parcipant*)p1;
-		auto e2 = (parcipant*)p2;
-		if(e1->wounds == e2->wounds)
-			return e1->unit->get("wounds") - e2->unit->get("wounds");
-		return e1->wounds - e2->wounds;
-	}
-
-	void normalize() {
-		qsort(units.data, sizeof(units.data) / sizeof(units.data[0]), sizeof(units[0]), compare_units);
+			r += (p->*proc)();
+		return r;
 	}
 
 };
+
+void calculate(gobject* attacker_player, gobject* defender_player, gobject* province) {
+	combatside attackers(province, attacker_player);
+	combatside defenders(province, defender_player);
+}

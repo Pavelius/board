@@ -7,11 +7,11 @@ struct player : gobject {
 	const char*		text;
 	int				gold;
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 };
 
-xsfield player_type[] = {
+bsreq player_type[] = {
 	BSREQ(player, id, text_type),
 	BSREQ(player, name, text_type),
 	BSREQ(player, text, text_type),
@@ -19,8 +19,8 @@ xsfield player_type[] = {
 	{0}
 };
 
-xsfield* player::getmeta() const {
+bsreq* player::getmeta() const {
 	return player_type;
 }
 
-static player player_data[player_max]; BSMETA(player);
+static adat<player, player_max> players; BSDATA(player, player_type);

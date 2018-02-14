@@ -9,7 +9,7 @@ struct unit : gobject {
 	gobject* bonus[5];
 	gobject* penalty[5];
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 	aref<gobject*> getbonuses() const override {
 		return {(gobject**)bonus, zlen(bonus)};
@@ -21,7 +21,7 @@ struct unit : gobject {
 
 };
 
-xsfield unit_type[] = {
+bsreq unit_type[] = {
 	BSREQ(unit, id, text_type),
 	BSREQ(unit, name, text_type),
 	BSREQ(unit, text, text_type),
@@ -31,8 +31,8 @@ xsfield unit_type[] = {
 	{0}
 };
 
-xsfield* unit::getmeta() const {
+bsreq* unit::getmeta() const {
 	return unit_type;
 }
 
-static unit unit_data[256];  BSMETA(unit);
+static adat<unit, 256> units; BSDATA(unit, unit_type);

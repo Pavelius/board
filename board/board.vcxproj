@@ -121,19 +121,21 @@
     <ClInclude Include="adat.h" />
     <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
+    <ClInclude Include="bsdata.h" />
+    <ClInclude Include="bsreq.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="crt.h" />
     <ClInclude Include="main.h" />
-    <ClInclude Include="xsbase.h" />
-    <ClInclude Include="xsfield.h" />
-    <ClInclude Include="xsref.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="active_enchantment.cpp" />
     <ClCompile Include="amem.cpp" />
+    <ClCompile Include="bsdata.cpp" />
+    <ClCompile Include="bsreq.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_memory.cpp" />
+    <ClCompile Include="crt_parse.cpp" />
     <ClCompile Include="enchantment.cpp" />
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="hero.cpp" />
@@ -144,9 +146,6 @@
     <ClCompile Include="trait.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />
-    <ClCompile Include="xsbase.cpp" />
-    <ClCompile Include="xsfield.cpp" />
-    <ClCompile Include="xsref.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

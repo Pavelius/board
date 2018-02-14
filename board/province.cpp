@@ -9,7 +9,7 @@ struct province : gobject {
 	gobject*		resource;
 	short			support[player_max];
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 	aref<gobject*> getbonuses() const {
 		return {(gobject**)&resource, 1};
@@ -17,7 +17,7 @@ struct province : gobject {
 
 };
 
-xsfield province_type[] = {
+bsreq province_type[] = {
 	BSREQ(province, id, text_type),
 	BSREQ(province, name, text_type),
 	BSREQ(province, text, text_type),
@@ -25,7 +25,7 @@ xsfield province_type[] = {
 	{0}
 };
 
-xsfield* province::getmeta() const {
+bsreq* province::getmeta() const {
 	return province_type;
 }
 

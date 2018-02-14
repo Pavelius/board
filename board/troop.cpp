@@ -7,7 +7,7 @@ struct troop : gobject {
 	gobject* province;
 	gobject* moveto;
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 	const char* getname() const override {
 		return parent->getname();
@@ -25,9 +25,13 @@ struct troop : gobject {
 		return moveto;
 	}
 
+	bool isvalid() const override {
+		return parent != 0;
+	}
+
 };
 
-xsfield troop_type[] = {
+bsreq troop_type[] = {
 	BSREQ(troop, parent, unit_type),
 	BSREQ(troop, owner, player_type),
 	BSREQ(troop, province, province_type),
@@ -35,7 +39,7 @@ xsfield troop_type[] = {
 	{0}
 };
 
-xsfield* troop::getmeta() const {
+bsreq* troop::getmeta() const {
 	return troop_type;
 }
 

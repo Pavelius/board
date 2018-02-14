@@ -1,7 +1,6 @@
 #include "main.h"
 
 struct active_enchantment : gobject {
-
 	gobject* type;
 	gobject* target;
 
@@ -13,26 +12,26 @@ struct active_enchantment : gobject {
 		return type->get(id);
 	}
 
-	xsfield* getmeta() const override;
+	bsreq* getmeta() const override;
 
 };
 
-xsfield active_enchantment_type[] = {
+bsreq active_enchantment_type[] = {
 	BSREQ(active_enchantment, type, enchantment_type),
-	BSREQ(active_enchantment, target, reference_type),
+	BSREQ(active_enchantment, target, player_type),
 	{0}
 };
 
-xsfield* active_enchantment::getmeta() const {
+bsreq* active_enchantment::getmeta() const {
 	return active_enchantment_type;
 }
 
-static active_enchantment active_enchantment_data[256]; BSMETA(active_enchantment);
+static adat<active_enchantment, 256> active_enchantments;
+BSDATA(active_enchantment, active_enchantment_type);
 
 int gobject::getbonus(const char* id) const {
 	auto result = 0;
-	for(unsigned i = 0; i < active_enchantment_manager.count; i++) {
-		auto& e = active_enchantment_data[i];
+	for(auto& e : active_enchantments) {
 		if(!e.target)
 			continue;
 		if(!((e.target == this)
