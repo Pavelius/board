@@ -6,12 +6,23 @@ struct bscpp {
 	const char*	p;
 	char buffer[256 * 256];
 
-	bool islinefeed() const {
-		return *p == 13 || *p == 10;
+	bool isvalid() {
+		return *p != 0;
 	}
 
-	void skip() {
-		p++;
+	bool islinefeed() {
+		if(*p == '\n') {
+			p++;
+			if(*p == '\r')
+				p++;
+			return true;
+		} else if(*p == '\r') {
+			p++;
+			if(*p == '\n')
+				p++;
+			return true;
+		} else
+			return false;
 	}
 
 	bool skip(const char* sym) {
@@ -33,34 +44,40 @@ struct bscpp {
 	}
 
 	void skipline() {
-		while(p[0] && p[0] != 10 && p[0] != 13)
+		while(*p) {
+			if(islinefeed())
+				return;
 			p++;
+		}
+	}
+
+	bool iswhitespace() {
+		if(*p == '\t' || *p == ' ') {
+			p++;
+			return true;
+		} else
+			return false;
+	}
+
+	bool iscomment() {
+		if(p[0] == '/' && p[1] == '/') {
+			p += 2;
+			skipline();
+			return true;
+		}
+		return false;
 	}
 
 	void skipws() {
 		while(*p) {
-			if(*p == '\n') {
-				p++;
-				if(*p == '\r')
-					p++;
+			if(islinefeed())
 				continue;
-			} else if(*p == '\r') {
-				p++;
-				if(*p == '\n')
-					p++;
+			if(iswhitespace())
 				continue;
-			} else if(p[0] == 9 || p[0] == 0x20) {
-				p++;
+			if(iscomment())
 				continue;
-			} else if(p[0] == '\\') {
+			if(p[0] == '\\' && (p[1] == 10 || p[1] == 13)) {
 				p++;
-				if(!(p[0] == 10 || p[0] == 13))
-					p++;
-				continue;
-			} else if(p[0] == '/' && p[1] == '/') {
-				// Comments
-				p += 2;
-				skipline();
 				continue;
 			}
 			break;
@@ -82,8 +99,6 @@ struct bscpp {
 		return true;
 	}
 
-public:
-
 	bscpp(const char* p) : p(p) {
 	}
 
@@ -93,7 +108,7 @@ public:
 		po << "#include \"bsdata.h\"\r\n";
 		po << "#include \"messages.h\"\r\n";
 		po << "\r\n";
-		while(*p) {
+		while(isvalid()) {
 			if(skip("#") || skip("extern")) {
 				skipline();
 				skipws();
@@ -136,7 +151,7 @@ public:
 };
 
 bool cpp_parsemsg(const char* url, const char* out_url) {
-	io::file po(out_url, StreamWrite|StreamText);
+	io::file po(out_url, StreamWrite | StreamText);
 	if(!po)
 		return false;
 	auto p = loadt(url);
