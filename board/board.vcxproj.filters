@@ -55,6 +55,33 @@
     <ClCompile Include="crt_parse.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="bsparse.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="io.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="win_io_file.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="stringcreator.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="szdup.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="win_draw_dlg.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="view.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="messages.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="bscpp.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Objects">
@@ -68,6 +95,15 @@
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{890dc64e-2963-4068-9497-7b7b3083ed0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Script">
+      <UniqueIdentifier>{ed49c791-00b8-4f6d-8e48-b478827a7b92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Platform">
+      <UniqueIdentifier>{097d753a-29fe-4c21-8ce1-b2f7a3700500}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="View">
+      <UniqueIdentifier>{4c321217-a9f4-4e62-8a25-4eb88de21ed3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -98,5 +134,25 @@
     <ClInclude Include="crt.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="bsparse.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="io.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="win.h">
+      <Filter>Platform</Filter>
+    </ClInclude>
+    <ClInclude Include="stringcreator.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="messages.h">
+      <Filter>View</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\script\game.txt">
+      <Filter>Script</Filter>
+    </Text>
   </ItemGroup>
 </Project>

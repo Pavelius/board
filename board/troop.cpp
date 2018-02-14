@@ -21,6 +21,10 @@ struct troop : gobject {
 		return parent->get(id) + getbonus(id);
 	}
 
+	gobject* getprovince() const override {
+		return province;
+	}
+
 	gobject* getmoveto() const override {
 		return moveto;
 	}
@@ -43,4 +47,4 @@ bsreq* troop::getmeta() const {
 	return troop_type;
 }
 
-static troop troop_data[1024]; BSMETA(troop)
+static adat<troop, 1024> troops; BSDATA(troop, troop_type)

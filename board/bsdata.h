@@ -7,6 +7,8 @@
 bsdata c##_manager(#c, c##_data, sizeof(c##_data[0]), sizeof(c##_data)/sizeof(c##_data[0]), c##_type);
 #define BSDATA(c, c_type) \
 bsdata c##_manager(#c, c##s.data, c##s.count, sizeof(c##s.data[0]), sizeof(c##s.data)/sizeof(c##s.data[0]), c_type);
+#define BSGLOB(c) \
+bsdata c##_manager(#c, &c, 1, sizeof(c), c##_type);
 
 struct bsdata : collection {
 	const char*			id;

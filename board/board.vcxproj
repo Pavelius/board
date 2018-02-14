@@ -81,6 +81,9 @@
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
     </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -122,15 +125,22 @@
     <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
     <ClInclude Include="bsdata.h" />
+    <ClInclude Include="bsparse.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="crt.h" />
+    <ClInclude Include="io.h" />
     <ClInclude Include="main.h" />
+    <ClInclude Include="messages.h" />
+    <ClInclude Include="stringcreator.h" />
+    <ClInclude Include="win.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="active_enchantment.cpp" />
     <ClCompile Include="amem.cpp" />
+    <ClCompile Include="bscpp.cpp" />
     <ClCompile Include="bsdata.cpp" />
+    <ClCompile Include="bsparse.cpp" />
     <ClCompile Include="bsreq.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="crt.cpp" />
@@ -139,13 +149,23 @@
     <ClCompile Include="enchantment.cpp" />
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="hero.cpp" />
+    <ClCompile Include="io.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="messages.cpp" />
+    <ClCompile Include="view.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="province.cpp" />
     <ClCompile Include="combat.cpp" />
+    <ClCompile Include="stringcreator.cpp" />
+    <ClCompile Include="szdup.cpp" />
     <ClCompile Include="trait.cpp" />
     <ClCompile Include="troop.cpp" />
     <ClCompile Include="unit.cpp" />
+    <ClCompile Include="win_draw_dlg.cpp" />
+    <ClCompile Include="win_io_file.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\script\game.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

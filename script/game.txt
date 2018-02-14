@@ -1,0 +1,4 @@
+#mainmenu newgame("Начать игру")
+#mainmenu loadgame("Загрузить игру")
+#mainmenu savegame("Записать игру")
+#mainmenu exit("Выход")

@@ -29,4 +29,4 @@ bsreq* province::getmeta() const {
 	return province_type;
 }
 
-static province province_data[256]; BSMETA(province);
+static adat<province, 256> provinces; BSDATA(province, province_type);

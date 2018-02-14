@@ -26,21 +26,21 @@ int	gobject::getindex() const {
 }
 
 int	gobject::get(const char* id) const {
-	auto pf = getmeta();
+	auto pf = getmeta()->find(id);
 	if(!pf)
 		return 0;
 	return pf->get(pf->ptr(this));
 }
 
 int	gobject::get(const char* id, int index) const {
-	auto pf = getmeta();
+	auto pf = getmeta()->find(id);
 	if(!pf)
 		return 0;
 	return pf->get(pf->ptr(this, index));
 }
 
 void gobject::set(const char* id, int value) {
-	auto pf = getmeta();
+	auto pf = getmeta()->find(id);
 	if(!pf)
 		return;
 	pf->set(pf->ptr(this), value);
@@ -49,7 +49,7 @@ void gobject::set(const char* id, int value) {
 void gobject::set(const char* id, int value, int index) {
 	if(index == -1)
 		return;
-	auto pf = getmeta();
+	auto pf = getmeta()->find(id);
 	if(!pf)
 		return;
 	pf->set(pf->ptr(this, index), value);
@@ -66,7 +66,7 @@ gobject* gobject::create(const bsreq* meta, const char* id) {
 	auto m = bsdata::find(meta);
 	if(!m)
 		return 0;
-	auto p = (gobject*)m->find(meta->find("id"), id);
+	auto p = (gobject*)m->find(meta->getkey(), id);
 	if(p)
 		return p;
 	p = (gobject*)m->add();
@@ -79,6 +79,13 @@ acol<gobject> gobject::getcol(const bsreq* fields) {
 	if(m)
 		return {(gobject*)m->data, m->getcount(), m->size};
 	return {0, 0, 0};
+}
+
+gobject* gobject::find(bsreq* meta, const char* id) {
+	auto m = bsdata::find(meta);
+	if(!m)
+		return 0;
+	return (gobject*)m->find(meta->getkey(), id);
 }
 
 void* gobject::getarray(const char* id) const {
