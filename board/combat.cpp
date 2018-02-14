@@ -44,7 +44,7 @@ struct combatside {
 
 };
 
-void calculate(gobject* attacker_player, gobject* defender_player, gobject* province) {
+void calculate(char* result, gobject* attacker_player, gobject* defender_player, gobject* province) {
 	combatside attackers(province, attacker_player);
 	combatside defenders(province, defender_player);
 }
