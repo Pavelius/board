@@ -6,7 +6,7 @@ struct trait : gobject {
 	const char* name;
 	const char* text;
 	char attack, defend, raid;
-	char casualties;
+	char enemy_casualties, friendly_casualties;
 	char gold, gold_upkeep, support, support_upkeep;
 
 	bsreq* getmeta() const override;
@@ -24,7 +24,8 @@ bsreq trait_type[] = {
 	BSREQ(trait, gold_upkeep, number_type),
 	BSREQ(trait, support, number_type),
 	BSREQ(trait, support_upkeep, number_type),
-	BSREQ(trait, casualties, number_type),
+	BSREQ(trait, enemy_casualties, number_type),
+	BSREQ(trait, friendly_casualties, number_type),
 	{0}
 };
 

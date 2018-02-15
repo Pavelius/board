@@ -1,10 +1,9 @@
 #include "main.h"
 
-game_info game;
-
 bool cpp_parsemsg(const char* url, const char* out_url);
 
 int main() {
+	srand((int)time(0));
 	char temp[4096];
 	cpp_parsemsg("board/messages.h", "board/messages.cpp");
 	bsdata::read("script/test.txt");

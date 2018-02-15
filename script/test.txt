@@ -1,6 +1,8 @@
 #tactic lighting_attack name("¬незапна€ атака") strenght(2) text("%1 применили молниеносную атаку в надежде рассе€ть врага.")
-#tactic careful_defence name("“щательна€ защита") friendly_casualty(-1) text("%1 выстроили защитное построение и приготовились отражать удар.")
-#tactic messy_fighting name(" ровава€ бан€") enemy_casualty(1) text("%1 ринулись в бой не щад€ себ€, чтобы нанести максимальный урон врагу.")
+#tactic careful_defence name("“щательна€ защита") friendly_casualties(-1) text("%1 выстроили защитное построение и приготовились отражать удар.")
+#tactic messy_fighting name(" ровава€ бан€") enemy_casualties(1) text("%1 ринулись в бой не щад€ себ€, чтобы нанести максимальный урон врагу.")
+
+#game casualties(4)
 
 #player red name("»мпери€")
 #player green name("ќрки")

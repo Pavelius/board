@@ -5,7 +5,7 @@ struct tactic : gobject {
 	const char* id;
 	const char* name;
 	const char* text;
-	char strenght, enemy_casualty, friendly_casualty;
+	char strenght, enemy_casualties, friendly_casualties;
 
 	bsreq* getmeta() const override;
 
@@ -16,8 +16,8 @@ bsreq tactic_type[] = {
 	BSREQ(tactic, name, text_type),
 	BSREQ(tactic, text, text_type),
 	BSREQ(tactic, strenght, number_type),
-	BSREQ(tactic, enemy_casualty, number_type),
-	BSREQ(tactic, friendly_casualty, number_type),
+	BSREQ(tactic, enemy_casualties, number_type),
+	BSREQ(tactic, friendly_casualties, number_type),
 	{0}
 };
 

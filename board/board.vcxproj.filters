@@ -91,6 +91,9 @@
     <ClCompile Include="tactic.cpp">
       <Filter>Logic\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="game.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

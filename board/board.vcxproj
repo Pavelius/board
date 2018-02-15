@@ -148,6 +148,7 @@
     <ClCompile Include="crt_memory.cpp" />
     <ClCompile Include="crt_parse.cpp" />
     <ClCompile Include="enchantment.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="grammar.cpp" />
     <ClCompile Include="hero.cpp" />
