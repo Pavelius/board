@@ -5,7 +5,8 @@ struct hero : gobject {
 	const char*	id;
 	const char*	name;
 	const char*	text;
-	gobject*	traits[5];
+	gobject* traits[5];
+	gobject* tactic;
 
 	bsreq* getmeta() const override;
 

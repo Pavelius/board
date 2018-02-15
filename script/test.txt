@@ -1,3 +1,7 @@
+#tactic lighting_attack name("Внезапная атака") strenght(2)
+#tactic careful_defence name("Тщательная защита") friendly_casualty(-1)
+#tactic messy_fighting name("Кровавая баня") enemy_casualty(1)
+
 #player red name("Империя")
 #player green name("Орки")
 
