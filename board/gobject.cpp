@@ -25,6 +25,15 @@ int	gobject::getindex() const {
 	return m->indexof(this);
 }
 
+int gobject::fix(tipinfo* ti, int value) const {
+	if(ti && value) {
+		szprint(zend(ti->result), ti->text, value, getname());
+		if(ti->separator)
+			zcat(ti->result, ti->separator);
+	}
+	return value;
+}
+
 int	gobject::get(const char* id) const {
 	auto pf = getmeta()->find(id);
 	if(!pf)
@@ -98,24 +107,20 @@ void* gobject::getarray(const char* id) const {
 	return (void*)pf->ptr(this);
 }
 
-gobject* gobject::getloyalty() const {
-	auto p = (short*)getarray("support");
-	if(!p)
-		return 0;
-	int index = 0;
-	for(int i = 0; i < player_max; i++) {
-		if(p[index] < p[i])
-			index = i;
-	}
-	if(p[index] < 10)
-		return 0;
-	return &getcol(player_type)[index];
-}
-
 bool gobject::is(bsreq* type) const {
 	return this && getmeta() == type;
 }
 
-void gobject::addloyalty(gobject* province, gobject* player, int value) {
-	province->add("support", value, player->getindex());
+void gobject::actv(char* result, const char* format, const char* param) const {
+	logs::driver driver;
+	driver.name = getname();
+	driver.gender = getgender();
+	auto p = getprovince();
+	if(p)
+		driver.province = p->getname();
+	driver.printv(result, result + 4096, format, param);
+}
+
+void gobject::act(char* result, const char* format, ...) const {
+	actv(result, format, xva_start(format));
 }

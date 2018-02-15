@@ -15,7 +15,7 @@ bsdata::bsdata(const char* id, void* data, unsigned& count, unsigned size, unsig
 
 void* bsdata::add() {
 	if(getcount() >= getmaxcount())
-		return 0;
+		return get(0);
 	return get(count++);
 }
 

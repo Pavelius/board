@@ -21,6 +21,10 @@ struct troop : gobject {
 		return parent->get(id) + getbonus(id);
 	}
 
+	gobject* getowner() const override {
+		return owner;
+	}
+
 	gobject* getprovince() const override {
 		return province;
 	}

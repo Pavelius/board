@@ -1,5 +1,4 @@
-﻿#include "bsreq.h"
-#include "bsdata.h"
+﻿#include "bsdata.h"
 #include "messages.h"
 
 static bsreq msgmenu_type[] = {
@@ -12,9 +11,10 @@ static bsreq msgmenu_type[] = {
 msgmenu_info msgmenu; BSGLOB(msgmenu);
 static bsreq msgcombat_type[] = {
 	BSREQ(msgcombat_info, attacking_force, text_type),
+	BSREQ(msgcombat_info, casualties, text_type),
 	BSREQ(msgcombat_info, defending_force, text_type),
 	BSREQ(msgcombat_info, lead, text_type),
-	BSREQ(msgcombat_info, squads, text_type),
-	BSREQ(msgcombat_info, casualties, text_type),
+	BSREQ(msgcombat_info, loose, text_type),
+	BSREQ(msgcombat_info, win, text_type),
 };
 msgcombat_info msgcombat; BSGLOB(msgcombat);

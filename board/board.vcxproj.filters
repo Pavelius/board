@@ -2,19 +2,19 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="unit.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Support</Filter>
+      <Filter>Logic</Filter>
     </ClCompile>
     <ClCompile Include="troop.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="province.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="amem.cpp">
       <Filter>Database</Filter>
@@ -23,22 +23,19 @@
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="hero.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="trait.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="enchantment.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="active_enchantment.cpp">
-      <Filter>Objects</Filter>
+      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="gobject.cpp">
       <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="combat.cpp">
-      <Filter>Objects</Filter>
     </ClCompile>
     <ClCompile Include="bsdata.cpp">
       <Filter>Database</Filter>
@@ -82,22 +79,22 @@
     <ClCompile Include="bscpp.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="combat.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="print.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="grammar.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Objects">
-      <UniqueIdentifier>{0cb3dfe6-1fd9-4303-bcda-86396b1e5f8e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Support">
-      <UniqueIdentifier>{09380389-9940-45dc-990a-03db9b2c0c4c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Database">
       <UniqueIdentifier>{e8b33c78-f7d6-4423-8b6f-6d4bef2b62f9}</UniqueIdentifier>
     </Filter>
     <Filter Include="System">
       <UniqueIdentifier>{890dc64e-2963-4068-9497-7b7b3083ed0c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Script">
-      <UniqueIdentifier>{ed49c791-00b8-4f6d-8e48-b478827a7b92}</UniqueIdentifier>
     </Filter>
     <Filter Include="Platform">
       <UniqueIdentifier>{097d753a-29fe-4c21-8ce1-b2f7a3700500}</UniqueIdentifier>
@@ -105,10 +102,19 @@
     <Filter Include="View">
       <UniqueIdentifier>{4c321217-a9f4-4e62-8a25-4eb88de21ed3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Logic">
+      <UniqueIdentifier>{09380389-9940-45dc-990a-03db9b2c0c4c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logic\Objects">
+      <UniqueIdentifier>{0cb3dfe6-1fd9-4303-bcda-86396b1e5f8e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Logic\Script">
+      <UniqueIdentifier>{ed49c791-00b8-4f6d-8e48-b478827a7b92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="main.h">
-      <Filter>Support</Filter>
+      <Filter>Logic</Filter>
     </ClInclude>
     <ClInclude Include="amem.h">
       <Filter>Database</Filter>
@@ -149,10 +155,19 @@
     <ClInclude Include="messages.h">
       <Filter>View</Filter>
     </ClInclude>
+    <ClInclude Include="grammar.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\script\game.txt">
-      <Filter>Script</Filter>
+    <Text Include="..\script\msgmenu.txt">
+      <Filter>Logic\Script</Filter>
+    </Text>
+    <Text Include="..\script\msgcombat.txt">
+      <Filter>Logic\Script</Filter>
+    </Text>
+    <Text Include="..\script\test.txt">
+      <Filter>Logic\Script</Filter>
     </Text>
   </ItemGroup>
 </Project>

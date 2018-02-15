@@ -235,7 +235,7 @@ bool bsparse::readrecord() {
 	if(iskey(p))
 		readvalue(fields, true);
 	else if(pd)
-		value_object = pd->data;
+		value_object = pd->add();
 	else
 		value_object = 0;
 	readfields(value_object, fields);

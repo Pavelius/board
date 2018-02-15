@@ -42,4 +42,4 @@ bsreq* hero::getmeta() const {
 	return hero_type;
 }
 
-static hero hero_data[256]; BSMETA(hero);
+static adat<hero, 256> heros; BSDATA(hero, hero_type)

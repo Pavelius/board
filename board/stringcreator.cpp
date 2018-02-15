@@ -65,6 +65,13 @@ char* stringcreator::parsenumber(char* dst, const char* result_max, unsigned val
 	char temp[32]; int i = 0;
 	if(!result_max)
 		result_max = dst + 32;
+	if(!value) {
+		if(dst < result_max) {
+			dst[0] = '0';
+			dst[1] = 0;
+			return dst;
+		}
+	}
 	while(value) {
 		temp[i++] = (value % radix);
 		value /= radix;

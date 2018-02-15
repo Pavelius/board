@@ -1,0 +1,16 @@
+#player red name("Империя")
+#player green name("Орки")
+
+#province black_wood name("Черный лес") level(2)
+
+#unit spearmans name("копейщики") nameof("копейщиков") attack(1) defence(2) gold(3) gold_upkeep(1)
+#unit archers name("лучники") nameof("лучники") attack(1) defence(2) gold(4) gold_upkeep(1)
+#unit swordmans name("мечники") nameof("мечников") attack(2) defence(2) gold(4) gold_upkeep(2)
+#unit cavalry name("кавалерия") nameof("кавалерии") attack(3) defence(1) gold(5) gold_upkeep(2)
+
+#troop parent(spearmans) owner(red) province(black_wood)
+#troop parent(spearmans) owner(red) province(black_wood)
+#troop parent(swordmans) owner(red) province(black_wood)
+
+#troop parent(spearmans) owner(green) province(black_wood)
+#troop parent(spearmans) owner(green) province(black_wood)

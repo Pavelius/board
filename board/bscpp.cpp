@@ -10,7 +10,7 @@ struct bscpp {
 		return *p != 0;
 	}
 
-	bool islinefeed() {
+	bool linefeed() {
 		if(*p == '\n') {
 			p++;
 			if(*p == '\r')
@@ -25,7 +25,7 @@ struct bscpp {
 			return false;
 	}
 
-	bool skip(const char* sym) {
+	bool symbol(const char* sym) {
 		auto i = 0;
 		while(sym[i]) {
 			if(p[i] != sym[i])
@@ -36,8 +36,8 @@ struct bscpp {
 		return true;
 	}
 
-	bool skipws(const char* sym) {
-		if(!skip(sym))
+	bool keyword(const char* sym) {
+		if(!symbol(sym))
 			return false;
 		skipws();
 		return true;
@@ -45,13 +45,18 @@ struct bscpp {
 
 	void skipline() {
 		while(*p) {
-			if(islinefeed())
+			if(p[0] == '\\' && (p[1] == 10 || p[1] == 13)) {
+				p++;
+				linefeed();
+				continue;
+			}
+			if(linefeed())
 				return;
 			p++;
 		}
 	}
 
-	bool iswhitespace() {
+	bool whitespace() {
 		if(*p == '\t' || *p == ' ') {
 			p++;
 			return true;
@@ -59,7 +64,7 @@ struct bscpp {
 			return false;
 	}
 
-	bool iscomment() {
+	bool comment() {
 		if(p[0] == '/' && p[1] == '/') {
 			p += 2;
 			skipline();
@@ -70,14 +75,14 @@ struct bscpp {
 
 	void skipws() {
 		while(*p) {
-			if(islinefeed())
+			if(whitespace())
 				continue;
-			if(iswhitespace())
+			if(linefeed())
 				continue;
-			if(iscomment())
+			if(comment())
 				continue;
 			if(p[0] == '\\' && (p[1] == 10 || p[1] == 13)) {
-				p++;
+				p++; // Screen by linefeed
 				continue;
 			}
 			break;
@@ -102,19 +107,22 @@ struct bscpp {
 	bscpp(const char* p) : p(p) {
 	}
 
+	const char* cr() {
+		return "\r\n";
+	}
+
 	bool parsemsg(io::stream& po) {
 		char class_name[512];
-		po << "#include \"bsreq.h\"\r\n";
-		po << "#include \"bsdata.h\"\r\n";
-		po << "#include \"messages.h\"\r\n";
-		po << "\r\n";
+		po << "#include \"bsdata.h\"" << cr();
+		po << "#include \"messages.h\"" << cr();
+		po << cr();
 		while(isvalid()) {
-			if(skip("#") || skip("extern")) {
+			if(symbol("#") || keyword("extern")) {
 				skipline();
 				skipws();
 				continue;
 			}
-			if(!skipws("struct"))
+			if(!keyword("struct"))
 				return false;
 			if(!readidentifier())
 				return false;
@@ -125,25 +133,25 @@ struct bscpp {
 				if(pz)
 					pz[0] = 0;
 			}
-			po << "static bsreq " << class_name << "_type[] = {\r\n";
-			if(!skipws("{"))
+			po << "static bsreq " << class_name << "_type[] = {" << cr();
+			if(!keyword("{"))
 				return false;
 			while(*p) {
-				if(!skipws("const char*"))
+				if(!keyword("const char*"))
 					return false;
 				if(!readidentifier())
 					return false;
-				po << "\tBSREQ(" << class_name << "_info, " << buffer << ", text_type),\r\n";
-				if(!skipws(";"))
+				po << "\tBSREQ(" << class_name << "_info, " << buffer << ", text_type)," << cr();
+				if(!keyword(";"))
 					return false;
 				if(*p == '}') {
 					p++; skipws();
 					break;
 				}
 			}
-			if(!skipws(";"))
+			if(!keyword(";"))
 				return false;
-			po << "};\r\n" << class_name << "_info " << class_name << "; BSGLOB(" << class_name << ");\r\n";
+			po << "};" << cr() << class_name << "_info " << class_name << "; BSGLOB(" << class_name << ");" << cr();
 		}
 		return true;
 	}

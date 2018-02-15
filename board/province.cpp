@@ -7,7 +7,7 @@ struct province : gobject {
 	const char*		text;
 	gobject*		landscape;
 	gobject*		resource;
-	short			support[player_max];
+	char			level;
 
 	bsreq* getmeta() const override;
 
@@ -21,7 +21,7 @@ bsreq province_type[] = {
 	BSREQ(province, id, text_type),
 	BSREQ(province, name, text_type),
 	BSREQ(province, text, text_type),
-	BSREQ(province, support, number_type),
+	BSREQ(province, level, number_type),
 	{0}
 };
 

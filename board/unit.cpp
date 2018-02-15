@@ -6,6 +6,7 @@ struct unit : gobject {
 	const char* name;
 	const char* text;
 	char attack, raid, defence;
+	char gold, gold_upkeep, support, support_upkeep;
 	gobject* bonus[5];
 	gobject* penalty[5];
 
@@ -28,6 +29,8 @@ bsreq unit_type[] = {
 	BSREQ(unit, attack, number_type),
 	BSREQ(unit, defence, number_type),
 	BSREQ(unit, raid, number_type),
+	BSREQ(unit, gold, number_type),
+	BSREQ(unit, gold_upkeep, number_type),
 	{0}
 };
 
