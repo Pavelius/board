@@ -36,6 +36,7 @@ bsreq hero_type[] = {
 	BSREQ(hero, name, text_type),
 	BSREQ(hero, text, text_type),
 	BSREQ(hero, traits, trait_type),
+	BSREQ(hero, tactic, tactic_type),
 	{0}
 };
 

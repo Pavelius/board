@@ -13,8 +13,7 @@ static bsreq msgcombat_type[] = {
 	BSREQ(msgcombat_info, attacking_force, text_type),
 	BSREQ(msgcombat_info, casualties, text_type),
 	BSREQ(msgcombat_info, defending_force, text_type),
+	BSREQ(msgcombat_info, winner, text_type),
 	BSREQ(msgcombat_info, lead, text_type),
-	BSREQ(msgcombat_info, loose, text_type),
-	BSREQ(msgcombat_info, win, text_type),
 };
 msgcombat_info msgcombat; BSGLOB(msgcombat);

@@ -1,5 +1,7 @@
 #include "main.h"
 
+game_info game;
+
 bool cpp_parsemsg(const char* url, const char* out_url);
 
 int main() {

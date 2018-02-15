@@ -51,6 +51,7 @@ struct gobject {
 	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
+	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
 	virtual const char*			gettext() const { return (const char*)get("text"); }
 	virtual aref<gobject*>		gettraits() const { return aref<gobject*>(); }
 	bool						is(bsreq* type) const;
@@ -61,6 +62,10 @@ struct gobject {
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
 };
+struct game_info {
+	char						casualties; // One casualties per this strenght value
+};
+extern game_info game;
 namespace logs {
 struct driver : stringcreator {
 	const char*					name;
@@ -75,6 +80,7 @@ bsreq							event_type[];
 bsreq							hero_type[];
 bsreq							province_type[];
 bsreq							player_type[];
+bsreq							tactic_type[];
 bsreq							trait_type[];
 bsreq							troop_type[];
 bsreq							unit_type[];

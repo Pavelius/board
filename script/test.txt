@@ -1,6 +1,6 @@
-#tactic lighting_attack name("Внезапная атака") strenght(2)
-#tactic careful_defence name("Тщательная защита") friendly_casualty(-1)
-#tactic messy_fighting name("Кровавая баня") enemy_casualty(1)
+#tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили молниеносную атаку в надежде рассеять врага.")
+#tactic careful_defence name("Тщательная защита") friendly_casualty(-1) text("%1 выстроили защитное построение и приготовились отражать удар.")
+#tactic messy_fighting name("Кровавая баня") enemy_casualty(1) text("%1 ринулись в бой не щадя себя, чтобы нанести максимальный урон врагу.")
 
 #player red name("Империя")
 #player green name("Орки")
