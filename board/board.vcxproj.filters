@@ -85,9 +85,6 @@
     <ClCompile Include="print.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="grammar.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="tactic.cpp">
       <Filter>Logic\Objects</Filter>
     </ClCompile>
@@ -160,9 +157,6 @@
     </ClInclude>
     <ClInclude Include="messages.h">
       <Filter>View</Filter>
-    </ClInclude>
-    <ClInclude Include="grammar.h">
-      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

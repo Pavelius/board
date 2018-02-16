@@ -1,5 +1,4 @@
 #include "main.h"
-#include "grammar.h"
 
 using namespace logs;
 
@@ -16,8 +15,6 @@ static void msg(gender_s gender, char* result, const char* text_male, const char
 void driver::parseidentifier(char* result, const char* result_max, const char* identifier) {
 	if(strcmp(identifier, "герой") == 0)
 		zcpy(result, name);
-	else if(strcmp(identifier, "героя") == 0)
-		grammar::of(result, name);
 	else if(strcmp(identifier, "ась") == 0)
 		msg(gender, result, "ся", identifier, "ись");
 	else if(strcmp(identifier, "а") == 0)

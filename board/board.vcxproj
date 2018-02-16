@@ -129,7 +129,6 @@
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="crt.h" />
-    <ClInclude Include="grammar.h" />
     <ClInclude Include="io.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="messages.h" />
@@ -150,7 +149,6 @@
     <ClCompile Include="enchantment.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gobject.cpp" />
-    <ClCompile Include="grammar.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="io.cpp" />
     <ClCompile Include="main.cpp" />

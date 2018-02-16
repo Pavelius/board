@@ -2,3 +2,4 @@
 #msgcombat defending_force("В защите находилась армия %1с общей силой %2.")
 #msgcombat winner("Победителем в битве оказались [%1].")
 #msgcombat lead("под предводительством [%1] ")
+#msgcombat casualties("Потери")

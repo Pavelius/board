@@ -2,10 +2,11 @@
 
 struct player : gobject {
 
-	const char*		id;
-	const char*		name;
-	const char*		text;
-	int				gold;
+	const char*	id;
+	const char*	name;
+	const char*	nameof;
+	const char*	text;
+	int	gold;
 
 	bsreq* getmeta() const override;
 
@@ -14,6 +15,7 @@ struct player : gobject {
 bsreq player_type[] = {
 	BSREQ(player, id, text_type),
 	BSREQ(player, name, text_type),
+	BSREQ(player, nameof, text_type),
 	BSREQ(player, text, text_type),
 	BSREQ(player, gold, number_type),
 	{0}

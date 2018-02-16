@@ -47,6 +47,7 @@ struct gobject {
 	virtual bsreq*				getmeta() const { return 0; }
 	virtual gobject*			getmoveto() const { return 0; }
 	virtual const char*			getname() const { return (const char*)get("name"); }
+	virtual const char*			getnameof() const { return (const char*)get("nameof"); }
 	virtual gobject*			getowner() const { return (gobject*)get("owner"); }
 	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
@@ -56,7 +57,7 @@ struct gobject {
 	virtual aref<gobject*>		gettraits() const { return aref<gobject*>(); }
 	bool						is(bsreq* type) const;
 	virtual bool				isvalid() const { return this != 0; }
-	void						resolve(char* result, gobject* attacker_player, gobject* defender_player) const;
+	bool						resolve(char* result, gobject* attacker_player, gobject* defender_player) const;
 	void						set(const char* id, int value);
 	void						set(const char* id, int value, int index);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
