@@ -91,6 +91,42 @@
     <ClCompile Include="game.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="win_draw.cpp">
+      <Filter>Platform</Filter>
+    </ClCompile>
+    <ClCompile Include="point.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="point_type.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_text.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_textf.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="pma.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="sprite.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="draw.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="bitops.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="command.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="color.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="surface.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">
@@ -156,6 +192,33 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="messages.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="draw.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="point.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="rect.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="stringid.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="pma.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="sprite.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="bitops.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="command.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="surface.h">
       <Filter>View</Filter>
     </ClInclude>
   </ItemGroup>
