@@ -124,7 +124,6 @@
     <ClInclude Include="adat.h" />
     <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
-    <ClInclude Include="bitops.h" />
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bsparse.h" />
     <ClInclude Include="bsreq.h" />
@@ -135,10 +134,8 @@
     <ClInclude Include="io.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="messages.h" />
-    <ClInclude Include="pma.h" />
     <ClInclude Include="point.h" />
     <ClInclude Include="rect.h" />
-    <ClInclude Include="sprite.h" />
     <ClInclude Include="stringcreator.h" />
     <ClInclude Include="stringid.h" />
     <ClInclude Include="surface.h" />
@@ -148,7 +145,6 @@
   <ItemGroup>
     <ClCompile Include="active_enchantment.cpp" />
     <ClCompile Include="amem.cpp" />
-    <ClCompile Include="bitops.cpp" />
     <ClCompile Include="bscpp.cpp" />
     <ClCompile Include="bsdata.cpp" />
     <ClCompile Include="bsparse.cpp" />
@@ -170,11 +166,9 @@
     <ClCompile Include="io.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messages.cpp" />
-    <ClCompile Include="pma.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="point_type.cpp" />
     <ClCompile Include="print.cpp" />
-    <ClCompile Include="sprite.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="tactic.cpp" />
     <ClCompile Include="view.cpp" />

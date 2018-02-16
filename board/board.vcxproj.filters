@@ -106,16 +106,7 @@
     <ClCompile Include="draw_textf.cpp">
       <Filter>View</Filter>
     </ClCompile>
-    <ClCompile Include="pma.cpp">
-      <Filter>View</Filter>
-    </ClCompile>
-    <ClCompile Include="sprite.cpp">
-      <Filter>View</Filter>
-    </ClCompile>
     <ClCompile Include="draw.cpp">
-      <Filter>View</Filter>
-    </ClCompile>
-    <ClCompile Include="bitops.cpp">
       <Filter>View</Filter>
     </ClCompile>
     <ClCompile Include="command.cpp">
@@ -208,15 +199,6 @@
     </ClInclude>
     <ClInclude Include="stringid.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="pma.h">
-      <Filter>View</Filter>
-    </ClInclude>
-    <ClInclude Include="sprite.h">
-      <Filter>View</Filter>
-    </ClInclude>
-    <ClInclude Include="bitops.h">
-      <Filter>View</Filter>
     </ClInclude>
     <ClInclude Include="command.h">
       <Filter>System</Filter>

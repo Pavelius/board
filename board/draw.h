@@ -1,10 +1,7 @@
 #include "point.h"
 #include "surface.h"
-#include "sprite.h"
 
 #pragma once
-
-extern "C" void* memset(void* destination, int value, unsigned size);
 
 enum draw_event_s {
 	// input events
@@ -75,12 +72,53 @@ enum iflags {
 	AlignWidth = 0xE000,
 	AlignMask = 0xF000,
 };
-enum drap_part_s : unsigned char {
-	DragElement, DragScrollH, DragScrollV, DragSplitH, DragSplitV, DragColumn,
+struct pma {
+	char				name[4]; // Identifier of current block
+	int					size; // Size of all block
+	int					count; // Count of records in this block
+	int					find(const char* name) const;
+	const pma*			getheader(const char* name) const;
+	const char*			getstring(int id) const;
 };
-
+struct sprite : public pma {
+	enum flagse { NoIndex = 1 };
+	enum encodes { Auto, RAW, RLE, ALC, RAW8, RLE8 };
+	struct frame {
+		short int		sx, sy;
+		short int		ox, oy;
+		encodes			encode;
+		unsigned		pallette;
+		unsigned		offset;
+		rect			getrect(int x, int y, unsigned flags) const;
+	};
+	struct cicle {
+		short unsigned	start;
+		short unsigned	count;
+	};
+	short int			width; // common width of all frames (if applicable)
+	short int			height; // common height of all frames (if applicable)
+	short int			ascend;
+	short int			descend;
+	short unsigned		flags; // must be zero
+	unsigned			cicles; // count of anim structure
+	unsigned			cicles_offset;
+	frame				frames[1];
+	frame&				add();
+	frame&				addlast();
+	void*				add(const void* data, int count);
+	int					esize() const { return frames[0].offset - (sizeof(sprite) + sizeof(frame)*(count - 1)); }
+	const unsigned char* edata() const { return (const unsigned char*)this + sizeof(sprite) + sizeof(frame)*(count - 1); }
+	int					ganim(int index, int tick);
+	const frame&		get(int id) const { return frames[(id >= count) ? 0 : id]; }
+	inline cicle*		gcicle(int index) { return (cicle*)offs(cicles_offset) + index; }
+	inline int			gindex(int index) const { return *((short unsigned*)((cicle*)offs(cicles_offset) + cicles) + index); }
+	int					glyph(unsigned sym) const;
+	const unsigned char* offs(unsigned o) const { return (unsigned char*)this + o; }
+	void				setup(int count, int pallette_count = 0, int cicles = 0, int cicles_indexes = 0);
+	int					store(const unsigned char* p, int width, int w, int h, int ox, int oy, sprite::encodes mode, unsigned char shadow_index = 1, color* pallette = 0, int frame_index = -1, unsigned char transparent_index = 0);
+	void				write(const char* url);
+};
 typedef const char* (*proctext)(char* result, void* object);
-
 namespace hot {
 typedef void(*proc)(); // Hot callback reaction
 extern int				animate; // Frame tick count
@@ -91,7 +129,6 @@ extern bool				pressed; // flag if any of mouse keys is pressed
 extern int				param; // Draw command context. Application can extend this structure
 extern rect				element; // Element coordinates
 }
-
 namespace colors {
 extern color			active;
 extern color			button;
@@ -108,7 +145,6 @@ extern color		back;
 extern color		text;
 }
 }
-
 namespace metrics {
 extern rect				edit;
 extern sprite*			font;
@@ -121,65 +157,19 @@ extern sprite*			tree;
 extern int				h3s;
 extern int				padding;
 extern int				scroll;
-namespace show {
-extern bool			left;
-extern bool			right;
-extern bool			bottom;
-extern bool			padding;
-extern bool			statusbar;
 }
-}
-
 namespace draw {
-namespace drag {
-extern int			id;
-extern drap_part_s	part;
-extern int			value;
-extern point		mouse;
-bool				active(int id, drap_part_s part);
-void				begin(int id, drap_part_s part);
-}
-namespace clipboard {
-void				copy(const void* string, int lenght);
-char*				paste();
-}
-namespace dialog {
-bool				color(struct color& result, struct color* custom = 0);
-bool				folder(const char* title, char* path);
-bool				open(const char* title, char* path, const char* filter, int filter_index = 0, const char* ext = 0);
-bool				save(const char* title, char* path, const char* filter, int filter_index = 0);
-}
 struct state // Push state in stack
 {
 	state();
 	~state();
 private:
-	unsigned char		forc;
 	color				fore;
 	float				linw;
 	const sprite*		font; // glyph font
-	color*				palt;
 	surface*			canvas;
 	rect				clip;
 	bool				mouseinput;
-};
-// Output system window
-struct window : surface, state {
-	window*				parent;
-	unsigned			flags;
-	const char*			identifier; // Identifier for storing and restoring positions
-	point				minimum;
-	rect				position;
-	int					focus;
-	void*				hwnd;  // Platform specific handles
-	void*				gc; // Platform specific handles
-	//
-	window(int x, int y, int width, int height, unsigned flags, int bpp = 32, const char* identifier = 0);
-	~window();
-	//
-	void				closing();
-	void				opening();
-	void				resizing(const rect& rc);
 };
 struct textplugin {
 	typedef int(*proc)(int x, int y, int width, const char* id, int value, const char* label, const char* tips);
@@ -222,12 +212,10 @@ void					focusing(int id, unsigned& flags, rect rc);
 int						getbpp();
 color					getcolor(color normal, unsigned flags);
 color					getcolor(rect rc, color normal, color hilite, unsigned flags);
-int						getfocus();
 int						getheight();
 int						getnext(int id, int key);
 int						getresult();
 int						getwidth();
-window*					getwindow();
 void					glyph(int x, int y, int sym, unsigned flags);
 void					gradv(rect rc, const color c1, const color c2, int skip = 0);
 void					gradh(rect rc, const color c1, const color c2, int skip = 0);
@@ -268,7 +256,6 @@ void					rectx(rect rc, color c1);
 void					setcaption(const char* string);
 void					setclip(rect rc);
 inline void				setclip() { clipping.set(0, 0, getwidth(), getheight()); }
-void					setcolor(unsigned char index);
 void					setposition(int& x, int& y, int& width);
 void					settimer(unsigned milleseconds);
 const char*				skiptr(const char* string);
@@ -292,7 +279,6 @@ int						textw(rect& rc, const char* string);
 int						textw(sprite* font);
 void					updatewindow();
 }
-// Control drawing interface (part of draw interface)
 namespace draw {
 bool					addbutton(rect& rc, bool focused, const char* t1, int k1, const char* tt1);
 int						addbutton(rect& rc, bool focused, const char* t1, int k1, const char* tt1, const char* t2, int k2, const char* tt2);
@@ -310,15 +296,13 @@ int						sheetline(rect rc, bool background = true);
 void					splith(int x, int y, int width, int& value, int id, int size, int minimum, int maximum, bool down_align = false);
 void					splitv(int x, int y, int& value, int height, int id, int size, int minimum, int maximum, bool right_align = false);
 int						statusbardraw();
+void					statusbar(const char* format, ...);
 int						titletext(int& x, int y, int& width, unsigned flags, const char* label, int title);
 bool					tool(rect rc, bool disabled, bool checked, bool press);
+void					tooltips(const char* format, ...);
+void					tooltips(int x, int y, const char* format, ...);
+void					tooltips(rect rc, const char* format, ...);
 }
 int						distance(point p1, point p2);
 int						isqrt(int num);
 char*					key2str(char* result, int key);
-void					statusbar(const char* format, ...);
-void					set_light_theme();
-void					set_dark_theme();
-void					tooltips(const char* format, ...);
-void					tooltips(int x, int y, const char* format, ...);
-void					tooltips(rect rc, const char* format, ...);
