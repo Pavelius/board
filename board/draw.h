@@ -269,17 +269,13 @@ void					setcaption(const char* string);
 void					setclip(rect rc);
 inline void				setclip() { clipping.set(0, 0, getwidth(), getheight()); }
 void					setcolor(unsigned char index);
-void					setfocus(int id, bool intant);
 void					setposition(int& x, int& y, int& width);
 void					settimer(unsigned milleseconds);
 const char*				skiptr(const char* string);
 void					spline(point* points, int n);
 void					stroke(int x, int y, const sprite* e, int id, int flags, unsigned char thin = 1, unsigned char* koeff = 0);
 void					syscursor(bool enable);
-void					sysmouse(bool enable);
 void					sysredraw();
-int						tabs(rect rc, bool show_close, bool right_side, void** data, int start, int count, int current, int* hilite, proctext gtext, proctext gstate = 0, rect position = {0, 0, 0, 0});
-int						tabs(int x, int y, int witdh, bool show_close, bool right_side, void** data, int start, int count, int current, int* hilite, proctext gtext, proctext gstate = 0, rect position = {0, 0, 0, 0});
 void					text(int x, int y, const char* string, int count = -1, unsigned flags = 0);
 int						text(rect rc, const char* string, unsigned state = 0, int* max_width = 0);
 int						textc(int x, int y, int width, const char* string, int count = -1, unsigned flags = 0);
@@ -298,7 +294,6 @@ void					updatewindow();
 }
 // Control drawing interface (part of draw interface)
 namespace draw {
-int						application(const char* name);
 bool					addbutton(rect& rc, bool focused, const char* t1, int k1, const char* tt1);
 int						addbutton(rect& rc, bool focused, const char* t1, int k1, const char* tt1, const char* t2, int k2, const char* tt2);
 int						button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);

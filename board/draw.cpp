@@ -45,7 +45,8 @@ rect					hot::element; // Event rectange (optional)
 bool					sys_optimize_mouse_move = true;
 rect					sys_static_area;
 // Locale draw variables
-draw::surface*			draw::canvas;
+static draw::surface	current_surface;
+draw::surface*			draw::canvas = &current_surface;
 static bool				line_antialiasing = true;
 static bool				break_modal;
 static int				break_result;

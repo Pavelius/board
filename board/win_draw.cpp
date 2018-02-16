@@ -244,14 +244,15 @@ void draw::syscursor(bool enable) {
 }
 
 void draw::create(int x, int y, int width, int height, unsigned flags, int bpp) {
+	draw::initialize();
 	if(!bpp)
 		bpp = draw::canvas->bpp;
 	if(!width)
 		width = (GetSystemMetrics(SM_CXFULLSCREEN) / 3) * 2;
 	if(!height)
 		height = (GetSystemMetrics(SM_CYFULLSCREEN) / 3) * 2;
-	unsigned dwStyle = WS_CAPTION | WS_VISIBLE | WS_SYSMENU; // Windows Style;
 	// custom
+	unsigned dwStyle = WS_CAPTION | WS_VISIBLE | WS_SYSMENU; // Windows Style;
 	if(flags&WFResize)
 		dwStyle |= WS_THICKFRAME;
 	else
@@ -331,6 +332,11 @@ int draw::rawinput() {
 					m |= Ctrl;
 			}
 			if(m == InputUpdate) {
+				if(canvas) {
+					RECT rc; GetClientRect(hwnd, &rc);
+					canvas->resize(rc.right - rc.left, rc.bottom - rc.top, 32, true);
+					setclip();
+				}
 			}
 			return m;
 		}

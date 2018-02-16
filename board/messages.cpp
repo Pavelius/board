@@ -2,11 +2,11 @@
 #include "messages.h"
 
 static bsreq msgmenu_type[] = {
+	BSREQ(msgmenu_info, title, text_type),
 	BSREQ(msgmenu_info, exit, text_type),
 	BSREQ(msgmenu_info, loadgame, text_type),
 	BSREQ(msgmenu_info, newgame, text_type),
 	BSREQ(msgmenu_info, savegame, text_type),
-	BSREQ(msgmenu_info, title, text_type),
 };
 msgmenu_info msgmenu; BSGLOB(msgmenu);
 static bsreq msgcombat_type[] = {

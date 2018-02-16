@@ -1,11 +1,11 @@
 #pragma once
 
 struct msgmenu_info {
+	const char* title;
 	const char* exit;
 	const char* loadgame;
 	const char* newgame;
 	const char* savegame;
-	const char* title;
 };
 extern msgmenu_info msgmenu;
 struct msgcombat_info {

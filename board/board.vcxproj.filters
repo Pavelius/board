@@ -127,6 +127,9 @@
     <ClCompile Include="surface.cpp">
       <Filter>View</Filter>
     </ClCompile>
+    <ClCompile Include="draw_input.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">
@@ -219,6 +222,9 @@
       <Filter>System</Filter>
     </ClInclude>
     <ClInclude Include="surface.h">
+      <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="view.h">
       <Filter>View</Filter>
     </ClInclude>
   </ItemGroup>
