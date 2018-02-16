@@ -141,7 +141,7 @@
     <Filter Include="Logic\Objects">
       <UniqueIdentifier>{0cb3dfe6-1fd9-4303-bcda-86396b1e5f8e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Logic\Script">
+    <Filter Include="Script">
       <UniqueIdentifier>{ed49c791-00b8-4f6d-8e48-b478827a7b92}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -212,13 +212,13 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\script\msgmenu.txt">
-      <Filter>Logic\Script</Filter>
+      <Filter>Script</Filter>
     </Text>
     <Text Include="..\script\msgcombat.txt">
-      <Filter>Logic\Script</Filter>
+      <Filter>Script</Filter>
     </Text>
     <Text Include="..\script\test.txt">
-      <Filter>Logic\Script</Filter>
+      <Filter>Script</Filter>
     </Text>
   </ItemGroup>
 </Project>

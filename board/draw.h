@@ -222,7 +222,6 @@ void					gradh(rect rc, const color c1, const color c2, int skip = 0);
 void					hilight(rect rc, unsigned flags);
 int						hittest(int x, int test_x, const char* string, int lenght);
 int						hittest(rect rc, const char* string, unsigned state, point mouse);
-bool					hittest(int x, int y, const sprite* e, int id, int flags, point mouse);
 inline bool				ischecked(unsigned flags) { return (flags&Checked) != 0; }
 inline bool				isdisabled(unsigned flags) { return (flags&Disabled) != 0; }
 inline bool				isfocused(unsigned flags) { return (flags&Focused) != 0; }
@@ -232,7 +231,6 @@ void					image(int x, int y, const sprite* e, int id, int flags, unsigned char a
 void					initialize();
 int						input(bool redraw = false);
 void					line(int x1, int y1, int x2, int y2); // Draw line
-void					line(int x1, int y1, int x2, int y2, unsigned char color); // Draw line
 void					line(int x1, int y1, int x2, int y2, color c1); // Draw line
 inline void				line(point p1, point p2, color c1) { line(p1.x, p1.y, p2.x, p2.y, c1); }
 void					linet(int x1, int y1, int x2, int y2);
@@ -245,13 +243,10 @@ void					pixel(int x, int y, unsigned char alpha);
 unsigned char*			ptr(int x, int y);
 int						rawinput();
 void					rectb(rect rc); // Draw rectangle border
-void					rectb(rect rc, unsigned char c1);
 void					rectb(rect rc, color c1);
 void					rectf(rect rc); // Draw rectangle area. Right and bottom side is one pixel less.
-void					rectf(rect rc, unsigned char c1); // Draw rectangle area. Right and bottom side is one pixel less.
 void					rectf(rect rc, color c1);
 void					rectf(rect rc, color c1, unsigned char alpha);
-void					rectf(rect rc, unsigned char c1, unsigned char alpha);
 void					rectx(rect rc, color c1);
 void					setcaption(const char* string);
 void					setclip(rect rc);
@@ -302,6 +297,7 @@ bool					tool(rect rc, bool disabled, bool checked, bool press);
 void					tooltips(const char* format, ...);
 void					tooltips(int x, int y, const char* format, ...);
 void					tooltips(rect rc, const char* format, ...);
+areas					window(rect rc, bool disabled = false);
 }
 int						distance(point p1, point p2);
 int						isqrt(int num);
