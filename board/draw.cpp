@@ -49,13 +49,11 @@ static bool		break_modal;
 static int		break_result;
 // Metrics
 rect			metrics::edit = {4, 4, -4, -4};
-sprite*			metrics::font = (sprite*)loadb("font.pma");
-sprite*			metrics::h1 = (sprite*)loadb("h1.pma");
-sprite*			metrics::h2 = (sprite*)loadb("h2.pma");
-sprite*			metrics::h3 = (sprite*)loadb("h3.pma");
-sprite*			metrics::icons = (sprite*)loadb("icons.pma");
-int				metrics::h3s = 2;
-int				metrics::padding = 4;
+sprite*			metrics::font = (sprite*)loadb("art/font.pma");
+sprite*			metrics::h1 = (sprite*)loadb("art/h1.pma");
+sprite*			metrics::h2 = (sprite*)loadb("art/h2.pma");
+sprite*			metrics::h3 = (sprite*)loadb("art/h3.pma");
+sprite*			metrics::icons = (sprite*)loadb("art/icons.pma");
 int				metrics::scroll = 16;
 
 float sqrt(const float x) {
@@ -871,28 +869,6 @@ color draw::getcolor(rect rc, color normal, color active, unsigned flags) {
 
 void draw::decortext(unsigned flags) {
 	draw::fore = getcolor(colors::text, flags);
-}
-
-void draw::setposition(int& x, int& y, int& width) {
-	x += metrics::padding;
-	y += metrics::padding;
-	width -= metrics::padding * 2;
-}
-
-int draw::titletext(int& x, int y, int& width, unsigned flags, const char* label, int title) {
-	if(!label || label[0] == 0)
-		return 0;
-	if(!title)
-		title = 100;
-	char temp[1024];
-	draw::state push;
-	zcpy(temp, label, sizeof(temp) - 2);
-	zcat(temp, ":");
-	decortext(flags);
-	text(x + metrics::padding, y + metrics::padding + 4, temp);
-	x += title;
-	width -= title;
-	return draw::texth();
 }
 
 void draw::hilight(rect rc, unsigned flags) {

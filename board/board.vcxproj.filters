@@ -121,6 +121,9 @@
     <ClCompile Include="draw_input.cpp">
       <Filter>View</Filter>
     </ClCompile>
+    <ClCompile Include="draw_tooltips.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

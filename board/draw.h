@@ -137,12 +137,12 @@ extern color			window;
 extern color			border;
 extern color			text, edit, h1, h2, h3, special;
 namespace tips {
-extern color		back;
-extern color		text;
+extern color			back;
+extern color			text;
 }
 namespace tabs {
-extern color		back;
-extern color		text;
+extern color			back;
+extern color			text;
 }
 }
 namespace metrics {
@@ -152,10 +152,6 @@ extern sprite*			h1;
 extern sprite*			h2;
 extern sprite*			h3;
 extern sprite*			icons;
-extern sprite*			toolbar;
-extern sprite*			tree;
-extern int				h3s;
-extern int				padding;
 extern int				scroll;
 }
 namespace draw {
@@ -185,7 +181,6 @@ extern rect				clipping; // Clipping area
 extern color			fore; // Foreground color (curently selected color)
 extern const sprite*	font; // Currently selected font
 //
-void					addelement(int id, const rect& rc);
 int						aligned(int x, int width, unsigned state, int string_width);
 int						alignedh(const rect& rc, const char* string, unsigned state);
 areas					area(rect rc);
@@ -201,19 +196,14 @@ extern surface*			canvas;
 void					circle(int x, int y, int radius);
 void					circle(int x, int y, int radius, const color c1);
 void					circlef(int x, int y, int radius, const color c1, unsigned char alpha = 0xFF);
-int						clipart(int x, int y, int width, unsigned flags, const char* string);
 void					create(int x, int y, int width, int height, unsigned flags, int bpp);
 void					decortext(unsigned flags);
-bool					dodialog(int id);
-void					doevent(int id, void(*callback)(), void(*callback_setparam)(void*), void* param);
 void					execute(void(*callback)());
 void					execute(int id, int value = 0);
-void					focusing(int id, unsigned& flags, rect rc);
 int						getbpp();
 color					getcolor(color normal, unsigned flags);
 color					getcolor(rect rc, color normal, color hilite, unsigned flags);
 int						getheight();
-int						getnext(int id, int key);
 int						getresult();
 int						getwidth();
 void					glyph(int x, int y, int sym, unsigned flags);
@@ -251,7 +241,6 @@ void					rectx(rect rc, color c1);
 void					setcaption(const char* string);
 void					setclip(rect rc);
 inline void				setclip() { clipping.set(0, 0, getwidth(), getheight()); }
-void					setposition(int& x, int& y, int& width);
 void					settimer(unsigned milleseconds);
 const char*				skiptr(const char* string);
 void					spline(point* points, int n);
@@ -273,31 +262,6 @@ int						textw(const char* string, int count = -1);
 int						textw(rect& rc, const char* string);
 int						textw(sprite* font);
 void					updatewindow();
-}
-namespace draw {
-bool					addbutton(rect& rc, bool focused, const char* t1, int k1, const char* tt1);
-int						addbutton(rect& rc, bool focused, const char* t1, int k1, const char* tt1, const char* t2, int k2, const char* tt2);
-int						button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);
-bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, color value, const char* string, int key, bool press, const char* tips = 0);
-bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false, const char* tips = 0);
-bool					buttonv(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false);
-int						checkbox(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);
-int						field(int x, int y, int width, int id, unsigned falgs, const char* label, const char* tips, const char* header_label, int header_title, void(*callback_edit)() = 0, void(*callback_list)() = 0, void(*callback_choose)() = 0, void(*callback_up)() = 0, void(*callback_down)() = 0, void(*callback_open)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);
-void					header(int& x, int y, int& width, unsigned flags, const char* label, int title = 128);
-int						radio(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);
-void					scrollh(int id, const struct rect& scroll, int& origin, int count, int maximum, bool focused = false);
-void					scrollv(int id, const struct rect& scroll, int& origin, int count, int maximum, bool focused = false);
-int						sheetline(rect rc, bool background = true);
-void					splith(int x, int y, int width, int& value, int id, int size, int minimum, int maximum, bool down_align = false);
-void					splitv(int x, int y, int& value, int height, int id, int size, int minimum, int maximum, bool right_align = false);
-int						statusbardraw();
-void					statusbar(const char* format, ...);
-int						titletext(int& x, int y, int& width, unsigned flags, const char* label, int title);
-bool					tool(rect rc, bool disabled, bool checked, bool press);
-void					tooltips(const char* format, ...);
-void					tooltips(int x, int y, const char* format, ...);
-void					tooltips(rect rc, const char* format, ...);
-areas					window(rect rc, bool disabled = false);
 }
 int						distance(point p1, point p2);
 int						isqrt(int num);

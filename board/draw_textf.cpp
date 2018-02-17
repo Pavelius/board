@@ -344,7 +344,7 @@ int draw::textf(int x, int y, int width, const char* string, int* max_width,
 				if(p[0] == ':' && p[1] == ':' && p[2] == ':')
 					p += 3;
 				else
-					y += metrics::padding;
+					y += draw::texth()/4;
 			}
 		}
 		// Возвратим стандартные настройки блока
