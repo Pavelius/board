@@ -83,9 +83,8 @@ static int handle(MSG& msg) {
 			break;
 		memset(&tm, 0, sizeof(tm));
 		tm.cbSize = sizeof(tm);
-		tm.dwFlags = TME_LEAVE | TME_HOVER;
+		tm.dwFlags = TME_LEAVE;
 		tm.hwndTrack = hwnd;
-		tm.dwHoverTime = HOVER_DEFAULT;
 		TrackMouseEvent(&tm);
 		hot::mouse.x = LOWORD(msg.lParam);
 		hot::mouse.y = HIWORD(msg.lParam);
@@ -108,10 +107,6 @@ static int handle(MSG& msg) {
 		if(hot::mouse.y < 0)
 			hot::mouse.y = -10000;
 		return MouseMove;
-	case WM_MOUSEHOVER:
-		if(!use_mouse)
-			break;
-		return InputIdle;
 	case WM_LBUTTONDOWN:
 		if(msg.hwnd != hwnd)
 			break;

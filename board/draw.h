@@ -5,7 +5,7 @@
 
 enum draw_event_s {
 	// input events
-	InputSymbol = 0xED00, InputTimer, InputIdle, InputUpdate, InputNoUpdate, InputExecute,
+	InputSymbol = 0xED00, InputTimer, InputUpdate, InputNoUpdate, InputExecute,
 	// Keyboard and mouse input (can be overrided by flags)
 	MouseLeft = 0xEE00, MouseLeftDBL, MouseRight,
 	MouseMove, MouseWheelUp, MouseWheelDown,

@@ -27,7 +27,10 @@ int	gobject::getindex() const {
 
 int gobject::fix(tipinfo* ti, int value) const {
 	if(ti && value) {
-		szprint(zend(ti->result), ti->text, value, getname());
+		char temp[260];
+		zcpy(temp, getname());
+		szupper(temp, 1);
+		szprint(zend(ti->result), ti->text, value, temp);
 		if(ti->separator)
 			zcat(ti->result, ti->separator);
 	}

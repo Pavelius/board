@@ -1,38 +1,14 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="unit.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Logic</Filter>
-    </ClCompile>
-    <ClCompile Include="troop.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="province.cpp">
-      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="amem.cpp">
       <Filter>Database</Filter>
     </ClCompile>
     <ClCompile Include="collection.cpp">
       <Filter>Database</Filter>
-    </ClCompile>
-    <ClCompile Include="hero.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="trait.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="enchantment.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
-    <ClCompile Include="active_enchantment.cpp">
-      <Filter>Logic\Objects</Filter>
     </ClCompile>
     <ClCompile Include="gobject.cpp">
       <Filter>Database</Filter>
@@ -85,9 +61,6 @@
     <ClCompile Include="print.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="tactic.cpp">
-      <Filter>Logic\Objects</Filter>
-    </ClCompile>
     <ClCompile Include="game.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
@@ -121,7 +94,46 @@
     <ClCompile Include="draw_input.cpp">
       <Filter>View</Filter>
     </ClCompile>
-    <ClCompile Include="draw_tooltips.cpp">
+    <ClCompile Include="png.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="zip.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="bstream.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="converter.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="active_enchantment.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="enchantment.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="hero.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="province.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="tactic.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="trait.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="troop.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="unit.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="surface_serial.cpp">
       <Filter>View</Filter>
     </ClCompile>
   </ItemGroup>
@@ -140,9 +152,6 @@
     </Filter>
     <Filter Include="Logic">
       <UniqueIdentifier>{09380389-9940-45dc-990a-03db9b2c0c4c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Logic\Objects">
-      <UniqueIdentifier>{0cb3dfe6-1fd9-4303-bcda-86396b1e5f8e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Script">
       <UniqueIdentifier>{ed49c791-00b8-4f6d-8e48-b478827a7b92}</UniqueIdentifier>
@@ -211,6 +220,12 @@
     </ClInclude>
     <ClInclude Include="view.h">
       <Filter>View</Filter>
+    </ClInclude>
+    <ClInclude Include="bstream.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="converter.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

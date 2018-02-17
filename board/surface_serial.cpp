@@ -4,15 +4,13 @@
 
 #pragma pack(push)
 #pragma pack(1)
-struct bmp_header
-{
+struct bmp_header {
 	unsigned short	signature; // for bitmap 4D42
 	unsigned		size; // size in bytes all file
 	unsigned short	reserved[2]; // reserved, must be null
 	unsigned		bits; // offset to bitmap bits from top of this structure
 };
-struct bmp_info
-{
+struct bmp_info {
 	unsigned		size; // The number of bytes required by the structure.
 	int				width; // The width of the bitmap, in pixels. If biCompression is BI_JPEG or BI_PNG, the biWidth member specifies the width of the decompressed JPEG or PNG image file, respectively.
 	int				height; // The height of the bitmap, in pixels. If biHeight is positive, the bitmap is a bottom-up DIB and its origin is the lower-left corner. If biHeight is negative, the bitmap is a top-down DIB and its origin is the upper-left corner.
@@ -38,8 +36,7 @@ struct bmp_info
 //	}
 //}
 
-void draw::write(const char* url, unsigned char* bits, int width, int height, int bpp, int scanline, color* pallette)
-{
+void draw::write(const char* url, unsigned char* bits, int width, int height, int bpp, int scanline, color* pallette) {
 	bmp_header bmf = {0};
 	bmp_info bmi = {0};
 	//
@@ -54,8 +51,7 @@ void draw::write(const char* url, unsigned char* bits, int width, int height, in
 	bmi.bpp = bpp;
 	bmi.pels_per_meter_x = 96;
 	bmi.pels_per_meter_y = 96;
-	switch(bpp)
-	{
+	switch(bpp) {
 	case 8:
 		bmi.color_used = 256;
 		if(!pallette)
@@ -78,69 +74,58 @@ void draw::write(const char* url, unsigned char* bits, int width, int height, in
 		file.write(pallette, 256 * sizeof(color));
 	// bits
 	int pixbytes = bmi.bpp / 8;
-	for(int y = 0; y < height; y++)
-	{
-		int w = pixbytes*width;
+	for(int y = 0; y < height; y++) {
+		int w = pixbytes * width;
 		unsigned char* p0 = (unsigned char*)bits + (height - y - 1)*scanline;
 		file.write(p0, w);
-		if(w < wscn)
-		{
+		if(w < wscn) {
 			char temp[16] = {0};
 			file.write(p0, wscn - w);
 		}
 	}
 }
 
-void draw::surface::write(const char* url, color* pallette)
-{
+void draw::surface::write(const char* url, color* pallette) {
 	draw::write(url, bits, width, height, bpp, 0, pallette);
 }
 
-draw::surface::surface(const char* url, color* pallette) :surface()
-{
+draw::surface::surface(const char* url, color* pallette) :surface() {
 	read(url, pallette);
 }
 
-int draw::surface::read(const char* url, color* pallette, int need_bpp)
-{
+bool draw::surface::read(const char* url, color* pallette, int need_bpp) {
 	unsigned size;
 	resize(0, 0, 0, true);
 	unsigned char* pin = (unsigned char*)loadb(url, (int*)&size);
 	if(!pin)
-		return ErrorFileNotFound;
-	int e = NoCrtError;
-	for(auto pv = surface::plugin::first; pv; pv = pv->next)
-	{
+		return false;
+	for(auto pv = surface::plugin::first; pv; pv = pv->next) {
 		int width, height, bpp;
-		if(pv->inspect(width, height, bpp, pin, size))
-		{
+		if(pv->inspect(width, height, bpp, pin, size)) {
 			resize(width, height, bpp, true);
-			e = pv->decode(bits, pin, size, scanline);
-			if(e)
-				break;
+			if(!pv->decode(bits, pin, size, scanline)) {
+				delete pin;
+				return false;
+			}
 			if(need_bpp)
 				convert(need_bpp, pallette);
 			break;
 		}
 	}
 	delete pin;
-	return e;
+	return true;
 }
 
-static struct bmp_bitmap_plugin : public draw::surface::plugin
-{
+static struct bmp_bitmap_plugin : public draw::surface::plugin {
 
-	bmp_bitmap_plugin() : plugin("bmp", "BMP images\0*.bmp\0")
-	{
-	}
+	bmp_bitmap_plugin() : plugin("bmp", "BMP images\0*.bmp\0") {}
 
-	int decode(unsigned char* output, const unsigned char* input, unsigned input_size, int& output_scanline) override
-	{
+	bool decode(unsigned char* output, const unsigned char* input, unsigned input_size, int& output_scanline) override {
 		int width, height, bpp;
 		if(!output)
-			return ErrorInvalidInputParameters;
+			return false;
 		if(!inspect(width, height, bpp, input, input_size))
-			return ErrorIllegalByteSequence;
+			return false;
 		bpp = iabs(bpp);
 		auto ph = (bmp_header*)input;
 		auto pi = (bmp_info*)(input + sizeof(bmp_header));
@@ -150,21 +135,18 @@ static struct bmp_bitmap_plugin : public draw::surface::plugin
 		int input_bpp = bpp;
 		int input_scanline = color::scanline(width, input_bpp);
 		color e;
-		for(int y = 0; y < height; y++)
-		{
-			unsigned char* d = output + y*output_scanline;
-			unsigned char* s = pb + ((pi->height < 0) ? y*input_scanline : (pi->height - y - 1)*input_scanline);
-			for(int x = 0; x < width; x++)
-			{
+		for(int y = 0; y < height; y++) {
+			unsigned char* d = output + y * output_scanline;
+			unsigned char* s = pb + ((pi->height < 0) ? y * input_scanline : (pi->height - y - 1)*input_scanline);
+			for(int x = 0; x < width; x++) {
 				e.read(s, x, input_bpp, ppal);
 				e.write(d, x, output_bpp, 0);
 			}
 		}
-		return NoCrtError;
+		return true;
 	}
 
-	bool inspect(int& width, int& height, int& bpp, const unsigned char* input, unsigned size) override
-	{
+	bool inspect(int& width, int& height, int& bpp, const unsigned char* input, unsigned size) override {
 		if(input[1] != 0x4D || input[0] != 0x42)
 			return false;
 		auto ph = (bmp_header*)input;

@@ -23,7 +23,7 @@ struct tipinfo {
 	char*						result;
 	const char*					text;
 	const char*					separator;
-	tipinfo(char* result) :result(result), text("%+1i %2"), separator("\r\n") { result[0] = 0; }
+	tipinfo(char* result) :result(result), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
 };
 struct gobject {
 	void						act(char* result, const char* format, ...) const;
@@ -65,6 +65,7 @@ struct gobject {
 };
 struct game_info {
 	char						casualties; // One casualties per this strenght value
+	const char*					map;
 };
 extern game_info game;
 namespace logs {

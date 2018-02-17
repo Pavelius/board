@@ -9,13 +9,15 @@ int main() {
 	bsdata::read("script/test.txt");
 	bsdata::read("script/msgcombat.txt");
 	bsdata::read("script/msgmenu.txt");
-	draw::create(-1, -1, 800, 600, WFResize, 32);
+	if(!draw::initializemap())
+		return 0;
+	draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
 	draw::setcaption(msgmenu.title);
 	auto black_wood = gobject::find(province_type, "black_wood");
 	auto red = gobject::find(player_type, "red");
 	auto green = gobject::find(player_type, "green");
 	black_wood->resolve(temp, red, green);
-	draw::menu();
+	draw::report(temp);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

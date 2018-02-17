@@ -127,8 +127,10 @@
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bsparse.h" />
     <ClInclude Include="bsreq.h" />
+    <ClInclude Include="bstream.h" />
     <ClInclude Include="collection.h" />
     <ClInclude Include="command.h" />
+    <ClInclude Include="converter.h" />
     <ClInclude Include="crt.h" />
     <ClInclude Include="draw.h" />
     <ClInclude Include="io.h" />
@@ -149,9 +151,11 @@
     <ClCompile Include="bsdata.cpp" />
     <ClCompile Include="bsparse.cpp" />
     <ClCompile Include="bsreq.cpp" />
+    <ClCompile Include="bstream.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="color.cpp" />
     <ClCompile Include="command.cpp" />
+    <ClCompile Include="converter.cpp" />
     <ClCompile Include="crt.cpp" />
     <ClCompile Include="crt_memory.cpp" />
     <ClCompile Include="crt_parse.cpp" />
@@ -159,7 +163,6 @@
     <ClCompile Include="draw_input.cpp" />
     <ClCompile Include="draw_text.cpp" />
     <ClCompile Include="draw_textf.cpp" />
-    <ClCompile Include="draw_tooltips.cpp" />
     <ClCompile Include="enchantment.cpp" />
     <ClCompile Include="game.cpp" />
     <ClCompile Include="gobject.cpp" />
@@ -167,10 +170,12 @@
     <ClCompile Include="io.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messages.cpp" />
+    <ClCompile Include="png.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="point_type.cpp" />
     <ClCompile Include="print.cpp" />
     <ClCompile Include="surface.cpp" />
+    <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="tactic.cpp" />
     <ClCompile Include="view.cpp" />
     <ClCompile Include="player.cpp" />
@@ -184,6 +189,7 @@
     <ClCompile Include="win_draw.cpp" />
     <ClCompile Include="win_draw_dlg.cpp" />
     <ClCompile Include="win_io_file.cpp" />
+    <ClCompile Include="zip.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\script\msgmenu.txt" />
