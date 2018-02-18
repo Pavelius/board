@@ -44,6 +44,13 @@ int	gobject::get(const char* id) const {
 	return pf->get(pf->ptr(this));
 }
 
+const char*	gobject::gets(const char* id) const {
+	auto pf = getmeta()->find(id, text_type);
+	if(!pf)
+		return "";
+	return (const char*)pf->get(pf->ptr(this));
+}
+
 int	gobject::get(const char* id, int index) const {
 	auto pf = getmeta()->find(id);
 	if(!pf)

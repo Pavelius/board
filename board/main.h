@@ -37,25 +37,25 @@ struct gobject {
 	int							fix(tipinfo* ti, int value) const;
 	virtual int					get(const char* id) const;
 	virtual int					get(const char* id, int index) const;
+	const char*					gets(const char* id) const;
 	static acol<gobject>		getcol(const bsreq* fields); // Get collection by metadata
 	void*						getarray(const char* id) const;
-	const char*					getavatar() const { return (const char*)get("avatar");; }
+	virtual const char*			getavatar() const { return gets("avatar");; }
 	int							getbonus(const char* id) const;
 	virtual aref<gobject*>		getbonuses() const { return aref<gobject*>(); }
 	virtual gender_s			getgender() const { return Male; }
-	const char*					getid() const { return (const char*)get("id"); }
+	const char*					getid() const { return gets("id"); }
 	int							getindex() const;
 	virtual bsreq*				getmeta() const { return 0; }
 	virtual gobject*			getmoveto() const { return 0; }
-	virtual const char*			getname() const { return (const char*)get("name"); }
-	virtual const char*			getnameof() const { return (const char*)get("nameof"); }
+	virtual const char*			getname() const { return gets("name"); }
+	virtual const char*			getnameof() const { return gets("nameof"); }
 	virtual gobject*			getowner() const { return (gobject*)get("owner"); }
 	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
-	virtual const char*			gettext() const { return (const char*)get("text"); }
-	virtual aref<gobject*>		gettraits() const { return aref<gobject*>(); }
+	virtual const char*			gettext() const { return gets("text"); }
 	bool						is(bsreq* type) const;
 	virtual bool				isvalid() const { return this != 0; }
 	bool						resolve(char* result, gobject* attacker_player, gobject* defender_player) const;

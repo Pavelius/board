@@ -179,17 +179,16 @@ bool bsparse::readvalue(const bsreq* hint_type, bool create) {
 void bsparse::storevalue(void* object, const bsreq* req, unsigned index) {
 	if(!object || !req)
 		return;
-	if(index)
-		object = (char*)object + req->size*index;
+	auto p = req->ptr(object, index);
 	if(req->type == text_type) {
 		if(!buffer[0])
-			req->set(req->ptr(object), 0);
+			req->set(p, 0);
 		else
-			req->set(req->ptr(object), (int)szdup(buffer));
+			req->set(p, (int)szdup(buffer));
 	} else if(req->type == number_type)
-		req->set(req->ptr(object), value);
+		req->set(p, value);
 	else if(req->type->reference)
-		req->set(req->ptr(object), (int)value_object);
+		req->set(p, (int)value_object);
 }
 
 bool bsparse::readreq(void* object, const bsreq* req, unsigned index) {
@@ -198,7 +197,7 @@ bool bsparse::readreq(void* object, const bsreq* req, unsigned index) {
 	while(*p) {
 		if(skip(')'))
 			break;
-		readvalue(0, false);
+		readvalue(req ? req->type : 0, false);
 		storevalue(object, req, index);
 		if(skip(','))
 			index++;

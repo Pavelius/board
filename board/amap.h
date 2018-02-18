@@ -1,6 +1,7 @@
 #pragma once
 
-void* operator new(unsigned, void*);
+void* rmreserve(void* ptr, unsigned size);
+unsigned rmoptimal(unsigned need_count);
 
 template <class T1, class T2>
 class amap {
@@ -17,17 +18,21 @@ class amap {
 				return;
 		}
 		count_maximum = rmoptimal(count + 1);
-		data = rmreserve(data, count_maximum*size);
+		data = (element*)rmreserve(data, count_maximum*sizeof(element));
 	}
 public:
 	typedef T1 key_type;
 	typedef T2 value_type;
 	amap() : data(0), count(0) {}
-	~amap() { clear(); }
-	T2& operator[](T1 k) { auto p = find(k); if(!p) p = add; return *p; }
+	~amap() { if(data) rmreserve(data, 0); }
 	element* begin() { return data; }
 	element* end() { return data + count; }
-	T2* add() { reserve(); void* p = data + (count++); auto p2 = new(p) T2; return p2; }
+	T2* add(T1 k) {
+		reserve();
+		auto p = data + (count++);
+		p->key = k;
+		return &p->value;
+	}
 	T2* find(T1 k) {
 		for(auto& e : *this) {
 			if(e.key == k)

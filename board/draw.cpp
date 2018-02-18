@@ -49,10 +49,10 @@ static bool		break_modal;
 static int		break_result;
 // Metrics
 rect			metrics::edit = {4, 4, -4, -4};
-sprite*			metrics::font = (sprite*)loadb("art/font.pma");
-sprite*			metrics::h1 = (sprite*)loadb("art/h1.pma");
-sprite*			metrics::h2 = (sprite*)loadb("art/h2.pma");
-sprite*			metrics::h3 = (sprite*)loadb("art/h3.pma");
+sprite*			metrics::font = (sprite*)loadb("art/fonts/font.pma");
+sprite*			metrics::h1 = (sprite*)loadb("art/fonts/h1.pma");
+sprite*			metrics::h2 = (sprite*)loadb("art/fonts/h2.pma");
+sprite*			metrics::h3 = (sprite*)loadb("art/fonts/h3.pma");
 sprite*			metrics::icons = (sprite*)loadb("art/icons.pma");
 int				metrics::scroll = 16;
 

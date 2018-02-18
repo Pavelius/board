@@ -10,9 +10,6 @@
     <ClCompile Include="collection.cpp">
       <Filter>Database</Filter>
     </ClCompile>
-    <ClCompile Include="gobject.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="bsdata.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -135,6 +132,9 @@
     </ClCompile>
     <ClCompile Include="surface_serial.cpp">
       <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="gobject.cpp">
+      <Filter>Logic</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

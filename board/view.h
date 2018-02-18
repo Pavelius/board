@@ -12,6 +12,7 @@ struct gui_info {
 extern gui_info gui;
 
 namespace draw {
+void			avatar(int x, int y, const char* id);
 bool			initializemap();
 void			menu();
 void			report(const char* format);

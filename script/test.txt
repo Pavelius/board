@@ -1,3 +1,10 @@
+#trait general name("Генерал") attack(1)
+#trait hireling name("Наемник") raid(1)
+#trait carefull name("Осторожный") defence(1)
+#trait bloody name("Кровожадный") attack(1)
+
+#hero gordek name("Гордек") nameof("Гордека") avatar("gordek.bmp") traits(bloody, hireling)
+
 #gui opacity(220)
 #gui opacity_disabled(50)
 #gui border(16)
