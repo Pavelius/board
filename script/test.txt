@@ -4,6 +4,7 @@
 #gui padding(4)
 #gui window_width(400)
 #gui tips_width(200)
+#gui hero_width(64)
 
 #tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили внезапную атаку в надежде рассеять противника.")
 #tactic careful_defence name("Тщательная защита") friendly_casualties(-1) text("%1 выстроили защитное построение и приготовились отражать удар.")

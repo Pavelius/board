@@ -9,6 +9,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, border, number_type),
 	BSREQ(gui_info, window_width, number_type),
 	BSREQ(gui_info, tips_width, number_type),
+	BSREQ(gui_info, hero_width, number_type),
 	BSREQ(gui_info, padding, number_type),
 };
 gui_info gui; BSGLOB(gui);
@@ -52,6 +53,42 @@ static void render_frame(rect rc) {
 #ifdef _DEBUG
 	//debug_mouse();
 #endif
+}
+
+int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* disable_text) {
+	char temp[2048]; temp[0] = 0;
+	draw::state push;
+	draw::font = metrics::font;
+	auto pa = e->getavatar();
+	int height = gui.hero_width;
+	szprint(zend(temp), "###%1\n", e->getname());
+	int value = e->get("loyalty");
+	if(value)
+		szprint(zend(temp), ": %1i", value);
+	zcat(temp, "\n:::");
+	auto quirks = e->getbonuses();
+	if(quirks) {
+		auto q1 = *quirks.begin();
+		if(q1)
+			zcat(temp, q1->getname());
+	}
+	auto owner = e->getowner();
+	rect rc = {x, y, x + width, y + height};
+	areas hittest;
+	window(rc, disabled);
+	//if(owner)
+	//	draw::shield(x + drw.hero_width - 20, y + 18, owner->getimage());
+	int x1 = x;
+	if(pa) {
+		int y1 = y;
+		//avatar(x, y1, pa);
+		rectb({x, y1, x + gui.hero_width, y1 + gui.hero_width}, colors::border);
+		x1 += gui.hero_width + gui.padding;
+	}
+	draw::textf(x1, y - 3, rc.x2 - x1, temp);
+	//if(hittest == AreaHilited || hittest == AreaHilitedPressed)
+	//	game::tipshero(tooltips_text, e, x, y - 3, gui.hero_width, disable_text);
+	return height + gui.border * 2 + gui.padding;
 }
 
 static bool control_board(int id) {
@@ -158,6 +195,7 @@ bool draw::initializemap() {
 void draw::report(const char* format) {
 	while(ismodal()) {
 		render_frame({0, 0, draw::getwidth(), draw::getheight()});
+		render_hero(getwidth() - 300 - gui.border - gui.padding, 20, 300, &gobject::getcol(hero_type)[0], false, "Test");
 		draw::window(100, 100, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))

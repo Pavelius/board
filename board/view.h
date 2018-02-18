@@ -6,8 +6,7 @@
 struct gui_info {
 	unsigned char border;
 	unsigned char opacity, opacity_disabled;
-	short window_width;
-	short tips_width;
+	short window_width, tips_width, hero_width;
 	short padding;
 };
 extern gui_info gui;

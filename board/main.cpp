@@ -1,6 +1,7 @@
 #include "view.h"
 
 bool cpp_parsemsg(const char* url, const char* out_url);
+amap<const char*, draw::surface> resources;
 
 int main() {
 	srand((int)time(0));

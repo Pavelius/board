@@ -227,6 +227,9 @@
     <ClInclude Include="converter.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="amap.h">
+      <Filter>Database</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\script\msgmenu.txt">

@@ -122,6 +122,7 @@
   <ItemGroup>
     <ClInclude Include="acol.h" />
     <ClInclude Include="adat.h" />
+    <ClInclude Include="amap.h" />
     <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
     <ClInclude Include="bsdata.h" />
