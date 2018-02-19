@@ -133,7 +133,7 @@ struct bscpp {
 				if(pz)
 					pz[0] = 0;
 			}
-			po << "static bsreq " << class_name << "_type[] = {" << cr();
+			po << "bsreq " << class_name << "_type[] = {" << cr();
 			if(!keyword("{"))
 				return false;
 			while(*p) {

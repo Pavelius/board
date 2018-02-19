@@ -5,7 +5,7 @@
 
 struct gui_info {
 	unsigned char border;
-	unsigned char opacity, opacity_disabled;
+	unsigned char opacity, opacity_disabled, opacity_hilighted;
 	short window_width, tips_width, hero_width;
 	short padding;
 };
@@ -17,7 +17,7 @@ bool			initializemap();
 void			menu();
 bool			read(surface& e, const char* default_url, const char* file_name);
 void			report(const char* format);
-void			tooltips(int x, int y, int width, iflags align, const char* format, ...);
+void			tooltips(int x, int y, int width, const char* format, ...);
 areas			window(rect rc, bool disabled = false);
 int				window(int x, int y, int width, const char* string);
 }

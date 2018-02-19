@@ -6,6 +6,7 @@ using namespace draw;
 static bsreq gui_type[] = {
 	BSREQ(gui_info, opacity, number_type),
 	BSREQ(gui_info, opacity_disabled, number_type),
+	BSREQ(gui_info, opacity_hilighted, number_type),
 	BSREQ(gui_info, border, number_type),
 	BSREQ(gui_info, window_width, number_type),
 	BSREQ(gui_info, tips_width, number_type),
@@ -16,7 +17,8 @@ gui_info gui; BSGLOB(gui);
 
 static point camera;
 static rect last_board;
-static rect tooltips_rect;
+static point tooltips_point;
+static short tooltips_width;
 static char tooltips_text[4096];
 static surface map;
 
@@ -55,6 +57,8 @@ static void render_frame(rect rc) {
 #endif
 }
 
+bsreq msgcombat_type[];
+
 int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* disable_text) {
 	char temp[2048]; temp[0] = 0;
 	draw::state push;
@@ -68,8 +72,7 @@ int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* 
 	}
 	auto owner = e->getowner();
 	rect rc = {x, y, x + width, y + height};
-	areas hittest;
-	window(rc, disabled);
+	areas hittest = window(rc, disabled);
 	//if(owner)
 	//	draw::shield(x + drw.hero_width - 20, y + 18, owner->getimage());
 	int x1 = x;
@@ -80,8 +83,27 @@ int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* 
 		x1 += gui.hero_width + gui.padding;
 	}
 	draw::textf(x1, y - 3, rc.x2 - x1, temp);
-	//if(hittest == AreaHilited || hittest == AreaHilitedPressed)
-	//	game::tipshero(tooltips_text, e, x, y - 3, gui.hero_width, disable_text);
+	if(hittest == AreaHilited || hittest == AreaHilitedPressed) {
+		static const char* abilities[] = {"attack", "defence", "raid"};
+		temp[0] = 0;
+		// Ability block
+		auto ps = zend(temp);
+		for(auto text : abilities) {
+			auto value = e->get(text);
+			if(!value)
+				continue;
+			auto pf = msgcombat_type->find(text);
+			if(!pf)
+				continue;
+			auto pn = (const char*)pf->get(pf->ptr(&msgcombat));
+			if(!pn)
+				continue;
+			if(ps[0])
+				zcat(temp, "\n:::");
+			szprint(zend(temp), "%+2i %1", pn, value);
+		}
+		tooltips(x, y, width, temp);
+	}
 	return height + gui.border * 2 + gui.padding;
 }
 
@@ -138,28 +160,33 @@ int draw::window(int x, int y, int width, const char* string) {
 	window(rc, false);
 	link[0] = 0; draw::textf(x, y, rc.width(), string);
 	if(link[0])
-		tooltips(x, y, rc.width(), AlignRight, link);
+		tooltips(x, y, rc.width(), link);
 	return height + gui.border * 2 + gui.padding;
 }
 
-void draw::tooltips(int x1, int y1, int width, iflags align, const char* format, ...) {
-	tooltips_rect.x1 = x1 + width + gui.border*2 + gui.padding;
-	tooltips_rect.y1 = y1;
-	tooltips_rect.x2 = tooltips_rect.x1;
-	tooltips_rect.y2 = tooltips_rect.y1;
+void draw::tooltips(int x1, int y1, int width, const char* format, ...) {
+	tooltips_point.x = x1;
+	tooltips_point.y = y1;
+	tooltips_width = width;
 	szprintv(tooltips_text, format, xva_start(format));
 }
 
 COMMAND(after_render) {
-	if(!tooltips_text[0] || !tooltips_rect)
+	if(!tooltips_text[0])
 		return;
 	draw::state push;
 	draw::font = metrics::font;
 	if(draw::font) {
-		rect rc = tooltips_rect;
-		if(tooltips_rect.y1 == tooltips_rect.y2) {
-			rc.x2 = rc.x1 + gui.tips_width;
-			draw::textf(rc, tooltips_text);
+		rect rc;
+		rc.x1 = tooltips_point.x + tooltips_width + gui.border*2 + gui.padding;
+		rc.y1 = tooltips_point.y;
+		rc.x2 = rc.x1 + gui.tips_width;
+		rc.y2 = rc.y1;
+		draw::textf(rc, tooltips_text);
+		if(rc.x2 > getwidth() - gui.border - gui.padding) {
+			auto w = rc.width();
+			rc.x1 = tooltips_point.x - gui.border * 2 - gui.padding - w;
+			rc.x2 = rc.x1 + w;
 		}
 		// Correct border
 		int height = draw::getheight();
@@ -172,7 +199,6 @@ COMMAND(after_render) {
 		draw::fore = colors::tips::text;
 		draw::textf(rc.x1, rc.y1, rc.width(), tooltips_text);
 	}
-	tooltips_rect.clear();
 	tooltips_text[0] = 0;
 }
 

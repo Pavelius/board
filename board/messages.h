@@ -14,5 +14,8 @@ struct msgcombat_info {
 	const char* defending_force;
 	const char* winner;
 	const char* lead;
+	const char* attack;
+	const char* defence;
+	const char* raid;
 };
 extern msgcombat_info msgcombat;

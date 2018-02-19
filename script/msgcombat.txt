@@ -3,3 +3,6 @@
 #msgcombat winner("Победителем в битве оказались [%1].")
 #msgcombat lead("под предводительством [%1] ")
 #msgcombat casualties("Потери")
+#msgcombat attack("Атака")
+#msgcombat defence("Защита")
+#msgcombat raid("Рейд")
