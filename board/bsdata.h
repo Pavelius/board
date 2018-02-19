@@ -10,6 +10,11 @@ bsdata c##_manager(#c, c##s.data, c##s.count, sizeof(c##s.data[0]), sizeof(c##s.
 #define BSGLOB(c) \
 bsdata c##_manager(#c, &c, 1, sizeof(c), c##_type);
 
+enum bsparse_error_s : unsigned char {
+	ErrorExpectedIdentifier, ErrorExpectedArrayField,
+	ErrorNotFoundBase1p, ErrorNotFoundIdentifier1p, ErrorNotFoundMember1pInBase2p,
+};
+
 struct bsdata : collection {
 	const char*			id;
 	const bsreq*		fields;
@@ -37,7 +42,7 @@ struct bsdata : collection {
 	static void			read(const char* url);
 	void				remove(int index, int count = 1) override;
 	void				setcount(unsigned value) { count = value; }
-	static void			setparser(void(*error_callback)(int id, const char* url, int line, int column, const char* format_param));
+	static void			setparser(void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char* format_param));
 	static void			write(const char* url, const char** baseids, bool(*comparer)(void* object, const bsreq* type) = 0);
 	static void			write(const char* url, const char* baseid);
 private:

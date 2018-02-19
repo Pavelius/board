@@ -1,5 +1,3 @@
-#testerror 1
-
 #trait general name("Генерал") attack(1)
 #trait hireling name("Наемник") raid(1)
 #trait carefull name("Осторожный") defence(1)
@@ -23,7 +21,7 @@
 #game map("cradle.png")
 #game casualties(4)
 
-#player red name("Имперцы") nameof("имперцев")
+#player red name("Имперцы") nameof("имперцев") tactic(lighting_attack1)
 #player green name("Орки") nameof("орков")
 
 #province black_wood name("Черный лес") level(2)

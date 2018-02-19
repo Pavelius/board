@@ -2,7 +2,7 @@
 #include "crt.h"
 #include "io.h"
 
-static void(*error_callback)(int id, const char* url, int line, int column, const char* format_param);
+static void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char* format_param);
 
 class bsfile {
 	const bsfile* parent;
@@ -20,10 +20,6 @@ public:
 };
 
 struct bsparse : bsfile {
-	enum error_s : unsigned char {
-		ErrorExpectedIdentifier, ErrorExpectedArrayField,
-		ErrorNotFoundBase1p, ErrorNotFoundMember1pInBase2p,
-	};
 	char buffer[128 * 256];
 	int	value;
 	const bsreq* value_type;
@@ -73,14 +69,14 @@ struct bsparse : bsfile {
 			line++;
 			auto pe = skipline(ps);
 			if(p >= ps && p < pe) {
-				column = p - ps;
+				column = p - ps + 1;
 				return;
 			}
 			ps = pe;
 		}
 	}
 
-	void error(error_s id, ...) {
+	void error(bsparse_error_s id, ...) {
 		if(!error_callback)
 			return;
 		int line, column;
@@ -89,7 +85,7 @@ struct bsparse : bsfile {
 		skipline();
 	}
 
-	void warning(error_s id, ...) {
+	void warning(bsparse_error_s id, ...) {
 		if(!error_callback)
 			return;
 		int line, column;
@@ -227,6 +223,8 @@ struct bsparse : bsfile {
 				value_type = number_type;
 			if(value_object && value_data)
 				value = value_data->indexof(value_object);
+			if(!value_object)
+				warning(ErrorNotFoundIdentifier1p, buffer);
 		} else if(create && hint_type && value_type == number_type) {
 			auto value_data = bsdata::find(hint_type);
 			value_type = hint_type;
@@ -536,6 +534,6 @@ void bsdata::read(const char* url) {
 		parser.parse();
 }
 
-void bsdata::setparser(void(*callback)(int id, const char* url, int line, int column, const char* format_param)) {
+void bsdata::setparser(void(*callback)(bsparse_error_s id, const char* url, int line, int column, const char* format_param)) {
 	error_callback = callback;
 }
