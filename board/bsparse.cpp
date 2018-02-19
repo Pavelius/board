@@ -2,7 +2,7 @@
 #include "crt.h"
 #include "io.h"
 
-static void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char* format_param);
+static void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param);
 
 class bsfile {
 	const bsfile* parent;
@@ -81,7 +81,7 @@ struct bsparse : bsfile {
 			return;
 		int line, column;
 		getpos(p, line, column);
-		error_callback(id, geturl(), line, column, xva_start(id));
+		error_callback(id, geturl(), line, column, (const char**)xva_start(id));
 		skipline();
 	}
 
@@ -90,7 +90,7 @@ struct bsparse : bsfile {
 			return;
 		int line, column;
 		getpos(p, line, column);
-		error_callback(id, geturl(), line, column, xva_start(id));
+		error_callback(id, geturl(), line, column, (const char**)xva_start(id));
 	}
 
 	void clearvalue() {
@@ -534,6 +534,6 @@ void bsdata::read(const char* url) {
 		parser.parse();
 }
 
-void bsdata::setparser(void(*callback)(bsparse_error_s id, const char* url, int line, int column, const char* format_param)) {
+void bsdata::setparser(void(*callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param)) {
 	error_callback = callback;
 }

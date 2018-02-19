@@ -3,8 +3,8 @@
 bool cpp_parsemsg(const char* url, const char* out_url);
 amap<const char*, draw::surface> resources;
 
-void parse_error(bsparse_error_s id, const char* url, int line, int column, const char* format_param) {
-//	format_param[0]
+void parse_error(bsparse_error_s id, const char* url, int line, int column, const char** format_param) {
+	auto p1 = format_param[0];
 }
 
 int main() {
