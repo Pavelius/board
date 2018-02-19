@@ -3,7 +3,7 @@
 #trait carefull name("Осторожный") defence(1)
 #trait bloody name("Кровожадный") attack(1)
 
-#hero gordek name("Гордек") nameof("Гордека") avatar("gordek.bmp") traits(bloody, hireling)
+#hero gordek name("Гордек") nameof("Гордека") avatar("art/portraits/gordek.bmp") traits(bloody, hireling)
 
 #gui opacity(220)
 #gui opacity_disabled(50)

@@ -15,6 +15,7 @@ namespace draw {
 void			avatar(int x, int y, const char* id);
 bool			initializemap();
 void			menu();
+bool			read(surface& e, const char* default_url, const char* file_name);
 void			report(const char* format);
 void			tooltips(int x, int y, int width, iflags align, const char* format, ...);
 areas			window(rect rc, bool disabled = false);

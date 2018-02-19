@@ -201,14 +201,14 @@ void draw::avatar(int x, int y, const char* id) {
 	static amap<const char*, surface> avatars;
 	auto p = avatars.find(id);
 	if(!p) {
-		char temp[260];
 		p = avatars.add(id);
 		memset(p, 0, sizeof(*p));
 		p->resize(gui.hero_width, gui.hero_width, 32, true);
-		surface e(szurl(temp, "art/portraits", id));
-		e.convert(-32, 0);
-		if(e)
+		surface e(id, 0);
+		if(e) {
+			e.convert(-32, 0);
 			blit(*p, 0, 0, p->width, p->height, 0, e, 0, 0, e.width, e.height);
+		}
 	}
 	blit(*draw::canvas, x, y, gui.hero_width, gui.hero_width, 0, *p, 0, 0);
 }
