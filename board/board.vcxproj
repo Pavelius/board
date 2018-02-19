@@ -126,7 +126,6 @@
     <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
     <ClInclude Include="bsdata.h" />
-    <ClInclude Include="bsparse.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="collection.h" />

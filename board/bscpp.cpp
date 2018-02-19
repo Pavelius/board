@@ -1,7 +1,7 @@
 #include "crt.h"
 #include "io.h"
 
-struct bscpp {
+class bscpp {
 
 	const char*	p;
 	char buffer[256 * 256];
@@ -104,18 +104,22 @@ struct bscpp {
 		return true;
 	}
 
-	bscpp(const char* p) : p(p) {
-	}
-
 	const char* cr() {
 		return "\r\n";
 	}
+
+public:
+
+	bscpp(const char* p) : p(p) {
+	}
+
 
 	bool parsemsg(io::stream& po) {
 		char class_name[512];
 		po << "#include \"bsdata.h\"" << cr();
 		po << "#include \"messages.h\"" << cr();
 		po << cr();
+		skipws();
 		while(isvalid()) {
 			if(symbol("#") || keyword("extern")) {
 				skipline();
@@ -166,7 +170,6 @@ bool cpp_parsemsg(const char* url, const char* out_url) {
 	if(!p)
 		return false;
 	bscpp e(p);
-	e.skipws();
 	e.parsemsg(po);
 	delete p;
 	return true;

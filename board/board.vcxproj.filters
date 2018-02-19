@@ -185,9 +185,6 @@
     <ClInclude Include="crt.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="bsparse.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="io.h">
       <Filter>System</Filter>
     </ClInclude>

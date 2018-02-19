@@ -37,6 +37,7 @@ struct bsdata : collection {
 	static void			read(const char* url);
 	void				remove(int index, int count = 1) override;
 	void				setcount(unsigned value) { count = value; }
+	static void			setparser(void(*error_callback)(int id, const char* url, int line, int column, const char* format_param));
 	static void			write(const char* url, const char** baseids, bool(*comparer)(void* object, const bsreq* type) = 0);
 	static void			write(const char* url, const char* baseid);
 private:

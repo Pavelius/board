@@ -1,3 +1,5 @@
+#testerror 1
+
 #trait general name("Генерал") attack(1)
 #trait hireling name("Наемник") raid(1)
 #trait carefull name("Осторожный") defence(1)
