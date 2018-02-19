@@ -1,23 +1,15 @@
 #include "main.h"
 
-struct unit : gobject {
+struct unit : combatable {
 
 	const char* id;
 	const char* name;
 	const char* text;
-	char attack, raid, defence;
-	char gold, gold_upkeep, support, support_upkeep;
-	gobject* bonus[5];
-	gobject* penalty[5];
 
 	bsreq* getmeta() const override;
 
 	aref<gobject*> getbonuses() const override {
-		return {(gobject**)bonus, zlen(bonus)};
-	}
-
-	aref<gobject*> getpenalty() const override {
-		return {(gobject**)penalty, zlen(bonus)};
+		return {(gobject**)traits, zlen(traits)};
 	}
 
 };
@@ -26,12 +18,16 @@ bsreq unit_type[] = {
 	BSREQ(unit, id, text_type),
 	BSREQ(unit, name, text_type),
 	BSREQ(unit, text, text_type),
-	BSREQ(unit, attack, number_type),
-	BSREQ(unit, defence, number_type),
-	BSREQ(unit, raid, number_type),
-	BSREQ(unit, gold, number_type),
-	BSREQ(unit, gold_upkeep, number_type),
-	{0}
+	BSREQ(combatable, attack, number_type),
+	BSREQ(combatable, defend, number_type),
+	BSREQ(combatable, gold, number_type),
+	BSREQ(combatable, gold_upkeep, number_type),
+	BSREQ(combatable, support, number_type),
+	BSREQ(combatable, support_upkeep, number_type),
+	BSREQ(combatable, enemy_casualties, number_type),
+	BSREQ(combatable, firendly_casualties, number_type),
+	BSREQ(combatable, traits, number_type),
+{0}
 };
 
 bsreq* unit::getmeta() const {

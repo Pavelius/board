@@ -139,6 +139,9 @@
     <ClCompile Include="logger.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="action.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

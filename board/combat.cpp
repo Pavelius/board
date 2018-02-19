@@ -144,7 +144,7 @@ bool gobject::resolve(char* result, gobject* attacker_player, gobject* defender_
 	combatside attackers(this, attacker_player);
 	combatside defenders(this, defender_player);
 	p = attackers.setstrenght(p, msgcombat.attacking_force, "attack", getname()); zcat(p, " ");
-	p = defenders.setstrenght(zend(p), msgcombat.defending_force, "defence", getname());
+	p = defenders.setstrenght(zend(p), msgcombat.defending_force, "defend", getname());
 	attackers.setcasualty(zend(p), defenders);
 	defenders.setcasualty(zend(p), attackers);
 	auto& winner = (attackers.getstrenght() > defenders.getstrenght()) ? attackers : defenders;

@@ -64,6 +64,12 @@ struct gobject {
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
 };
+struct combatable : gobject {
+	char						attack, defend;
+	char						enemy_casualties, firendly_casualties;
+	char						gold, gold_upkeep, support, support_upkeep;
+	gobject*					traits[5];
+};
 struct game_info {
 	char						casualties; // One casualties per this strenght value
 	const char*					map;

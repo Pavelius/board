@@ -145,6 +145,7 @@
     <ClInclude Include="win.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="action.cpp" />
     <ClCompile Include="active_enchantment.cpp" />
     <ClCompile Include="amem.cpp" />
     <ClCompile Include="bscpp.cpp" />

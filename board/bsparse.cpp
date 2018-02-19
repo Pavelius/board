@@ -255,6 +255,13 @@ struct bsparse : bsfile {
 			req->set(p, (int)value_object);
 	}
 
+	const char* getbasename(const bsreq* type) const {
+		auto p = bsdata::find(type);
+		if(!p)
+			return "";
+		return p->id;
+	}
+
 	bool readreq(void* object, const bsreq* req, unsigned index) {
 		if(!skip('('))
 			return false;
@@ -275,6 +282,8 @@ struct bsparse : bsfile {
 			const bsreq* req = 0;
 			if(readidentifier())
 				req = fields->find(buffer);
+			if(!req)
+				warning(ErrorNotFoundMember1pInBase2p, buffer, getbasename(fields));
 			readreq(object, req, 0);
 		}
 		return true;

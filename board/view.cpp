@@ -84,7 +84,7 @@ int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* 
 	}
 	draw::textf(x1, y - 3, rc.x2 - x1, temp);
 	if(hittest == AreaHilited || hittest == AreaHilitedPressed) {
-		static const char* abilities[] = {"attack", "defence", "raid"};
+		static const char* abilities[] = {"attack", "defence", "raid", "enemy_casualties", "friendly_casualties"};
 		temp[0] = 0;
 		// Ability block
 		auto ps = zend(temp);

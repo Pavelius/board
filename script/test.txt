@@ -21,15 +21,15 @@
 #game map("cradle.png")
 #game casualties(4)
 
-#player red name("Имперцы") nameof("имперцев") tactic(lighting_attack1)
+#player red name("Имперцы") nameof("имперцев")
 #player green name("Орки") nameof("орков")
 
 #province black_wood name("Черный лес") level(2)
 
-#unit spearmans name("копейщики") nameof("копейщиков") attack(1) defence(2) gold(3) gold_upkeep(1)
-#unit archers name("лучники") nameof("лучники") attack(1) defence(2) gold(4) gold_upkeep(1)
-#unit swordmans name("мечники") nameof("мечников") attack(2) defence(2) gold(4) gold_upkeep(2)
-#unit cavalry name("кавалерия") nameof("кавалерии") attack(3) defence(1) gold(5) gold_upkeep(2)
+#unit spearmans name("копейщики") nameof("копейщиков") attack(1) defend(2) gold(3) gold_upkeep(1)
+#unit archers name("лучники") nameof("лучники") attack(2) defend(1) gold(3) gold_upkeep(1)
+#unit swordmans name("мечники") nameof("мечников") attack(2) defend(2) gold(4) gold_upkeep(2)
+#unit cavalry name("кавалерия") nameof("кавалерии") attack(3) defend(1) gold(5) gold_upkeep(2)
 
 #troop parent(spearmans) owner(red) province(black_wood)
 #troop parent(spearmans) owner(red) province(black_wood)

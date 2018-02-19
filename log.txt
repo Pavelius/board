@@ -1,4 +1,0 @@
-Error in 'log.txt', line 24, column 71: Not found identifier 'lighting_attack1'
-Error in 'log.txt', line 24, column 71: Not found identifier 'lighting_attack1'
-Error in 'log.txt', line 24, column 71: Not found identifier 'lighting_attack1'
-Error in 'script/test.txt', line 24, column 71: Not found identifier 'lighting_attack1'
