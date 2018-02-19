@@ -18,6 +18,6 @@ void			menu();
 bool			read(surface& e, const char* default_url, const char* file_name);
 void			report(const char* format);
 void			tooltips(int x, int y, int width, const char* format, ...);
-areas			window(rect rc, bool disabled = false);
+areas			window(rect rc, bool disabled = false, bool hilight = false);
 int				window(int x, int y, int width, const char* string);
 }

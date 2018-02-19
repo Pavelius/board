@@ -72,7 +72,7 @@ int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* 
 	}
 	auto owner = e->getowner();
 	rect rc = {x, y, x + width, y + height};
-	areas hittest = window(rc, disabled);
+	areas hittest = window(rc, disabled, true);
 	//if(owner)
 	//	draw::shield(x + drw.hero_width - 20, y + 18, owner->getimage());
 	int x1 = x;
@@ -144,12 +144,18 @@ static bool control_board(int id) {
 	return true;
 }
 
-areas draw::window(rect rc, bool disabled) {
+areas draw::window(rect rc, bool disabled, bool hilight) {
 	rc.offset(-gui.border, -gui.border);
 	color c = colors::form;
-	draw::rectf(rc, c, disabled ? gui.opacity / 2 : gui.opacity);
+	auto rs = draw::area(rc);
+	auto op = gui.opacity;
+	if(disabled)
+		op = op / 2;
+	else if(hilight && !disabled && (rs==AreaHilited || rs==AreaHilitedPressed))
+		op = gui.opacity_hilighted;
+	draw::rectf(rc, c, op);
 	draw::rectb(rc, c);
-	return draw::area(rc);
+	return rs;
 }
 
 int draw::window(int x, int y, int width, const char* string) {
