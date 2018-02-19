@@ -6,7 +6,7 @@ struct action : gobject {
 	const char*	name;
 	const char*	text;
 	char attack, defend, gold, recruit, support, upgrade;
-	char hostile, placeable;
+	char conquer, placeable;
 
 	bsreq* getmeta() const override;
 
@@ -22,7 +22,7 @@ bsreq action_type[] = {
 	BSREQ(action, recruit, number_type),
 	BSREQ(action, support, number_type),
 	BSREQ(action, upgrade, number_type),
-	BSREQ(action, hostile, number_type),
+	BSREQ(action, conquer, number_type),
 	BSREQ(action, placeable, number_type),
 {0}
 };
