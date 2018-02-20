@@ -8,6 +8,8 @@ struct hero : gobject {
 	const char*	avatar;
 	gobject* traits[5];
 	gobject* tactic;
+	gobject* owner;
+	gobject* province;
 
 	bsreq* getmeta() const override;
 
@@ -34,6 +36,14 @@ struct hero : gobject {
 		return {(gobject**)traits, zlen(traits)};
 	}
 
+	gobject* getowner() const override {
+		return owner;
+	}
+
+	gobject* getprovince() const override {
+		return province;
+	}
+
 };
 
 bsreq hero_type[] = {
@@ -43,6 +53,8 @@ bsreq hero_type[] = {
 	BSREQ(hero, avatar, text_type),
 	BSREQ(hero, tactic, tactic_type),
 	BSREQ(hero, traits, trait_type),
+	BSREQ(hero, owner, player_type),
+	BSREQ(hero, province, province_type),
 {0}
 };
 

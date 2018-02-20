@@ -39,7 +39,10 @@ int main() {
 	auto black_wood = gobject::find(province_type, "black_wood");
 	auto red = gobject::find(player_type, "red");
 	auto green = gobject::find(player_type, "green");
+	auto gordek = gobject::find(hero_type, "gordek");
+	gordek->set("province", black_wood);
 	black_wood->resolve(temp, red, green);
+	red->setuiactive();
 	draw::report(temp);
 }
 

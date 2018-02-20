@@ -46,9 +46,9 @@ public:
 		if(ti && include_number)
 			zcpy(ti->result, "[\"");
 		if(general)
-			r += general->fix(ti, general->getbonus(id));
+			r += general->fix(ti, general->get(id) + general->getbonus(id));
 		for(auto p : units)
-			r += p->fix(ti, p->get(id));
+			r += p->fix(ti, p->get(id) + p->getbonus(id));
 		if(tactic)
 			r += tactic->fix(ti, tactic->get("strenght"));
 		if(ti && include_number)

@@ -3,24 +3,26 @@
 
 using namespace draw;
 
-static bsreq gui_type[] = {
-	BSREQ(gui_info, opacity, number_type),
-	BSREQ(gui_info, opacity_disabled, number_type),
-	BSREQ(gui_info, opacity_hilighted, number_type),
-	BSREQ(gui_info, border, number_type),
-	BSREQ(gui_info, window_width, number_type),
-	BSREQ(gui_info, tips_width, number_type),
-	BSREQ(gui_info, hero_width, number_type),
-	BSREQ(gui_info, padding, number_type),
-};
-gui_info gui; BSGLOB(gui);
-
 static point camera;
 static rect last_board;
 static point tooltips_point;
 static short tooltips_width;
 static char tooltips_text[4096];
 static surface map;
+static gobject* current_player;
+
+static bsreq gui_type[] = {
+	BSREQ(gui_info, opacity, number_type),
+	BSREQ(gui_info, opacity_disabled, number_type),
+	BSREQ(gui_info, opacity_hilighted, number_type),
+	BSREQ(gui_info, border, number_type),
+	BSREQ(gui_info, window_width, number_type),
+	BSREQ(gui_info, hero_window_width, number_type),
+	BSREQ(gui_info, tips_width, number_type),
+	BSREQ(gui_info, hero_width, number_type),
+	BSREQ(gui_info, padding, number_type),
+};
+gui_info gui; BSGLOB(gui);
 
 static void render_frame(rect rc) {
 	draw::state push;
@@ -57,9 +59,7 @@ static void render_frame(rect rc) {
 #endif
 }
 
-bsreq msgcombat_type[];
-
-int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* disable_text) {
+static int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* disable_text) {
 	char temp[2048]; temp[0] = 0;
 	draw::state push;
 	draw::font = metrics::font;
@@ -107,6 +107,19 @@ int render_hero(int x, int y, int width, gobject* e, bool disabled, const char* 
 	return height + gui.border * 2 + gui.padding;
 }
 
+static int render_heros(int x, int y, int width, gobject* owner) {
+	if(!owner)
+		return 0;
+	auto y1 = y;
+	for(auto& e : gobject::getcol(hero_type)) {
+		if(e.getowner() != owner)
+			continue;
+		y += render_hero(x, y, width, &e, !e.isready(), 0);
+		y += gui.padding;
+	}
+	return y - y1;
+}
+
 static bool control_board(int id) {
 	const int step = 32;
 	switch(id) {
@@ -142,6 +155,10 @@ static bool control_board(int id) {
 		return false;
 	}
 	return true;
+}
+
+void gobject::setuiactive() {
+	current_player = this;
 }
 
 areas draw::window(rect rc, bool disabled, bool hilight) {
@@ -221,7 +238,7 @@ bool draw::initializemap() {
 void draw::report(const char* format) {
 	while(ismodal()) {
 		render_frame({0, 0, draw::getwidth(), draw::getheight()});
-		render_hero(getwidth() - 300 - gui.border - gui.padding, 20, 300, &gobject::getcol(hero_type)[0], false, "Test");
+		render_heros(getwidth() - gui.hero_window_width - gui.border - gui.padding, 20, gui.hero_window_width, current_player);
 		draw::window(100, 100, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))

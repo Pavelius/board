@@ -1,9 +1,7 @@
-#trait general name("Генерал") attack(1)
-#trait hireling name("Наемник") raid(1)
+#trait general name("Генерал") defence(1)
+#trait hireling name("Наемник") attack(1)
 #trait carefull name("Осторожный") defence(1)
 #trait bloody name("Кровожадный") attack(1)
-
-#hero gordek name("Гордек") nameof("Гордека") avatar("art/portraits/gordek.bmp") traits(bloody, hireling)
 
 #gui opacity(220)
 #gui opacity_disabled(50)
@@ -12,6 +10,7 @@
 #gui window_width(400)
 #gui tips_width(200)
 #gui hero_width(64)
+#gui hero_window_width(200)
 #gui opacity_hilighted(200)
 
 #tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили внезапную атаку в надежде рассеять противника.")
@@ -25,6 +24,8 @@
 #player green name("Орки") nameof("орков")
 
 #province black_wood name("Черный лес") level(2)
+
+#hero gordek name("Гордек") nameof("Гордека") avatar("art/portraits/gordek.bmp") traits(bloody, hireling) owner(red)
 
 #unit spearmans name("копейщики") nameof("копейщиков") attack(1) defend(2) gold(3) gold_upkeep(1)
 #unit archers name("лучники") nameof("лучники") attack(2) defend(1) gold(3) gold_upkeep(1)

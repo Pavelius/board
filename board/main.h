@@ -57,12 +57,14 @@ struct gobject {
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
 	virtual const char*			gettext() const { return gets("text"); }
 	bool						is(bsreq* type) const;
+	bool						isready() const { return getprovince() == 0; }
 	virtual bool				isvalid() const { return this != 0; }
 	bool						resolve(char* result, gobject* attacker_player, gobject* defender_player) const;
 	void						set(const char* id, int value);
 	void						set(const char* id, int value, int index);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
+	void						setuiactive();
 };
 struct combatable : gobject {
 	char						attack, defend;
@@ -87,6 +89,7 @@ struct driver : stringcreator {
 bsreq							enchantment_type[];
 bsreq							event_type[];
 bsreq							hero_type[];
+bsreq							msgcombat_type[];
 bsreq							province_type[];
 bsreq							player_type[];
 bsreq							tactic_type[];
