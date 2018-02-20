@@ -47,6 +47,9 @@ draw::surface*	draw::canvas = &current_surface;
 static bool		line_antialiasing = true;
 static bool		break_modal;
 static int		break_result;
+// Drag
+static const char* drag_id;
+point			draw::drag::mouse;
 // Metrics
 rect			metrics::edit = {4, 4, -4, -4};
 sprite*			metrics::font = (sprite*)loadb("art/fonts/font.pma");
@@ -837,6 +840,28 @@ draw::state::~state() {
 	draw::canvas = this->canvas;
 }
 
+void draw::drag::begin(const char* id) {
+	drag_id = id;
+	drag::mouse = hot::mouse;
+}
+
+bool draw::drag::active() {
+	return drag_id != 0;
+}
+
+bool draw::drag::active(const char* id) {
+	if(drag_id == id) {
+		if(!hot::pressed || hot::key == KeyEscape) {
+			drag_id = 0;
+			hot::key = 0;
+			hot::cursor = CursorArrow;
+			return false;
+		}
+		return true;
+	}
+	return false;
+}
+
 int draw::getbpp() {
 	return canvas ? canvas->bpp : 1;
 }
@@ -1308,6 +1333,8 @@ static void intersect_rect(rect& r1, const rect& r2) {
 areas draw::area(rect rc) {
 	if(sys_optimize_mouse_move)
 		intersect_rect(sys_static_area, rc);
+	if(drag::active())
+		return AreaNormal;
 	if(!hot::mouse.in(clipping))
 		return AreaNormal;
 	if(!mouseinput)

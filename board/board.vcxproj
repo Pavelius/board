@@ -169,7 +169,6 @@
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="io.cpp" />
-    <ClCompile Include="logger.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messages.cpp" />
     <ClCompile Include="png.cpp" />

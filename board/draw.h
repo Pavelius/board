@@ -155,6 +155,12 @@ extern sprite*			icons;
 extern int				scroll;
 }
 namespace draw {
+namespace drag {
+extern point			mouse;
+bool					active(const char* id);
+bool					active();
+void					begin(const char* id);
+}
 struct state // Push state in stack
 {
 	state();

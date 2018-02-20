@@ -4,12 +4,14 @@
 using namespace draw;
 
 static point camera;
+static point camera_drag;
 static rect last_board;
 static point tooltips_point;
 static short tooltips_width;
 static char tooltips_text[4096];
 static surface map;
 static gobject* current_player;
+extern rect sys_static_area;
 
 static bsreq gui_type[] = {
 	BSREQ(gui_info, opacity, number_type),
@@ -26,7 +28,7 @@ gui_info gui; BSGLOB(gui);
 
 static void render_frame(rect rc) {
 	draw::state push;
-	draw::area(rc);
+	draw::area(rc); // Drag and drop analize this result
 	last_board = rc;
 	int w = rc.width();
 	int h = rc.height();
@@ -50,7 +52,8 @@ static void render_frame(rect rc) {
 		rc.y2 -= y2 - map.height;
 		y2 = map.height;
 	}
-	if(rc.x1 != last_board.x1 || rc.y1 != last_board.y1 || rc.y2 != last_board.y2 || rc.x2 != last_board.x2)
+	if((rc.x1 != last_board.x1 || rc.y1 != last_board.y1 || rc.y2 != last_board.y2 || rc.x2 != last_board.x2)
+		|| drag::active("board"))
 		draw::rectf(last_board, colors::gray);
 	if(rc.width() > 0 && rc.height() > 0)
 		blit(*draw::canvas, rc.x1, rc.y1, rc.width(), rc.height(), 0, map, x1, y1);
@@ -138,20 +141,20 @@ static bool control_board(int id) {
 		camera.y += step;
 		break;
 	case MouseLeft:
-		//if(hot::pressed) {
-		//	if(last_board == draw::lastarea) {
-		//		draw::drag::begin("board");
-		//		camera_drag = camera;
-		//	}
-		//}
+		if(hot::pressed) {
+			if(last_board == sys_static_area) {
+				draw::drag::begin("board");
+				camera_drag = camera;
+			}
+		}
 		break;
 	default:
-		//if(draw::drag::active("board")) {
-		//	hot::cursor = CursorAll;
-		//	if(hot::mouse.x >= 0 && hot::mouse.y >= 0)
-		//		camera = camera_drag + (draw::drag::mouse - hot::mouse);
-		//	return true;
-		//}
+		if(draw::drag::active("board")) {
+			hot::cursor = CursorAll;
+			if(hot::mouse.x >= 0 && hot::mouse.y >= 0)
+				camera = camera_drag + (draw::drag::mouse - hot::mouse);
+			return true;
+		}
 		return false;
 	}
 	return true;

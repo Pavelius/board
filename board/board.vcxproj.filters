@@ -136,9 +136,6 @@
     <ClCompile Include="gobject.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="logger.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="action.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
