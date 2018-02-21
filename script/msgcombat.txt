@@ -1,4 +1,4 @@
-#msgcombat attacking_force("јрми€ %1с общей силой %2 вторглась в провинцию [%3].")
+#msgcombat attacking_force("јрми€ %1с общей силой %2 вторглась :gold:12 в провинцию [%3].")
 #msgcombat defending_force("¬ защите находилась арми€ %1с общей силой %2.")
 #msgcombat winner("ѕобедителем в битве оказались [%1].")
 #msgcombat lead("под предводительством [%1] ")

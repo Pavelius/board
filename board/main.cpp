@@ -34,7 +34,7 @@ int main() {
 	bsdata::read("script/msgmenu.txt");
 	if(!draw::initializemap())
 		return 0;
-	//draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
+	draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
 	draw::setcaption(msgmenu.title);
 	auto black_wood = gobject::find(province_type, "black_wood");
 	auto red = gobject::find(player_type, "red");

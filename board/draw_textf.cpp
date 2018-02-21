@@ -5,9 +5,9 @@
 using namespace draw;
 
 textplugin*	draw::textplugin::first;
-static void (*draw_icon)(int& x, int& y, int x0, int& w, const char* name);
+static void (*draw_icon)(int& x, int& y, int x0, int x2, int* max_width, int& w, const char* name);
 
-void draw::set(void(*proc)(int& x, int& y, int x0, int& w, const char* id)) {
+void draw::set(void(*proc)(int& x, int& y, int x0, int x2, int* max_width, int& w, const char* id)) {
 	draw_icon = proc;
 }
 
@@ -215,7 +215,7 @@ static int textfln(int x0, int y0, int width, const char** string, color c1, int
 				p++;
 			w = 0;
 			if(draw_icon)
-				draw_icon(x, y, x0, w, temp);
+				draw_icon(x, y, x0, x2, max_width, w, temp);
 		} else {
 			const char* p2 = word(p);
 			w = draw::textw(p, p2 - p);
