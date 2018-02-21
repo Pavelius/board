@@ -145,10 +145,10 @@ void gobject::act(char* result, const char* format, ...) const {
 	actv(result, format, xva_start(format));
 }
 
-unsigned gobject::gettropps(gobject** result, unsigned maximum, gobject* province) const {
+unsigned gobject::getobjects(bsreq* type, gobject** result, unsigned maximum, gobject* province) const {
 	auto ps = result;
 	auto pe = result + maximum;
-	for(auto& e : getcol(troop_type)) {
+	for(auto& e : getcol(type)) {
 		if(ps >= pe)
 			break;
 		if(!e.isvalid())

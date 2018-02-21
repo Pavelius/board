@@ -38,6 +38,7 @@ static void debug_mouse() {
 }
 
 static void render_province(rect rc, point mouse, gobject* owner) {
+	char temp[1024];
 	draw::state push;
 	draw::fore = colors::black;
 	if(!draw::font)
@@ -49,7 +50,7 @@ static void render_province(rect rc, point mouse, gobject* owner) {
 		draw::font = metrics::h1;
 		point real_pos = e.getposition();
 		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
-		char temp[260]; szprint(temp, "%1", e.getname());
+		szprint(temp, "%1", e.getname());
 		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
@@ -58,12 +59,17 @@ static void render_province(rect rc, point mouse, gobject* owner) {
 		}
 		pt.y += draw::texth() / 2;
 		draw::font = metrics::font;
-		auto count = owner->gettropps(objects, lenghtof(objects), &e);
+		unsigned count;
+		count = owner->getheroes(objects, 1, &e);
 		if(count) {
-			char temp[1024];
+			szprint(temp, "%1", objects[0]->getname());
+			rect rc = {0, 0, 200, 0}; draw::textw(rc, temp);
+			pt.y += draw::text({pt.x - rc.width() / 2, pt.y, pt.x + rc.width() / 2, pt.y + rc.height()}, temp, AlignCenter);
+		}
+		count = owner->gettropps(objects, lenghtof(objects), &e);
+		if(count) {
 			gobject::getpresent(temp, sizeof(temp) / sizeof(temp[0]), objects, count);
-			rect rc = {0, 0, 200, 0};
-			draw::textw(rc, temp);
+			rect rc = {0, 0, 200, 0}; draw::textw(rc, temp);
 			pt.y += draw::text({pt.x - rc.width() / 2, pt.y, pt.x + rc.width() / 2, pt.y + rc.height()}, temp, AlignCenter);
 		}
 	}

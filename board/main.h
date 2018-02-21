@@ -10,13 +10,24 @@
 
 #pragma once
 
-#ifdef _DEBUG
-#define dbgcheck(...) dlgerr("Check this", __VA_ARGS__);
-#else
-#define dbgcheck(...)
-#endif
+//#ifdef _DEBUG
+//#define dbgcheck(...) dlgerr("Check this", __VA_ARGS__);
+//#else
+//#define dbgcheck(...)
+//#endif
 
 const int player_max = 8;
+bsreq enchantment_type[];
+bsreq event_type[];
+bsreq hero_type[];
+bsreq msgcombat_type[];
+bsreq point_type[];
+bsreq province_type[];
+bsreq player_type[];
+bsreq tactic_type[];
+bsreq trait_type[];
+bsreq troop_type[];
+bsreq unit_type[];
 
 enum gender_s : unsigned char {
 	Male, Female,
@@ -45,12 +56,14 @@ struct gobject {
 	int							getbonus(const char* id) const;
 	virtual aref<gobject*>		getbonuses() const { return aref<gobject*>(); }
 	virtual gender_s			getgender() const { return Male; }
+	unsigned					getheroes(gobject** result, unsigned maximum, gobject* province) const { return getobjects(hero_type, result, maximum, province); }
 	const char*					getid() const { return gets("id"); }
 	int							getindex() const;
 	virtual bsreq*				getmeta() const { return 0; }
 	virtual gobject*			getmoveto() const { return 0; }
 	virtual const char*			getname() const { return gets("name"); }
 	virtual const char*			getnameof() const { return gets("nameof"); }
+	unsigned					getobjects(bsreq* type, gobject** result, unsigned maximum, gobject* province) const;
 	virtual gobject*			getowner() const { return (gobject*)get("owner"); }
 	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
 	virtual point				getposition() const { return {0, 0}; }
@@ -59,7 +72,7 @@ struct gobject {
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
 	virtual const char*			gettext() const { return gets("text"); }
-	unsigned					gettropps(gobject** result, unsigned maximum, gobject* province) const;
+	unsigned					gettropps(gobject** result, unsigned maximum, gobject* province) const { return getobjects(troop_type, result, maximum, province); }
 	bool						is(bsreq* type) const;
 	bool						isready() const { return getprovince() == 0; }
 	virtual bool				isvalid() const { return this != 0; }
@@ -91,14 +104,3 @@ struct driver : stringcreator {
 	void						parseidentifier(char* result, const char* result_max, const char* identifier) override;
 };
 }
-bsreq							enchantment_type[];
-bsreq							event_type[];
-bsreq							hero_type[];
-bsreq							msgcombat_type[];
-bsreq							point_type[];
-bsreq							province_type[];
-bsreq							player_type[];
-bsreq							tactic_type[];
-bsreq							trait_type[];
-bsreq							troop_type[];
-bsreq							unit_type[];
