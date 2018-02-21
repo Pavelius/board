@@ -6,3 +6,4 @@
 #msgcombat attack("Атака")
 #msgcombat defence("Защита")
 #msgcombat raid("Рейд")
+#msgcombat squads("%1i отряда %2")

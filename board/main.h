@@ -54,10 +54,12 @@ struct gobject {
 	virtual gobject*			getowner() const { return (gobject*)get("owner"); }
 	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
 	virtual point				getposition() const { return {0, 0}; }
+	static char*				getpresent(char* result, unsigned maximum, gobject** objects, unsigned count);
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
 	virtual const char*			gettext() const { return gets("text"); }
+	unsigned					gettropps(gobject** result, unsigned maximum, gobject* province) const;
 	bool						is(bsreq* type) const;
 	bool						isready() const { return getprovince() == 0; }
 	virtual bool				isvalid() const { return this != 0; }
@@ -67,6 +69,7 @@ struct gobject {
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
 	void						set(const char* id, const char* value) { set(id, (int)value); }
 	void						setuiactive();
+	static void					sort(gobject** result, unsigned count);
 };
 struct combatable : gobject {
 	char						attack, defend;

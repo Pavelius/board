@@ -4,6 +4,7 @@ struct unit : combatable {
 
 	const char* id;
 	const char* name;
+	const char* nameof;
 	const char* text;
 
 	bsreq* getmeta() const override;
@@ -17,6 +18,7 @@ struct unit : combatable {
 bsreq unit_type[] = {
 	BSREQ(unit, id, text_type),
 	BSREQ(unit, name, text_type),
+	BSREQ(unit, nameof, text_type),
 	BSREQ(unit, text, text_type),
 	BSREQ(combatable, attack, number_type),
 	BSREQ(combatable, defend, number_type),

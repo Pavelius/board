@@ -13,6 +13,10 @@ struct troop : gobject {
 		return parent->getname();
 	}
 
+	const char* getnameof() const override {
+		return parent->getnameof();
+	}
+
 	const char* gettext() const override {
 		return parent->gettext();
 	}

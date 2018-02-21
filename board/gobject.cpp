@@ -1,5 +1,15 @@
 #include "main.h"
 
+static int compare(const void* v1, const void* v2) {
+	auto e1 = *((gobject**)v1);
+	auto e2 = *((gobject**)v2);
+	return strcmp(e1->getname(), e2->getname());
+}
+
+void gobject::sort(gobject** result, unsigned count) {
+	qsort(result, count, sizeof(result[0]), compare);
+}
+
 void gobject::add(const char* id, int value) {
 	auto pf = getmeta();
 	if(pf) {
@@ -133,4 +143,47 @@ void gobject::actv(char* result, const char* format, const char* param) const {
 
 void gobject::act(char* result, const char* format, ...) const {
 	actv(result, format, xva_start(format));
+}
+
+unsigned gobject::gettropps(gobject** result, unsigned maximum, gobject* province) const {
+	auto ps = result;
+	auto pe = result + maximum;
+	for(auto& e : getcol(troop_type)) {
+		if(ps >= pe)
+			break;
+		if(!e.isvalid())
+			continue;
+		if(e.getowner() != this)
+			continue;
+		if(province && e.getprovince() != province)
+			continue;
+		*ps++ = &e;
+	}
+	return ps - result;
+}
+
+char* gobject::getpresent(char* result, unsigned maximum, gobject** objects, unsigned count) {
+	stringcreator sc;
+	auto ps = result;
+	auto pe = result + maximum;
+	ps[0] = 0;
+	int count_in_row = 1;
+	for(unsigned i = 0; i < count; i++) {
+		if(i < count - 1 && strcmp(objects[i]->getname(), objects[i + 1]->getname())==0) {
+			count_in_row++;
+			continue;
+		}
+		if(ps != result) {
+			sc.prints(ps, pe, "\n");
+			ps = zend(ps);
+		}
+		if(count_in_row == 1)
+			sc.prints(ps, pe, objects[i]->getname());
+		else
+			sc.prints(ps, pe, msgcombat.squads, count_in_row, objects[i]->getnameof());
+		szupper(ps, 1);
+		ps = zend(ps);
+		count_in_row = 1;
+	}
+	return result;
 }

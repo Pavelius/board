@@ -18,5 +18,6 @@ bsreq msgcombat_type[] = {
 	BSREQ(msgcombat_info, attack, text_type),
 	BSREQ(msgcombat_info, defence, text_type),
 	BSREQ(msgcombat_info, raid, text_type),
+	BSREQ(msgcombat_info, squads, text_type),
 };
 msgcombat_info msgcombat; BSGLOB(msgcombat);

@@ -37,23 +37,34 @@ static void debug_mouse() {
 	draw::text(2, draw::getheight() - 20, temp);
 }
 
-static void render_province(rect rc, point mouse) {
+static void render_province(rect rc, point mouse, gobject* owner) {
 	draw::state push;
-	draw::font = metrics::h1;
-	draw::fore = colors::text;
+	draw::fore = colors::black;
 	if(!draw::font)
 		return;
+	gobject* objects[64];
 	for(auto& e : gobject::getcol(province_type)) {
 		if(!e.isvalid())
 			continue;
+		draw::font = metrics::h1;
 		point real_pos = e.getposition();
-		point pt = {(short)(real_pos.x - rc.x1), (short)(real_pos.y - rc.y1)};
-		char temp[260]; szprint(temp, "%1 (%2i)", e.getname(), e.getindex());
+		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
+		char temp[260]; szprint(temp, "%1", e.getname());
 		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
 			//if(d < 16)
 			//	draw::execute(ChooseProvince, e.getid());
+		}
+		pt.y += draw::texth() / 2;
+		draw::font = metrics::font;
+		auto count = owner->gettropps(objects, lenghtof(objects), &e);
+		if(count) {
+			char temp[1024];
+			gobject::getpresent(temp, sizeof(temp) / sizeof(temp[0]), objects, count);
+			rect rc = {0, 0, 200, 0};
+			draw::textw(rc, temp);
+			pt.y += draw::text({pt.x - rc.width() / 2, pt.y, pt.x + rc.width() / 2, pt.y + rc.height()}, temp, AlignCenter);
 		}
 	}
 }
@@ -90,7 +101,7 @@ static void render_frame(rect rc) {
 		draw::rectf(last_board, colors::gray);
 	if(rc.width() > 0 && rc.height() > 0)
 		blit(*draw::canvas, rc.x1, rc.y1, rc.width(), rc.height(), 0, map, x1, y1);
-	render_province(last_board, last_mouse);
+	render_province(last_board, last_mouse, current_player);
 #ifdef _DEBUG
 	debug_mouse();
 #endif
