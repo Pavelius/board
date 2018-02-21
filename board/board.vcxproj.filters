@@ -139,6 +139,9 @@
     <ClCompile Include="action.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="draw_icons.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

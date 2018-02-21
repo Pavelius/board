@@ -164,17 +164,19 @@ static int render_hero(int x, int y, int width, gobject* e, bool disabled, const
 	return height + gui.border * 2 + gui.padding;
 }
 
-static int render_heros(int x, int y, int width, gobject* owner) {
-	if(!owner)
-		return 0;
-	auto y1 = y;
-	for(auto& e : gobject::getcol(hero_type)) {
-		if(e.getowner() != owner)
-			continue;
-		y += render_hero(x, y, width, &e, !e.isready(), 0);
-		y += gui.padding;
+static void render_board(gobject* owner) {
+	render_frame({0, 0, draw::getwidth(), draw::getheight()}, owner);
+	// Render heroes
+	auto x = getwidth() - gui.hero_window_width - gui.hero_window_border - gui.padding;
+	auto y = gui.padding + gui.hero_window_border;
+	if(owner) {
+		for(auto& e : gobject::getcol(hero_type)) {
+			if(e.getowner() != owner)
+				continue;
+			y += render_hero(x, y, gui.hero_window_width, &e, !e.isready(), 0);
+			y += gui.padding;
+		}
 	}
-	return y - y1;
 }
 
 static bool control_board(int id) {
@@ -292,12 +294,6 @@ bool draw::initializemap() {
 		return false;
 	map.convert(-32, 0);
 	return true;
-}
-
-static void render_board(gobject* owner) {
-	render_frame({0, 0, draw::getwidth(), draw::getheight()}, owner);
-	if(owner)
-		render_heros(getwidth() - gui.hero_window_width - gui.hero_window_border - gui.padding, gui.padding + gui.hero_window_border, gui.hero_window_width, owner);
 }
 
 void draw::report(const char* format) {

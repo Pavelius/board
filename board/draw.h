@@ -245,6 +245,7 @@ void					rectf(rect rc); // Draw rectangle area. Right and bottom side is one pi
 void					rectf(rect rc, color c1);
 void					rectf(rect rc, color c1, unsigned char alpha);
 void					rectx(rect rc, color c1);
+void					set(void(*proc)(int& x, int& y, int x0, int& w, const char* id));
 void					setcaption(const char* string);
 void					setclip(rect rc);
 inline void				setclip() { clipping.set(0, 0, getwidth(), getheight()); }

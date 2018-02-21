@@ -4,8 +4,12 @@
 
 using namespace draw;
 
-stringid*		textf_icons_id;
-textplugin*		draw::textplugin::first;
+textplugin*	draw::textplugin::first;
+static void (*draw_icon)(int& x, int& y, int x0, int& w, const char* name);
+
+void draw::set(void(*proc)(int& x, int& y, int x0, int& w, const char* id)) {
+	draw_icon = proc;
+}
 
 textplugin::textplugin(const char* name, proc e) : name(name), render(e) {
 	seqlink(this);
@@ -210,26 +214,8 @@ static int textfln(int x0, int y0, int width, const char** string, color c1, int
 			if(*p == ':')
 				p++;
 			w = 0;
-			if(metrics::icons) {
-				int index = 0;
-				if(textf_icons_id) {
-					for(auto p = textf_icons_id; p->id; p++) {
-						if(strcmp(p->id, temp) == 0) {
-							index = p->value;
-							break;
-						}
-					}
-				}
-				auto fr = metrics::icons->get(index);
-				w = fr.sx;
-				if(x + w > x2) {
-					if(max_width)
-						*max_width = imax(*max_width, x - x0);
-					x = x0;
-					y += draw::texth();
-				}
-				draw::image(x + fr.sx / 2, y, metrics::icons, index, 0);
-			}
+			if(draw_icon)
+				draw_icon(x, y, x0, w, temp);
 		} else {
 			const char* p2 = word(p);
 			w = draw::textw(p, p2 - p);
