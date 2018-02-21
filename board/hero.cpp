@@ -4,6 +4,7 @@ struct hero : gobject {
 
 	const char*	id;
 	const char*	name;
+	const char*	nameof;
 	const char*	text;
 	const char*	avatar;
 	gobject* traits[5];
@@ -49,6 +50,7 @@ struct hero : gobject {
 bsreq hero_type[] = {
 	BSREQ(hero, id, text_type),
 	BSREQ(hero, name, text_type),
+	BSREQ(hero, nameof, text_type),
 	BSREQ(hero, text, text_type),
 	BSREQ(hero, avatar, text_type),
 	BSREQ(hero, tactic, tactic_type),

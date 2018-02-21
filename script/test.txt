@@ -3,9 +3,9 @@
 #province sunrise_hills name("Холмы Рассвета") position(476, 400)
 #province deadly_swamp name("Болота погибели") position(509, 276)
 
-#trait general name("Генерал") defence(1)
+#trait general name("Генерал") defend(1)
 #trait hireling name("Наемник") attack(1)
-#trait carefull name("Осторожный") defence(1)
+#trait carefull name("Осторожный") defend(1)
 #trait bloody name("Кровожадный") attack(1)
 
 #gui opacity(220)
@@ -16,6 +16,7 @@
 #gui tips_width(200)
 #gui hero_width(64)
 #gui hero_window_width(200)
+#gui hero_window_border(4)
 #gui opacity_hilighted(200)
 
 #tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили внезапную атаку в надежде рассеять противника.")

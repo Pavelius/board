@@ -22,6 +22,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, border, number_type),
 	BSREQ(gui_info, window_width, number_type),
 	BSREQ(gui_info, hero_window_width, number_type),
+	BSREQ(gui_info, hero_window_border, number_type),
 	BSREQ(gui_info, tips_width, number_type),
 	BSREQ(gui_info, hero_width, number_type),
 	BSREQ(gui_info, padding, number_type),
@@ -37,7 +38,7 @@ static void debug_mouse() {
 	draw::text(2, draw::getheight() - 20, temp);
 }
 
-static void render_province(rect rc, point mouse, gobject* owner) {
+static void render_province(rect rc, point mouse, const gobject* owner) {
 	char temp[1024];
 	draw::state push;
 	draw::fore = colors::black;
@@ -76,7 +77,7 @@ static void render_province(rect rc, point mouse, gobject* owner) {
 	}
 }
 
-static void render_frame(rect rc) {
+static void render_frame(rect rc, const gobject* owner) {
 	draw::state push;
 	draw::area(rc); // Drag and drop analize this result
 	last_board = rc;
@@ -108,7 +109,8 @@ static void render_frame(rect rc) {
 		draw::rectf(last_board, colors::gray);
 	if(rc.width() > 0 && rc.height() > 0)
 		blit(*draw::canvas, rc.x1, rc.y1, rc.width(), rc.height(), 0, map, x1, y1);
-	render_province(last_board, last_mouse, current_player);
+	if(owner)
+		render_province(last_board, last_mouse, owner);
 #ifdef _DEBUG
 	debug_mouse();
 #endif
@@ -127,7 +129,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool disabled, const
 	}
 	auto owner = e->getowner();
 	rect rc = {x, y, x + width, y + height};
-	areas hittest = window(rc, disabled, true);
+	areas hittest = window(rc, disabled, true, gui.hero_window_border);
 	//if(owner)
 	//	draw::shield(x + drw.hero_width - 20, y + 18, owner->getimage());
 	int x1 = x;
@@ -216,8 +218,10 @@ void gobject::setuiactive() {
 	current_player = this;
 }
 
-areas draw::window(rect rc, bool disabled, bool hilight) {
-	rc.offset(-gui.border, -gui.border);
+areas draw::window(rect rc, bool disabled, bool hilight, int border) {
+	if(border == 0)
+		border = gui.border;
+	rc.offset(-border, -border);
 	color c = colors::form;
 	auto rs = draw::area(rc);
 	auto op = gui.opacity;
@@ -290,10 +294,15 @@ bool draw::initializemap() {
 	return true;
 }
 
+static void render_board(gobject* owner) {
+	render_frame({0, 0, draw::getwidth(), draw::getheight()}, owner);
+	if(owner)
+		render_heros(getwidth() - gui.hero_window_width - gui.hero_window_border - gui.padding, gui.padding + gui.hero_window_border, gui.hero_window_width, owner);
+}
+
 void draw::report(const char* format) {
 	while(ismodal()) {
-		render_frame({0, 0, draw::getwidth(), draw::getheight()});
-		render_heros(getwidth() - gui.hero_window_width - gui.border - gui.padding, 20, gui.hero_window_width, current_player);
+		render_board(current_player);
 		draw::window(100, 100, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))
