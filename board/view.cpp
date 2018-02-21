@@ -299,7 +299,7 @@ bool draw::initializemap() {
 void draw::report(const char* format) {
 	while(ismodal()) {
 		render_board(current_player);
-		draw::window(100, 100, gui.window_width, format);
+		draw::window(gui.border*2, gui.border*2, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))
 			continue;

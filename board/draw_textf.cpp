@@ -1,6 +1,5 @@
 #include "crt.h"
 #include "draw.h"
-#include "stringid.h"
 
 using namespace draw;
 
@@ -33,10 +32,10 @@ static bool match(const char** string, const char* name) {
 
 static int render_control(const char** result, int x, int y, int width) {
 	struct element {
-		const char*		name;
-		const char*		label;
-		const char*		tips;
-		int				value;
+		const char*	id;
+		const char*	label;
+		const char*	tips;
+		int			value;
 	};
 	element e = {0};
 	char type[64];
@@ -69,8 +68,8 @@ static int render_control(const char** result, int x, int y, int width) {
 			}
 			p = zskipsp(p);
 		}
-		if(strcmp("name", name) == 0)
-			e.name = value_text;
+		if(strcmp("id", name) == 0)
+			e.id = value_text;
 		else if(strcmp("tips", name) == 0)
 			e.tips = value_text;
 		else if(strcmp("label", name) == 0)
@@ -84,7 +83,7 @@ static int render_control(const char** result, int x, int y, int width) {
 	*result = p;
 	auto pm = draw::textplugin::find(type);
 	if(pm)
-		return pm->render(x, y, width, e.name, e.value, e.label, e.tips);
+		return pm->render(x, y, width, e.id, e.value, e.label, e.tips);
 	return 0;
 }
 

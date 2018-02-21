@@ -10,13 +10,13 @@
 
 #gui opacity(220)
 #gui opacity_disabled(50)
-#gui border(16)
+#gui border(8)
 #gui padding(4)
 #gui window_width(400)
 #gui tips_width(200)
 #gui hero_width(64)
 #gui hero_window_width(200)
-#gui hero_window_border(4)
+#gui hero_window_border(8)
 #gui opacity_hilighted(200)
 
 #tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили внезапную атаку в надежде рассеять противника.")

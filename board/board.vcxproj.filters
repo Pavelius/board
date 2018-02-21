@@ -212,9 +212,6 @@
     <ClInclude Include="rect.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="stringid.h">
-      <Filter>System</Filter>
-    </ClInclude>
     <ClInclude Include="command.h">
       <Filter>System</Filter>
     </ClInclude>

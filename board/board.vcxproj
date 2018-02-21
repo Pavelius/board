@@ -139,7 +139,6 @@
     <ClInclude Include="point.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="stringcreator.h" />
-    <ClInclude Include="stringid.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="view.h" />
     <ClInclude Include="win.h" />

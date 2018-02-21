@@ -103,9 +103,6 @@ struct sprite : public pma {
 	unsigned			cicles; // count of anim structure
 	unsigned			cicles_offset;
 	frame				frames[1];
-	frame&				add();
-	frame&				addlast();
-	void*				add(const void* data, int count);
 	int					esize() const { return frames[0].offset - (sizeof(sprite) + sizeof(frame)*(count - 1)); }
 	const unsigned char* edata() const { return (const unsigned char*)this + sizeof(sprite) + sizeof(frame)*(count - 1); }
 	int					ganim(int index, int tick);
@@ -114,9 +111,6 @@ struct sprite : public pma {
 	inline int			gindex(int index) const { return *((short unsigned*)((cicle*)offs(cicles_offset) + cicles) + index); }
 	int					glyph(unsigned sym) const;
 	const unsigned char* offs(unsigned o) const { return (unsigned char*)this + o; }
-	void				setup(int count, int pallette_count = 0, int cicles = 0, int cicles_indexes = 0);
-	int					store(const unsigned char* p, int width, int w, int h, int ox, int oy, sprite::encodes mode, unsigned char shadow_index = 1, color* pallette = 0, int frame_index = -1, unsigned char transparent_index = 0);
-	void				write(const char* url);
 };
 typedef const char* (*proctext)(char* result, void* object);
 namespace hot {

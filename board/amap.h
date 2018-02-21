@@ -13,20 +13,18 @@ class amap {
 	unsigned count;
 	unsigned count_maximum;
 	void reserve() {
-		if(data) {
-			if(count_maximum >= count)
-				return;
-		}
+		if(data && count_maximum >= count)
+			return;
 		count_maximum = rmoptimal(count + 1);
 		data = (element*)rmreserve(data, count_maximum*sizeof(element));
 	}
 public:
 	typedef T1 key_type;
 	typedef T2 value_type;
-	amap() : data(0), count(0) {}
+	constexpr amap() : data(0), count(0) {}
 	~amap() { if(data) rmreserve(data, 0); }
-	element* begin() { return data; }
-	element* end() { return data + count; }
+	constexpr element* begin() { return data; }
+	constexpr element* end() { return data + count; }
 	T2* add(T1 k) {
 		reserve();
 		auto p = data + (count++);
