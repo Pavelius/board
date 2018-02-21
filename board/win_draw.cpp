@@ -272,10 +272,6 @@ void draw::create(int x, int y, int width, int height, unsigned flags, int bpp) 
 	position.y1 = y;
 	position.x2 = position.x1 + minimum.x;
 	position.y2 = position.y1 + minimum.y;
-	// Set default window colors
-	hot::cursor = CursorArrow;
-	draw::font = metrics::font;
-	draw::fore = colors::text;
 	// Update current surface
 	if(draw::canvas)
 		draw::canvas->resize(width, height, bpp, true);

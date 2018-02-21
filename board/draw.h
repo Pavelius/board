@@ -166,7 +166,7 @@ struct state // Push state in stack
 	state();
 	~state();
 private:
-	color				fore;
+	color				fore, fore_stroke;
 	float				linw;
 	const sprite*		font; // glyph font
 	surface*			canvas;
@@ -185,6 +185,7 @@ struct textplugin {
 typedef int(*widgetproc)(int x, int y, int width, unsigned flags, const char* label, int value, void* data, const char* tips);
 extern rect				clipping; // Clipping area
 extern color			fore; // Foreground color (curently selected color)
+extern color			fore_stroke; // foreground stroke color
 extern const sprite*	font; // Currently selected font
 //
 int						aligned(int x, int width, unsigned state, int string_width);

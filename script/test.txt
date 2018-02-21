@@ -1,4 +1,7 @@
-#province black_wood name("Черный лес") level(2) position(204, 495)
+#province black_wood name("Черный лес") level(1) position(204, 495)
+#province white_harbor name("Белая гавань") level(2) position(616, 616)
+#province sunrise_hills name("Холмы Рассвета") position(476, 400)
+#province deadly_swamp name("Болота погибели") position(509, 276)
 
 #trait general name("Генерал") defence(1)
 #trait hireling name("Наемник") attack(1)

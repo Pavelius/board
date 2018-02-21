@@ -25,6 +25,7 @@ color colors::tabs::text;
 color colors::tabs::back;
 // Color context and font context
 color			draw::fore;
+color			draw::fore_stroke;
 const sprite*	draw::font;
 float			draw::linw = 1.0;
 bool			draw::mouseinput = true;
@@ -825,6 +826,7 @@ static void cpy32t(unsigned char* d, int d_scan, unsigned char* s, int s_scan, i
 draw::state::state() :
 	mouseinput(draw::mouseinput),
 	fore(draw::fore),
+	fore_stroke(draw::fore_stroke),
 	font(draw::font),
 	linw(draw::linw),
 	canvas(draw::canvas),
@@ -835,6 +837,7 @@ draw::state::~state() {
 	draw::font = this->font;
 	draw::mouseinput = this->mouseinput;
 	draw::fore = this->fore;
+	draw::fore_stroke = this->fore_stroke;
 	draw::linw = this->linw;
 	draw::clipping = this->clip;
 	draw::canvas = this->canvas;
@@ -2030,6 +2033,11 @@ void draw::blit(surface& dest, int x, int y, int width, int height, unsigned fla
 void draw::initialize() {
 	set_dark_theme();
 	command_app_initialize->execute();
+	// Set default window colors
+	hot::cursor = CursorArrow;
+	draw::font = metrics::font;
+	draw::fore = colors::text;
+	draw::fore_stroke = colors::blue;
 }
 
 bool draw::ismodal() {

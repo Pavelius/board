@@ -41,6 +41,7 @@ static void render_province(rect rc, point mouse, gobject* owner) {
 	char temp[1024];
 	draw::state push;
 	draw::fore = colors::black;
+	draw::fore_stroke = colors::white;
 	if(!draw::font)
 		return;
 	gobject* objects[64];
@@ -51,7 +52,7 @@ static void render_province(rect rc, point mouse, gobject* owner) {
 		point real_pos = e.getposition();
 		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
 		szprint(temp, "%1", e.getname());
-		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp);
+		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
 			//if(d < 16)
