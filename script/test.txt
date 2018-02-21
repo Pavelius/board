@@ -1,3 +1,5 @@
+#province black_wood name("Черный лес") level(2) position(204, 495)
+
 #trait general name("Генерал") defence(1)
 #trait hireling name("Наемник") attack(1)
 #trait carefull name("Осторожный") defence(1)
@@ -22,8 +24,6 @@
 
 #player red name("Имперцы") nameof("имперцев")
 #player green name("Орки") nameof("орков")
-
-#province black_wood name("Черный лес") level(2)
 
 #hero gordek name("Гордек") nameof("Гордека") avatar("art/portraits/gordek.bmp") traits(bloody, hireling) owner(red)
 

@@ -5,6 +5,7 @@
 #include "bsdata.h"
 #include "crt.h"
 #include "messages.h"
+#include "point.h"
 #include "stringcreator.h"
 
 #pragma once
@@ -52,6 +53,7 @@ struct gobject {
 	virtual const char*			getnameof() const { return gets("nameof"); }
 	virtual gobject*			getowner() const { return (gobject*)get("owner"); }
 	virtual aref<gobject*>		getpenalty() const { return aref<gobject*>(); }
+	virtual point				getposition() const { return {0, 0}; }
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
@@ -90,6 +92,7 @@ bsreq							enchantment_type[];
 bsreq							event_type[];
 bsreq							hero_type[];
 bsreq							msgcombat_type[];
+bsreq							point_type[];
 bsreq							province_type[];
 bsreq							player_type[];
 bsreq							tactic_type[];

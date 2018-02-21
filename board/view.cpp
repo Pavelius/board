@@ -6,11 +6,13 @@ using namespace draw;
 static point camera;
 static point camera_drag;
 static rect last_board;
+static point last_mouse;
 static point tooltips_point;
 static short tooltips_width;
 static char tooltips_text[4096];
 static surface map;
 static gobject* current_player;
+static gobject* current_province;
 extern rect sys_static_area;
 
 static bsreq gui_type[] = {
@@ -26,10 +28,42 @@ static bsreq gui_type[] = {
 };
 gui_info gui; BSGLOB(gui);
 
+static void debug_mouse() {
+	char temp[128];
+	draw::state state;
+	draw::fore = colors::text;
+	draw::font = metrics::font;
+	szprint(temp, "mouse %1i, %2i, map mouse %3i, %4i", hot::mouse.x, hot::mouse.y, last_mouse.x, last_mouse.y);
+	draw::text(2, draw::getheight() - 20, temp);
+}
+
+static void render_province(rect rc, point mouse) {
+	draw::state push;
+	draw::font = metrics::h1;
+	draw::fore = colors::text;
+	if(!draw::font)
+		return;
+	for(auto& e : gobject::getcol(province_type)) {
+		if(!e.isvalid())
+			continue;
+		point real_pos = e.getposition();
+		point pt = {(short)(real_pos.x - rc.x1), (short)(real_pos.y - rc.y1)};
+		char temp[260]; szprint(temp, "%1 (%2i)", e.getname(), e.getindex());
+		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp);
+		if(hot::key == MouseLeft && hot::pressed) {
+			auto d = distance(mouse, real_pos);
+			//if(d < 16)
+			//	draw::execute(ChooseProvince, e.getid());
+		}
+	}
+}
+
 static void render_frame(rect rc) {
 	draw::state push;
 	draw::area(rc); // Drag and drop analize this result
 	last_board = rc;
+	last_mouse.x = (short)(hot::mouse.x - rc.x1 + camera.x);
+	last_mouse.y = (short)(hot::mouse.y - rc.y1 + camera.y);
 	int w = rc.width();
 	int h = rc.height();
 	int x1 = camera.x;
@@ -52,13 +86,13 @@ static void render_frame(rect rc) {
 		rc.y2 -= y2 - map.height;
 		y2 = map.height;
 	}
-	if((rc.x1 != last_board.x1 || rc.y1 != last_board.y1 || rc.y2 != last_board.y2 || rc.x2 != last_board.x2)
-		|| drag::active("board"))
+	if(rc.x1 != last_board.x1 || rc.y1 != last_board.y1 || rc.y2 != last_board.y2 || rc.x2 != last_board.x2)
 		draw::rectf(last_board, colors::gray);
 	if(rc.width() > 0 && rc.height() > 0)
 		blit(*draw::canvas, rc.x1, rc.y1, rc.width(), rc.height(), 0, map, x1, y1);
+	render_province(last_board, last_mouse);
 #ifdef _DEBUG
-	//debug_mouse();
+	debug_mouse();
 #endif
 }
 
@@ -171,7 +205,7 @@ areas draw::window(rect rc, bool disabled, bool hilight) {
 	auto op = gui.opacity;
 	if(disabled)
 		op = op / 2;
-	else if(hilight && !disabled && (rs==AreaHilited || rs==AreaHilitedPressed))
+	else if(hilight && !disabled && (rs == AreaHilited || rs == AreaHilitedPressed))
 		op = gui.opacity_hilighted;
 	draw::rectf(rc, c, op);
 	draw::rectb(rc, c);
@@ -204,7 +238,7 @@ COMMAND(after_render) {
 	draw::font = metrics::font;
 	if(draw::font) {
 		rect rc;
-		rc.x1 = tooltips_point.x + tooltips_width + gui.border*2 + gui.padding;
+		rc.x1 = tooltips_point.x + tooltips_width + gui.border * 2 + gui.padding;
 		rc.y1 = tooltips_point.y;
 		rc.x2 = rc.x1 + gui.tips_width;
 		rc.y2 = rc.y1;

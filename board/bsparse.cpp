@@ -253,6 +253,8 @@ struct bsparse : bsfile {
 			req->set(p, value);
 		else if(req->type->reference)
 			req->set(p, (int)value_object);
+		else
+			storevalue((void*)req->ptr(object), req->type + index, 0);
 	}
 
 	const char* getbasename(const bsreq* type) const {
