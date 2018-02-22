@@ -142,6 +142,9 @@
     <ClCompile Include="draw_icons.cpp">
       <Filter>View</Filter>
     </ClCompile>
+    <ClCompile Include="color_type.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">
@@ -229,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="amap.h">
       <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="color.h">
+      <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -26,6 +26,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, tips_width, number_type),
 	BSREQ(gui_info, hero_width, number_type),
 	BSREQ(gui_info, padding, number_type),
+	{}
 };
 gui_info gui; BSGLOB(gui);
 

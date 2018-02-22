@@ -12,12 +12,10 @@ struct gui_info {
 extern gui_info gui;
 
 namespace draw {
-void			avatar(int x, int y, const char* id);
-bool			initializemap();
-void			menu();
-bool			read(surface& e, const char* default_url, const char* file_name);
-void			report(const char* format);
-void			tooltips(int x, int y, int width, const char* format, ...);
-areas			window(rect rc, bool disabled = false, bool hilight = false, int border = 0);
-int				window(int x, int y, int width, const char* string);
+void avatar(int x, int y, const char* id);
+bool initializemap();
+void report(const char* format);
+void tooltips(int x, int y, int width, const char* format, ...);
+areas window(rect rc, bool disabled = false, bool hilight = false, int border = 0);
+int	window(int x, int y, int width, const char* string);
 }

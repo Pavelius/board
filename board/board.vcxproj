@@ -129,6 +129,7 @@
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="collection.h" />
+    <ClInclude Include="color.h" />
     <ClInclude Include="command.h" />
     <ClInclude Include="converter.h" />
     <ClInclude Include="crt.h" />
@@ -154,6 +155,7 @@
     <ClCompile Include="bstream.cpp" />
     <ClCompile Include="collection.cpp" />
     <ClCompile Include="color.cpp" />
+    <ClCompile Include="color_type.cpp" />
     <ClCompile Include="command.cpp" />
     <ClCompile Include="converter.cpp" />
     <ClCompile Include="crt.cpp" />
