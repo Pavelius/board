@@ -25,6 +25,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, hero_window_border, number_type),
 	BSREQ(gui_info, tips_width, number_type),
 	BSREQ(gui_info, hero_width, number_type),
+	BSREQ(gui_info, button_width, number_type),
 	BSREQ(gui_info, padding, number_type),
 };
 gui_info gui; BSGLOB(gui);
@@ -179,6 +180,15 @@ static void render_board(gobject* owner) {
 	}
 }
 
+static void choose_accept() {
+	draw::breakmodal(1);
+}
+
+TEXTPLUGIN(accept) {
+	return draw::button(x + width - gui.button_width, y, gui.button_width,
+		value, 0, label, tips, choose_accept);
+}
+
 static bool control_board(int id) {
 	const int step = 32;
 	switch(id) {
@@ -198,7 +208,7 @@ static bool control_board(int id) {
 		break;
 	case MouseLeft:
 		if(hot::pressed) {
-			if(last_board == sys_static_area) {
+			if(last_board == hot::hilite) {
 				draw::drag::begin("board");
 				camera_drag = camera;
 			}
@@ -299,7 +309,7 @@ bool draw::initializemap() {
 void draw::report(const char* format) {
 	while(ismodal()) {
 		render_board(current_player);
-		draw::window(gui.border*2, gui.border*2, gui.window_width, format);
+		draw::window(gui.border * 2, gui.border * 2, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))
 			continue;
@@ -320,4 +330,17 @@ void draw::avatar(int x, int y, const char* id) {
 		}
 	}
 	blit(*draw::canvas, x, y, gui.hero_width, gui.hero_width, 0, *p, 0, 0);
+}
+
+int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)()) {
+	const int button_stroke = 2;
+	x += button_stroke; y += button_stroke; width -= button_stroke * 2;
+	rect rc = {x, y, x + width, y + 4*2 + draw::texth()};
+	//focusing(id, flags, rc);
+	if(buttonh(rc, ischecked(flags), isfocused(flags), isdisabled(flags), true,
+		label, 0, false, tips)
+		|| (isfocused(flags) && hot::key == KeyEnter)) {
+		execute(callback);
+	}
+	return rc.height() + 2*button_stroke;
 }

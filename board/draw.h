@@ -3,6 +3,11 @@
 
 #pragma once
 
+#define TEXTPLUGIN(control_name)\
+static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips);\
+static draw::textplugin bottom_accept_plugin(#control_name, control_name);\
+static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips)
+
 enum draw_event_s {
 	// input events
 	InputSymbol = 0xED00, InputTimer, InputUpdate, InputNoUpdate, InputExecute,
@@ -122,6 +127,7 @@ extern point			mouse; // current mouse coordinates
 extern bool				pressed; // flag if any of mouse keys is pressed
 extern int				param; // Draw command context. Application can extend this structure
 extern rect				element; // Element coordinates
+extern rect				hilite; // Most valid hilited rectangle
 }
 namespace colors {
 extern color			active;
@@ -264,6 +270,13 @@ int						textw(const char* string, int count = -1);
 int						textw(rect& rc, const char* string);
 int						textw(sprite* font);
 void					updatewindow();
+}
+namespace draw {
+int						button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0);
+bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, color value, const char* string, int key, bool press, const char* tips = 0);
+bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false, const char* tips = 0);
+bool					buttonv(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false);
+void					tooltips(int x, int y, int width, const char* format, ...);
 }
 int						distance(point p1, point p2);
 int						isqrt(int num);

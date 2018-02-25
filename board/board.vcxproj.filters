@@ -142,6 +142,9 @@
     <ClCompile Include="draw_icons.cpp">
       <Filter>View</Filter>
     </ClCompile>
+    <ClCompile Include="draw_button.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

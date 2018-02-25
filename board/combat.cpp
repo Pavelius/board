@@ -151,5 +151,6 @@ bool gobject::resolve(char* result, gobject* attacker_player, gobject* defender_
 	zcat(result, " "); szprint(zend(result), msgcombat.winner, winner.getside());
 	attackers.applycasualty(zend(p));
 	defenders.applycasualty(zend(p));
+	zcat(p, "\n$(accept label=\"Далее\")");
 	return &winner == &attackers;
 }
