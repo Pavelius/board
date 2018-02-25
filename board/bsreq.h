@@ -32,36 +32,36 @@ struct bsreq {
 		static constexpr int size = sizeof(T);
 		static constexpr int count = 0;
 	};
-	const char*			id; // field identifier
-	unsigned			offset; // offset from begin of class or object
-	unsigned			size; // size of single element
-	unsigned			lenght; // total size in bytes of all field (array has size*count)
-	unsigned			count; // count of elements
-	const bsreq*		type; // metadata of element
-	unsigned char		reference; // 1+ is reference
-	unsigned char		isenum;
+	const char*		id; // field identifier
+	unsigned		offset; // offset from begin of class or object
+	unsigned		size; // size of single element
+	unsigned		lenght; // total size in bytes of all field (array has size*count)
+	unsigned		count; // count of elements
+	const bsreq*	type; // metadata of element
+	unsigned char	reference; // 1+ is reference
+	unsigned char	isenum;
 	//
 	operator bool() const { return id != 0; }
 	//
-	const bsreq*		find(const char* name) const;
-	const bsreq*		find(const char* name, const bsreq* type) const;
-	int					get(const void* p) const;
-	const char*			getdata(char* result, const char* id, const void* object, bool tobuffer) const;
-	const bsreq*		getkey() const;
-	bool				issimple() const { return type == 0; }
-	bool				match(const void* p, const char* name) const;
-	inline const char*	ptr(const void* data) const { return (const char*)data + offset; }
-	inline const char*	ptr(const void* data, int index) const { return (const char*)data + offset + index*size; }
-	void				set(const void* p, int value) const;
-	void				setdata(const char* result, const char* id, void* object) const;
+	const bsreq*	find(const char* name) const;
+	const bsreq*	find(const char* name, const bsreq* type) const;
+	int				get(const void* p) const;
+	const char*		getdata(char* result, const char* id, const void* object, bool tobuffer) const;
+	const bsreq*	getkey() const;
+	bool			issimple() const { return type == 0; }
+	bool			match(const void* p, const char* name) const;
+	const char*		ptr(const void* data) const { return (const char*)data + offset; }
+	const char*		ptr(const void* data, int index) const { return (const char*)data + offset + index*size; }
+	void			set(const void* p, int value) const;
+	void			setdata(const char* result, const char* id, void* object) const;
 };
 struct bsval {
-	const bsreq*		type;
-	void*				data;
+	const bsreq*	type;
+	void*			data;
 	operator bool() const { return data != 0; }
-	int					get() const { return type->get(type->ptr(data)); }
-	void				set(int value) { type->set(type->ptr(data), value); }
+	int				get() const { return type->get(type->ptr(data)); }
+	void			set(int value) { type->set(type->ptr(data), value); }
 };
-extern bsreq			number_type[]; // standart integer value
-extern bsreq			text_type[]; // stantart zero ending string
-extern bsreq			bsreq_type[]; // requisit metadata
+extern bsreq		number_type[]; // standart integer value
+extern bsreq		text_type[]; // stantart zero ending string
+extern bsreq		bsreq_type[]; // requisit metadata
