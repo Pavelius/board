@@ -177,7 +177,7 @@ void stringcreator::print(char* result, const char* src, ...) {
 	printv(result, result + maximum_string_lenght, src, xva_start(src));
 }
 
-void stringcreator::prints(char* result, char* result_end, const char* src, ...) {
+void stringcreator::prints(char* result, const char* result_end, const char* src, ...) {
 	printv(result, result_end, src, xva_start(src));
 }
 
@@ -206,5 +206,11 @@ char* szprintv(char* result, const char* src, const char* vl) {
 char* szprint(char* result, const char* src, ...) {
 	stringcreator e;
 	e.printv(result, result + maximum_string_lenght, src, xva_start(src));
+	return result;
+}
+
+char* szprints(char* result, const char* result_maximum, const char* src, ...) {
+	stringcreator e;
+	e.printv(result, result_maximum, src, xva_start(src));
 	return result;
 }

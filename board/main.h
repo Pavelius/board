@@ -101,6 +101,7 @@ struct driver : stringcreator {
 	const char*					province;
 	gender_s					gender;
 	driver() : name(""), province(""), gender(Male) {}
+	void						addbutton(char* result, const char* result_max, const char* name, const char* label);
 	void						parseidentifier(char* result, const char* result_max, const char* identifier) override;
 };
 }

@@ -23,6 +23,6 @@ struct stringcreator {
 	void				printv(char* result, const char* result_max, const char* format, const char* format_param);
 	void				print(char* result, const char* format, ...);
 	void				printn(char* result, const char* format, ...);
-	void				prints(char* result, char* result_end, const char* src, ...);
+	void				prints(char* result, const char* result_end, const char* src, ...);
 	void				println(char* result, const char* format, ...);
 };

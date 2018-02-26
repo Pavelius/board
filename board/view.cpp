@@ -190,18 +190,10 @@ static bool control_board(int id) {
 	switch(id) {
 		//case MouseWheelUp: scale += 0.005; break;
 		//case MouseWheelDown: scale -= 0.005; break;
-	case KeyLeft:
-		camera.x -= step;
-		break;
-	case KeyRight:
-		camera.x += step;
-		break;
-	case KeyUp:
-		camera.y -= step;
-		break;
-	case KeyDown:
-		camera.y += step;
-		break;
+	case KeyLeft: camera.x -= step; break;
+	case KeyRight: camera.x += step; break;
+	case KeyUp: camera.y -= step; break;
+	case KeyDown: camera.y += step; break;
 	case MouseLeft:
 		if(hot::pressed) {
 			if(last_board == sys_static_area) {
@@ -209,6 +201,8 @@ static bool control_board(int id) {
 				camera_drag = camera;
 			}
 		}
+		break;
+	case AcceptButton:
 		break;
 	default:
 		if(draw::drag::active("board")) {
