@@ -1,1 +1,1 @@
-Error in 'script/test.txt', line 17, column 18: Not found member 'button_width' in database 'gui'
+Error in 'script/test.txt', line 18, column 18: Not found member 'button_width' in database 'gui'

@@ -126,6 +126,7 @@
     <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
     <ClInclude Include="bsdata.h" />
+    <ClInclude Include="bsdoc.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
     <ClInclude Include="collection.h" />
@@ -140,6 +141,7 @@
     <ClInclude Include="point.h" />
     <ClInclude Include="rect.h" />
     <ClInclude Include="stringcreator.h" />
+    <ClInclude Include="stringtree.h" />
     <ClInclude Include="surface.h" />
     <ClInclude Include="view.h" />
     <ClInclude Include="win.h" />
@@ -150,6 +152,7 @@
     <ClCompile Include="amem.cpp" />
     <ClCompile Include="bscpp.cpp" />
     <ClCompile Include="bsdata.cpp" />
+    <ClCompile Include="bsdoc.cpp" />
     <ClCompile Include="bsparse.cpp" />
     <ClCompile Include="bsreq.cpp" />
     <ClCompile Include="bstream.cpp" />
@@ -178,6 +181,7 @@
     <ClCompile Include="point.cpp" />
     <ClCompile Include="point_type.cpp" />
     <ClCompile Include="print.cpp" />
+    <ClCompile Include="stringtree.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="surface_serial.cpp" />
     <ClCompile Include="tactic.cpp" />

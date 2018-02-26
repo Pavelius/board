@@ -12,7 +12,7 @@ struct color {
 	color		darken() const;
 	int			find(const void* pallette, int count) const;
 	static void	flipv(unsigned char* bits, unsigned scanline, int height);
-	char*		getname(char* temp) const;
+	char*		getname(char* result, const char* result_max) const;
 	color		gray() const;
 	color		lighten() const;
 	color		mix(const color c1, unsigned char s = 128) const;

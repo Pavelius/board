@@ -145,6 +145,15 @@
     <ClCompile Include="color_type.cpp">
       <Filter>System</Filter>
     </ClCompile>
+    <ClCompile Include="draw_button.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="bsdoc.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
+    <ClCompile Include="stringtree.cpp">
+      <Filter>System</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">
@@ -234,6 +243,12 @@
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="color.h">
+      <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="bsdoc.h">
+      <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="stringtree.h">
       <Filter>System</Filter>
     </ClInclude>
   </ItemGroup>

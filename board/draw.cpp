@@ -40,7 +40,7 @@ point			hot::mouse; // current mouse coordinates
 bool			hot::pressed; // flag if any of mouse keys is pressed
 int				hot::param; // Event numeric parameter (optional)
 rect			hot::element; // Event rectange (optional)
-rect			hot::hilite; // Most valid hilite
+rect			hot::hilite; // Event rectange (optional)
 bool			sys_optimize_mouse_move = true;
 rect			sys_static_area;
 // Locale draw variables

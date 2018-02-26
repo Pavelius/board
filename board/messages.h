@@ -6,6 +6,7 @@ struct msgmenu_info {
 	const char* loadgame;
 	const char* newgame;
 	const char* savegame;
+	const char* accept;
 };
 extern msgmenu_info msgmenu;
 struct msgcombat_info {

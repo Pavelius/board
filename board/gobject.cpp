@@ -40,7 +40,7 @@ int gobject::fix(tipinfo* ti, int value) const {
 		char temp[260];
 		zcpy(temp, getname());
 		szupper(temp, 1);
-		szprint(zend(ti->result), ti->text, value, temp);
+		szprints(zend(ti->result), ti->result_max, ti->text, value, temp);
 		if(ti->separator)
 			zcat(ti->result, ti->separator);
 	}
@@ -186,4 +186,8 @@ char* gobject::getpresent(char* result, unsigned maximum, gobject** objects, uns
 		count_in_row = 1;
 	}
 	return result;
+}
+
+void gobject::addbutton(char* result, const char* result_max, const char* name, const char* label) {
+	szprints(result, result_max, "\n$(%1 label=\"%2\")", name, label);
 }

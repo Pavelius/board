@@ -1,6 +1,10 @@
 #include "view.h"
 #include "command.h"
 
+enum command_s { NoCommand,
+	AcceptButton, YenButton, NoButton,
+};
+
 using namespace draw;
 
 static point camera;
@@ -20,12 +24,13 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, opacity_disabled, number_type),
 	BSREQ(gui_info, opacity_hilighted, number_type),
 	BSREQ(gui_info, border, number_type),
+	BSREQ(gui_info, control_border, number_type),
+	BSREQ(gui_info, button_width, number_type),
 	BSREQ(gui_info, window_width, number_type),
 	BSREQ(gui_info, hero_window_width, number_type),
 	BSREQ(gui_info, hero_window_border, number_type),
 	BSREQ(gui_info, tips_width, number_type),
 	BSREQ(gui_info, hero_width, number_type),
-	BSREQ(gui_info, button_width, number_type),
 	BSREQ(gui_info, padding, number_type),
 	{}
 };
@@ -36,7 +41,7 @@ static void debug_mouse() {
 	draw::state state;
 	draw::fore = colors::text;
 	draw::font = metrics::font;
-	szprint(temp, "mouse %1i, %2i, map mouse %3i, %4i", hot::mouse.x, hot::mouse.y, last_mouse.x, last_mouse.y);
+	szprints(temp, endofs(temp), "mouse %1i, %2i, map mouse %3i, %4i", hot::mouse.x, hot::mouse.y, last_mouse.x, last_mouse.y);
 	draw::text(2, draw::getheight() - 20, temp);
 }
 
@@ -54,7 +59,7 @@ static void render_province(rect rc, point mouse, const gobject* owner) {
 		draw::font = metrics::h1;
 		point real_pos = e.getposition();
 		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
-		szprint(temp, "%1", e.getname());
+		szprints(temp, endofs(temp), "%1", e.getname());
 		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
@@ -66,7 +71,7 @@ static void render_province(rect rc, point mouse, const gobject* owner) {
 		unsigned count;
 		count = owner->getheroes(objects, 1, &e);
 		if(count) {
-			szprint(temp, "%1", objects[0]->getname());
+			szprints(temp, endofs(temp), "%1", objects[0]->getname());
 			rect rc = {0, 0, 200, 0}; draw::textw(rc, temp);
 			pt.y += draw::text({pt.x - rc.width() / 2, pt.y, pt.x + rc.width() / 2, pt.y + rc.height()}, temp, AlignCenter);
 		}
@@ -124,7 +129,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool disabled, const
 	draw::font = metrics::font;
 	auto pa = e->getavatar();
 	int height = gui.hero_width;
-	szprint(zend(temp), "###%1\n", e->getname());
+	szprints(zend(temp), endofs(temp), "###%1\n", e->getname());
 	for(auto p : e->getbonuses()) {
 		zcat(temp, p->getname());
 		zcat(temp, "\n:::");
@@ -159,7 +164,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool disabled, const
 				continue;
 			if(ps[0])
 				zcat(temp, "\n:::");
-			szprint(zend(temp), "%+2i %1", pn, value);
+			szprints(zend(temp), endofs(temp), "%+2i %1", pn, value);
 		}
 		tooltips(x, y, width, temp);
 	}
@@ -181,32 +186,15 @@ static void render_board(gobject* owner) {
 	}
 }
 
-static void choose_accept() {
-	draw::breakmodal(1);
-}
-
-TEXTPLUGIN(accept) {
-	return draw::button(x + width - gui.button_width, y, gui.button_width,
-		value, 0, label, tips, choose_accept);
-}
-
 static bool control_board(int id) {
 	const int step = 32;
 	switch(id) {
 		//case MouseWheelUp: scale += 0.005; break;
 		//case MouseWheelDown: scale -= 0.005; break;
-	case KeyLeft:
-		camera.x -= step;
-		break;
-	case KeyRight:
-		camera.x += step;
-		break;
-	case KeyUp:
-		camera.y -= step;
-		break;
-	case KeyDown:
-		camera.y += step;
-		break;
+	case KeyLeft: camera.x -= step; break;
+	case KeyRight: camera.x += step; break;
+	case KeyUp: camera.y -= step; break;
+	case KeyDown: camera.y += step; break;
 	case MouseLeft:
 		if(hot::pressed) {
 			if(last_board == hot::hilite) {
@@ -214,6 +202,8 @@ static bool control_board(int id) {
 				camera_drag = camera;
 			}
 		}
+		break;
+	case AcceptButton:
 		break;
 	default:
 		if(draw::drag::active("board")) {
@@ -263,7 +253,7 @@ void draw::tooltips(int x1, int y1, int width, const char* format, ...) {
 	tooltips_point.x = x1;
 	tooltips_point.y = y1;
 	tooltips_width = width;
-	szprintv(tooltips_text, format, xva_start(format));
+	szprintv(tooltips_text, tooltips_text + sizeof(tooltips_text) - 1, format, xva_start(format));
 }
 
 COMMAND(after_render) {
@@ -307,7 +297,7 @@ bool draw::initializemap() {
 	return true;
 }
 
-void draw::report(const char* format) {
+static int render_report(const char* format) {
 	while(ismodal()) {
 		render_board(current_player);
 		draw::window(gui.border * 2, gui.border * 2, gui.window_width, format);
@@ -315,6 +305,11 @@ void draw::report(const char* format) {
 		if(control_board(id))
 			continue;
 	}
+	return getresult();
+}
+
+void draw::report(const char* format) {
+	render_report(format);
 }
 
 void draw::avatar(int x, int y, const char* id) {
@@ -334,14 +329,24 @@ void draw::avatar(int x, int y, const char* id) {
 }
 
 int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)()) {
-	const int button_stroke = 2;
-	x += button_stroke; y += button_stroke; width -= button_stroke * 2;
-	rect rc = {x, y, x + width, y + 4*2 + draw::texth()};
-	//focusing(id, flags, rc);
+	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()}; rc.offset(gui.control_border, gui.control_border);
 	if(buttonh(rc, ischecked(flags), isfocused(flags), isdisabled(flags), true,
 		label, 0, false, tips)
 		|| (isfocused(flags) && hot::key == KeyEnter)) {
-		execute(callback);
+		if(callback)
+			execute(callback);
+		else
+			execute(id);
 	}
-	return rc.height() + 2*button_stroke;
+	return rc.height() + gui.padding * 2;
+}
+
+static void choose_accept() {
+	draw::breakmodal(AcceptButton);
+}
+
+TEXTPLUGIN(accept) {
+	if(hot::key == KeyEnter)
+		execute(choose_accept);
+	return button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, label, tips, choose_accept);
 }

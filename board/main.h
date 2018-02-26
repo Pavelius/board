@@ -34,15 +34,17 @@ enum gender_s : unsigned char {
 };
 struct tipinfo {
 	char*						result;
+	const char*					result_max;
 	const char*					text;
 	const char*					separator;
-	tipinfo(char* result) :result(result), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
+	tipinfo(char* result, const char* result_max) :result(result), result_max(result_max), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
 };
 struct gobject {
 	void						act(char* result, const char* format, ...) const;
 	void						actv(char* result, const char* format, const char* param) const;
 	void						add(const char* id, int value);
 	void						add(const char* id, int value, int index);
+	static void					addbutton(char* result, const char* result_max, const char* name, const char* label);
 	static gobject*				create(const bsreq* meta);
 	static gobject*				create(const bsreq* meta, const char* id);
 	static gobject*				find(bsreq* type, const char* id);
@@ -76,7 +78,7 @@ struct gobject {
 	bool						is(bsreq* type) const;
 	bool						isready() const { return getprovince() == 0; }
 	virtual bool				isvalid() const { return this != 0; }
-	bool						resolve(char* result, gobject* attacker_player, gobject* defender_player) const;
+	bool						resolve(char* result, const char* result_max, gobject* attacker_player, gobject* defender_player) const;
 	void						set(const char* id, int value);
 	void						set(const char* id, int value, int index);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }
@@ -101,6 +103,7 @@ struct driver : stringcreator {
 	const char*					province;
 	gender_s					gender;
 	driver() : name(""), province(""), gender(Male) {}
+	void						addbutton(char* result, const char* result_max, const char* name, const char* label);
 	void						parseidentifier(char* result, const char* result_max, const char* identifier) override;
 };
 }

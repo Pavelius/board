@@ -3,9 +3,8 @@
 
 #pragma once
 
-#define TEXTPLUGIN(control_name)\
-static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips);\
-static draw::textplugin bottom_accept_plugin(#control_name, control_name);\
+#define TEXTPLUGIN(control_name) static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips);\
+static textplugin contol_name##_plugin(#control_name, control_name);\
 static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips)
 
 enum draw_event_s {
@@ -127,7 +126,7 @@ extern point			mouse; // current mouse coordinates
 extern bool				pressed; // flag if any of mouse keys is pressed
 extern int				param; // Draw command context. Application can extend this structure
 extern rect				element; // Element coordinates
-extern rect				hilite; // Most valid hilited rectangle
+extern rect				hilite; // Currently hilited rectangle
 }
 namespace colors {
 extern color			active;

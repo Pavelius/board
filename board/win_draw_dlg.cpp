@@ -11,7 +11,7 @@ void dlginf(const char* title, const char* text) {
 
 void dlgerr(const char* title, const char* format, ...) {
 	char temp[4096];
-	szprintv(temp, format, xva_start(format));
+	szprintv(temp, temp + sizeof(temp) - 1, format, xva_start(format));
 	MessageBoxA(GetActiveWindow(), temp, title, MB_OK | MB_ICONERROR);
 }
 
