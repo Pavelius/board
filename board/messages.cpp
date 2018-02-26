@@ -8,6 +8,8 @@ bsreq msgmenu_type[] = {
 	BSREQ(msgmenu_info, newgame, text_type),
 	BSREQ(msgmenu_info, savegame, text_type),
 	BSREQ(msgmenu_info, accept, text_type),
+	BSREQ(msgmenu_info, yes, text_type),
+	BSREQ(msgmenu_info, no, text_type),
 {},
 };
 msgmenu_info msgmenu; BSGLOB(msgmenu);

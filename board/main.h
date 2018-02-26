@@ -44,7 +44,7 @@ struct gobject {
 	void						actv(char* result, const char* format, const char* param) const;
 	void						add(const char* id, int value);
 	void						add(const char* id, int value, int index);
-	static void					addbutton(char* result, const char* result_max, const char* name, const char* label);
+	static void					addbutton(char* result, const char* result_max, const char* name);
 	static gobject*				create(const bsreq* meta);
 	static gobject*				create(const bsreq* meta, const char* id);
 	static gobject*				find(bsreq* type, const char* id);

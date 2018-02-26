@@ -345,10 +345,6 @@ static void choose_accept() {
 	draw::breakmodal(AcceptButton);
 }
 
-static void choose_yes() {
-	draw::breakmodal(AcceptButton);
-}
-
 static void choose_no() {
 	draw::breakmodal(0);
 }
@@ -356,16 +352,16 @@ static void choose_no() {
 TEXTPLUGIN(accept) {
 	if(hot::key == KeyEnter)
 		execute(choose_accept);
-	return button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, label, tips, choose_accept);
+	return button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, msgmenu.accept, tips, choose_accept);
 }
 
 TEXTPLUGIN(yesno) {
 	if(hot::key == Alpha + 'Y')
-		execute(choose_yes);
+		execute(choose_accept);
 	else if(hot::key == Alpha + 'N')
 		execute(choose_no);
-	auto height = button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, "Да", tips, choose_yes);
+	auto height = button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, msgmenu.yes, tips, choose_accept);
 	width -= gui.button_width + gui.padding;
-	button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, "Нет", tips, choose_accept);
+	button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, msgmenu.no, tips, choose_no);
 	return height;
 }
