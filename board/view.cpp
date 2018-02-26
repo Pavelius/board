@@ -337,5 +337,5 @@ int	draw::button(int x, int y, int width, int id, unsigned flags, const char* la
 }
 
 TEXTPLUGIN(accept) {
-	return button(x, y, width, AcceptButton, 0, label);
+	return button(x, y, width, AcceptButton, 0, label, tips);
 }

@@ -33,7 +33,3 @@ void driver::parseidentifier(char* result, const char* result_max, const char* i
 		zcat(result, "]");
 	}
 }
-
-void driver::addbutton(char* result, const char* result_max, const char* name, const char* label) {
-	prints(result, result_max, "\n$(%1 label=\"%2\")", name, label);
-}

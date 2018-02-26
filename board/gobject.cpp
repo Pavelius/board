@@ -187,3 +187,7 @@ char* gobject::getpresent(char* result, unsigned maximum, gobject** objects, uns
 	}
 	return result;
 }
+
+void gobject::addbutton(char* result, const char* result_max, const char* name, const char* label) {
+	szprints(result, result_max, "\n$(%1 label=\"%2\")", name, label);
+}

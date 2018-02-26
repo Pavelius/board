@@ -151,5 +151,6 @@ bool gobject::resolve(char* result, const char* result_max, gobject* attacker_pl
 	zcat(result, " "); szprints(zend(result), result_max, msgcombat.winner, winner.getside());
 	attackers.applycasualty(zend(p), result_max);
 	defenders.applycasualty(zend(p), result_max);
+	addbutton(zend(p), result_max, "accept", msgmenu.accept);
 	return &winner == &attackers;
 }

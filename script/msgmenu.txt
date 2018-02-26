@@ -3,3 +3,4 @@
 #msgmenu loadgame("Загрузить игру")
 #msgmenu savegame("Записать игру")
 #msgmenu exit("Выход")
+#msgmenu accept("Принять")
