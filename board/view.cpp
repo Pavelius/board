@@ -345,8 +345,27 @@ static void choose_accept() {
 	draw::breakmodal(AcceptButton);
 }
 
+static void choose_yes() {
+	draw::breakmodal(AcceptButton);
+}
+
+static void choose_no() {
+	draw::breakmodal(0);
+}
+
 TEXTPLUGIN(accept) {
 	if(hot::key == KeyEnter)
 		execute(choose_accept);
 	return button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, label, tips, choose_accept);
+}
+
+TEXTPLUGIN(yesno) {
+	if(hot::key == Alpha + 'Y')
+		execute(choose_yes);
+	else if(hot::key == Alpha + 'N')
+		execute(choose_no);
+	auto height = button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, "Да", tips, choose_yes);
+	width -= gui.button_width + gui.padding;
+	button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, "Нет", tips, choose_accept);
+	return height;
 }

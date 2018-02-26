@@ -4,7 +4,7 @@
 #pragma once
 
 #define TEXTPLUGIN(control_name) static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips);\
-static textplugin contol_name##_plugin(#control_name, control_name);\
+static textplugin control_name##_plugin(#control_name, control_name);\
 static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips)
 
 enum draw_event_s {

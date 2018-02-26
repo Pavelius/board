@@ -38,7 +38,7 @@ int main() {
 #endif
 	if(!draw::initializemap())
 		return 0;
-	//draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
+	draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
 	draw::setcaption(msgmenu.title);
 	auto black_wood = gobject::find(province_type, "black_wood");
 	auto red = gobject::find(player_type, "red");
@@ -47,8 +47,8 @@ int main() {
 	gordek->set("province", black_wood);
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
-	//draw::report(temp);
-	//draw::report("###Восстание\nВ провинции [Зеленые холмы] недовольное население огранизовалось в банды.\n$(accept label=\"Далее\")");
+	draw::report(temp);
+	draw::report("###Восстание\nВ провинции [Зеленые холмы] недовольное население огранизовалось в банды.\n$(yesno)");
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {
