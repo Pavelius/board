@@ -34,9 +34,10 @@ enum gender_s : unsigned char {
 };
 struct tipinfo {
 	char*						result;
+	const char*					result_max;
 	const char*					text;
 	const char*					separator;
-	tipinfo(char* result) :result(result), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
+	tipinfo(char* result, const char* result_max) :result(result), result_max(result_max), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
 };
 struct gobject {
 	void						act(char* result, const char* format, ...) const;
@@ -76,7 +77,7 @@ struct gobject {
 	bool						is(bsreq* type) const;
 	bool						isready() const { return getprovince() == 0; }
 	virtual bool				isvalid() const { return this != 0; }
-	bool						resolve(char* result, gobject* attacker_player, gobject* defender_player) const;
+	bool						resolve(char* result, const char* result_max, gobject* attacker_player, gobject* defender_player) const;
 	void						set(const char* id, int value);
 	void						set(const char* id, int value, int index);
 	void						set(const char* id, gobject* value) { set(id, (int)value); }

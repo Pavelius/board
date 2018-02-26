@@ -40,7 +40,7 @@ static void debug_mouse() {
 	draw::state state;
 	draw::fore = colors::text;
 	draw::font = metrics::font;
-	szprint(temp, "mouse %1i, %2i, map mouse %3i, %4i", hot::mouse.x, hot::mouse.y, last_mouse.x, last_mouse.y);
+	szprints(temp, endofs(temp), "mouse %1i, %2i, map mouse %3i, %4i", hot::mouse.x, hot::mouse.y, last_mouse.x, last_mouse.y);
 	draw::text(2, draw::getheight() - 20, temp);
 }
 
@@ -58,7 +58,7 @@ static void render_province(rect rc, point mouse, const gobject* owner) {
 		draw::font = metrics::h1;
 		point real_pos = e.getposition();
 		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
-		szprint(temp, "%1", e.getname());
+		szprints(temp, endofs(temp), "%1", e.getname());
 		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
@@ -70,7 +70,7 @@ static void render_province(rect rc, point mouse, const gobject* owner) {
 		unsigned count;
 		count = owner->getheroes(objects, 1, &e);
 		if(count) {
-			szprint(temp, "%1", objects[0]->getname());
+			szprints(temp, endofs(temp), "%1", objects[0]->getname());
 			rect rc = {0, 0, 200, 0}; draw::textw(rc, temp);
 			pt.y += draw::text({pt.x - rc.width() / 2, pt.y, pt.x + rc.width() / 2, pt.y + rc.height()}, temp, AlignCenter);
 		}
@@ -128,7 +128,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool disabled, const
 	draw::font = metrics::font;
 	auto pa = e->getavatar();
 	int height = gui.hero_width;
-	szprint(zend(temp), "###%1\n", e->getname());
+	szprints(zend(temp), endofs(temp), "###%1\n", e->getname());
 	for(auto p : e->getbonuses()) {
 		zcat(temp, p->getname());
 		zcat(temp, "\n:::");
@@ -163,7 +163,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool disabled, const
 				continue;
 			if(ps[0])
 				zcat(temp, "\n:::");
-			szprint(zend(temp), "%+2i %1", pn, value);
+			szprints(zend(temp), endofs(temp), "%+2i %1", pn, value);
 		}
 		tooltips(x, y, width, temp);
 	}
@@ -252,7 +252,7 @@ void draw::tooltips(int x1, int y1, int width, const char* format, ...) {
 	tooltips_point.x = x1;
 	tooltips_point.y = y1;
 	tooltips_width = width;
-	szprintv(tooltips_text, format, xva_start(format));
+	szprintv(tooltips_text, tooltips_text + sizeof(tooltips_text) - 1, format, xva_start(format));
 }
 
 COMMAND(after_render) {

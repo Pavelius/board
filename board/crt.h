@@ -7,6 +7,8 @@
 #define assert(e)
 #endif
 #define lenghtof(t) (sizeof(t)/sizeof(t[0]))
+#define endofs(t) (t + (sizeof(t)/sizeof(t[0])) - 1)
+#define DEPRECATED __declspec(deprecated)
 
 extern "C" void		abort();
 extern "C" int		atexit(void(*func)(void));
@@ -86,8 +88,8 @@ bool								szmatch(const char* text, const char* name); //
 char*								sznum(char* result, int num, int precision = 0, const char* empthy = 0, int radix = 10);
 char*								sznum(char* result, float f, int precision = 0, const char* empthy = "0.00");
 bool								szpmatch(const char* text, const char* pattern);
-char*					            szprint(char* result, const char* format, ...);
-char*								szprintv(char* result, const char* format, const char* vl);
+char*								szprints(char* result, const char* result_maximum, const char* src, ...);
+char*								szprintv(char* result, const char* result_maximum, const char* format, const char* vl);
 void								szput(char** output, unsigned u, codepages page = metrics::code);
 char*								szput(char* output, unsigned u, codepages page = metrics::code); // Fast symbol put function. Return 'output'.
 char*								szsep(char* result, const char* sep = ", ", const char* start = 0);

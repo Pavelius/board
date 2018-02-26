@@ -6,7 +6,7 @@ amap<const char*, draw::surface> resources;
 
 static void log_error(const char* url, int line, int column, const char* format, ...) {
 	char temp[4096];
-	szprintv(temp, format, xva_start(format));
+	szprintv(temp, temp + sizeof(temp) - 1, format, xva_start(format));
 	io::file file("log.txt", StreamWrite|StreamAppend);
 	auto b = file.seek(0, SeekEnd);
 	file << "Error in '" << url << "', line " << line << ", column " << column << ": ";
@@ -41,7 +41,7 @@ int main() {
 	auto green = gobject::find(player_type, "green");
 	auto gordek = gobject::find(hero_type, "gordek");
 	gordek->set("province", black_wood);
-	black_wood->resolve(temp, red, green);
+	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
 	//draw::report(temp);
 }

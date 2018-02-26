@@ -4,7 +4,7 @@
 
 void printc(const char* format, ...) {
 	char temp[4096 * 4];
-	szprintv(temp, format, xva_start(format));
+	szprintv(temp, temp + sizeof(temp) - 1, format, xva_start(format));
 	printcnf(temp);
 }
 
@@ -59,7 +59,7 @@ bool io::file::create(const char* url, unsigned flags) {
 		(flags&StreamWrite) ? GENERIC_WRITE : GENERIC_READ,
 		0,
 		0,
-		((flags&(StreamWrite|StreamAppend))==StreamWrite) ? CREATE_ALWAYS : ((flags&StreamAppend)? OPEN_ALWAYS:OPEN_EXISTING),
+		((flags&(StreamWrite | StreamAppend)) == StreamWrite) ? CREATE_ALWAYS : ((flags&StreamAppend) ? OPEN_ALWAYS : OPEN_EXISTING),
 		FILE_ATTRIBUTE_NORMAL,
 		0);
 	if(handle == -1)

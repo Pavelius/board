@@ -40,7 +40,7 @@ int gobject::fix(tipinfo* ti, int value) const {
 		char temp[260];
 		zcpy(temp, getname());
 		szupper(temp, 1);
-		szprint(zend(ti->result), ti->text, value, temp);
+		szprints(zend(ti->result), ti->result_max, ti->text, value, temp);
 		if(ti->separator)
 			zcat(ti->result, ti->separator);
 	}
