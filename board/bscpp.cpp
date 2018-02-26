@@ -155,7 +155,7 @@ public:
 			}
 			if(!keyword(";"))
 				return false;
-			po << "};" << cr() << class_name << "_info " << class_name << "; BSGLOB(" << class_name << ");" << cr();
+			po << "{}," << cr() << "};" << cr() << class_name << "_info " << class_name << "; BSGLOB(" << class_name << ");" << cr();
 		}
 		return true;
 	}

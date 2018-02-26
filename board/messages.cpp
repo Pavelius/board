@@ -8,6 +8,7 @@ bsreq msgmenu_type[] = {
 	BSREQ(msgmenu_info, newgame, text_type),
 	BSREQ(msgmenu_info, savegame, text_type),
 	BSREQ(msgmenu_info, accept, text_type),
+{},
 };
 msgmenu_info msgmenu; BSGLOB(msgmenu);
 bsreq msgcombat_type[] = {
@@ -20,5 +21,6 @@ bsreq msgcombat_type[] = {
 	BSREQ(msgcombat_info, defence, text_type),
 	BSREQ(msgcombat_info, raid, text_type),
 	BSREQ(msgcombat_info, squads, text_type),
+{},
 };
 msgcombat_info msgcombat; BSGLOB(msgcombat);
