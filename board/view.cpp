@@ -20,6 +20,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, opacity_disabled, number_type),
 	BSREQ(gui_info, opacity_hilighted, number_type),
 	BSREQ(gui_info, border, number_type),
+	BSREQ(gui_info, control_border, number_type),
 	BSREQ(gui_info, window_width, number_type),
 	BSREQ(gui_info, hero_window_width, number_type),
 	BSREQ(gui_info, hero_window_border, number_type),
@@ -321,4 +322,15 @@ void draw::avatar(int x, int y, const char* id) {
 		}
 	}
 	blit(*draw::canvas, x, y, gui.hero_width, gui.hero_width, 0, *p, 0, 0);
+}
+
+int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)(), void(*callback_setparam)(void*), void* param) {
+	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()};
+	if(buttonh({x, y, x + width, rc.y2},
+		ischecked(flags), isfocused(flags), isdisabled(flags), true,
+		label, 0, false, tips)
+		|| (isfocused(flags) && hot::key == KeyEnter)) {
+		execute(callback);
+	}
+	return rc.height() + gui.padding * 2;
 }

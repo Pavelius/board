@@ -265,6 +265,13 @@ int						textw(rect& rc, const char* string);
 int						textw(sprite* font);
 void					updatewindow();
 }
+namespace draw {
+int						button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);
+bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, color value, const char* string, int key, bool press, const char* tips = 0);
+bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false, const char* tips = 0);
+bool					buttonv(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false);
+void					tooltips(int x, int y, int width, const char* format, ...);
+}
 int						distance(point p1, point p2);
 int						isqrt(int num);
 char*					key2str(char* result, int key);
