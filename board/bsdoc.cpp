@@ -25,7 +25,6 @@ static const char* index_header = "<h1>File format description</h1>"
 "<p>Several entities has big text description which used to display tooltips and other text multiline controls. This special text lines can be after entity block and before next entitity.</p>"
 "<h2>Entity list</h2>";
 static const char* text_description = "Entity description text. Start with new line after entiry.";
-static const char* index_header_global = "<h2>Global namespaces</h1>";
 
 static void opentag(io::stream& e, const char* name) {
 	e << "<" << name << ">";
@@ -316,6 +315,5 @@ void generate_help() {
 	header(e);
 	e << index_header;
 	write_metadata(e, doc);
-	e << index_header_global;
 	footer(e);
 }
