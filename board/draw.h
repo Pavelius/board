@@ -126,6 +126,7 @@ extern point			mouse; // current mouse coordinates
 extern bool				pressed; // flag if any of mouse keys is pressed
 extern int				param; // Draw command context. Application can extend this structure
 extern rect				element; // Element coordinates
+extern rect				hilite; // Currently hilited rectangle
 }
 namespace colors {
 extern color			active;

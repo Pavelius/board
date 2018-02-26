@@ -15,6 +15,7 @@
 #gui window_width(400)
 #gui tips_width(200)
 #gui hero_width(64)
+#gui button_width(64)
 #gui hero_window_width(200)
 #gui hero_window_border(8)
 #gui opacity_hilighted(200)

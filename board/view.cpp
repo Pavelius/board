@@ -25,6 +25,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, opacity_hilighted, number_type),
 	BSREQ(gui_info, border, number_type),
 	BSREQ(gui_info, control_border, number_type),
+	BSREQ(gui_info, button_width, number_type),
 	BSREQ(gui_info, window_width, number_type),
 	BSREQ(gui_info, hero_window_width, number_type),
 	BSREQ(gui_info, hero_window_border, number_type),
@@ -196,7 +197,7 @@ static bool control_board(int id) {
 	case KeyDown: camera.y += step; break;
 	case MouseLeft:
 		if(hot::pressed) {
-			if(last_board == sys_static_area) {
+			if(last_board == hot::hilite) {
 				draw::drag::begin("board");
 				camera_drag = camera;
 			}
@@ -296,14 +297,19 @@ bool draw::initializemap() {
 	return true;
 }
 
-void draw::report(const char* format) {
+static int render_report(const char* format) {
 	while(ismodal()) {
 		render_board(current_player);
-		draw::window(gui.border*2, gui.border*2, gui.window_width, format);
+		draw::window(gui.border * 2, gui.border * 2, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))
 			continue;
 	}
+	return getresult();
+}
+
+void draw::report(const char* format) {
+	render_report(format);
 }
 
 void draw::avatar(int x, int y, const char* id) {
@@ -323,9 +329,8 @@ void draw::avatar(int x, int y, const char* id) {
 }
 
 int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)()) {
-	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()};
-	if(buttonh({x, y, x + width, rc.y2},
-		ischecked(flags), isfocused(flags), isdisabled(flags), true,
+	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()}; rc.offset(gui.control_border, gui.control_border);
+	if(buttonh(rc, ischecked(flags), isfocused(flags), isdisabled(flags), true,
 		label, 0, false, tips)
 		|| (isfocused(flags) && hot::key == KeyEnter)) {
 		if(callback)
@@ -336,6 +341,12 @@ int	draw::button(int x, int y, int width, int id, unsigned flags, const char* la
 	return rc.height() + gui.padding * 2;
 }
 
+static void choose_accept() {
+	draw::breakmodal(AcceptButton);
+}
+
 TEXTPLUGIN(accept) {
-	return button(x, y, width, AcceptButton, 0, label, tips);
+	if(hot::key == KeyEnter)
+		execute(choose_accept);
+	return button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, label, tips, choose_accept);
 }
