@@ -3,6 +3,10 @@
 
 #pragma once
 
+#define TEXTPLUGIN(control_name) static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips);\
+static textplugin contol_name##_plugin(#control_name, control_name);\
+static int control_name(int x, int y, int width, const char* id, int value, const char* label, const char* tips)
+
 enum draw_event_s {
 	// input events
 	InputSymbol = 0xED00, InputTimer, InputUpdate, InputNoUpdate, InputExecute,
@@ -266,7 +270,7 @@ int						textw(sprite* font);
 void					updatewindow();
 }
 namespace draw {
-int						button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0, void(*callback_setparam)(void*) = 0, void* param = 0);
+int						button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips = 0, void(*callback)() = 0);
 bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, color value, const char* string, int key, bool press, const char* tips = 0);
 bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false, const char* tips = 0);
 bool					buttonv(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false);

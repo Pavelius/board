@@ -1,6 +1,10 @@
 #include "view.h"
 #include "command.h"
 
+enum command_s { NoCommand,
+	AcceptButton, YenButton, NoButton,
+};
+
 using namespace draw;
 
 static point camera;
@@ -324,13 +328,20 @@ void draw::avatar(int x, int y, const char* id) {
 	blit(*draw::canvas, x, y, gui.hero_width, gui.hero_width, 0, *p, 0, 0);
 }
 
-int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)(), void(*callback_setparam)(void*), void* param) {
+int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)()) {
 	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()};
 	if(buttonh({x, y, x + width, rc.y2},
 		ischecked(flags), isfocused(flags), isdisabled(flags), true,
 		label, 0, false, tips)
 		|| (isfocused(flags) && hot::key == KeyEnter)) {
-		execute(callback);
+		if(callback)
+			execute(callback);
+		else
+			execute(id);
 	}
 	return rc.height() + gui.padding * 2;
+}
+
+TEXTPLUGIN(accept) {
+	return button(x, y, width, AcceptButton, 0, label);
 }

@@ -8,28 +8,27 @@
 #endif
 #define lenghtof(t) (sizeof(t)/sizeof(t[0]))
 
-extern "C" void						abort();
-extern "C" int						atexit(void(*func)(void));
-extern "C" void*					bsearch(const void* key, const void *base, unsigned num, unsigned size, int(*compar)(const void *, const void *));
-extern "C" unsigned					clock(); // Returns the processor time consumed by the program.
-extern "C" void						exit(int exit_code);
-extern "C" int						memcmp(const void* p1, const void* p2, unsigned size);
-extern "C" void*					memmove(void* destination, const void* source, unsigned size);
-extern "C" void*					memcpy(void* destination, const void* source, unsigned size);
-extern "C" void*					memset(void* destination, int value, unsigned size);
-extern "C" void						qsort(void* base, unsigned num, unsigned size, int(*compar)(const void*, const void*));
-extern "C" int						rand(void); // Get next random value
-extern "C" void						sleep(unsigned seconds); // Suspend execution for an interval of time
-extern "C" void						srand(unsigned seed); // Set random seed
-extern "C" int						strcmp(const char* s1, const char* s2); // Compare two strings
-extern "C" int						system(const char* command); // Execute system command
-extern "C" long long				time(long long* seconds);
+extern "C" void		abort();
+extern "C" int		atexit(void(*func)(void));
+extern "C" void*	bsearch(const void* key, const void *base, unsigned num, unsigned size, int(*compar)(const void *, const void *));
+extern "C" unsigned	clock(); // Returns the processor time consumed by the program.
+extern "C" void		exit(int exit_code);
+extern "C" int		memcmp(const void* p1, const void* p2, unsigned size);
+extern "C" void*	memmove(void* destination, const void* source, unsigned size);
+extern "C" void*	memcpy(void* destination, const void* source, unsigned size);
+extern "C" void*	memset(void* destination, int value, unsigned size);
+extern "C" void		qsort(void* base, unsigned num, unsigned size, int(*compar)(const void*, const void*));
+extern "C" int		rand(void); // Get next random value
+extern "C" void		sleep(unsigned seconds); // Suspend execution for an interval of time
+extern "C" void		srand(unsigned seed); // Set random seed
+extern "C" int		strcmp(const char* s1, const char* s2); // Compare two strings
+extern "C" int		system(const char* command); // Execute system command
+extern "C" long long time(long long* seconds);
 
 enum codepages { CPNONE, CP1251, CPUTF8, CPU16BE, CPU16LE };
 namespace metrics {
-const codepages					code = CP1251;
+const codepages	code = CP1251;
 }
-//
 unsigned							dayb(unsigned d); // Get begin of day (time 00:00)
 unsigned							daye(unsigned d); // Get end of day (time 23:59)
 unsigned							getdate(); // Get current date
