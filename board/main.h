@@ -10,12 +10,6 @@
 
 #pragma once
 
-//#ifdef _DEBUG
-//#define dbgcheck(...) dlgerr("Check this", __VA_ARGS__);
-//#else
-//#define dbgcheck(...)
-//#endif
-
 const int player_max = 8;
 bsreq enchantment_type[];
 bsreq event_type[];

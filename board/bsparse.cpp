@@ -3,6 +3,7 @@
 #include "io.h"
 
 static void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param);
+static bsparse_error_s(*validate_text)(const char* id, const char* value);
 
 class bsfile {
 	const bsfile* parent;
@@ -247,8 +248,15 @@ struct bsparse : bsfile {
 		if(req->type == text_type) {
 			if(!buffer[0])
 				req->set(p, 0);
-			else
-				req->set(p, (int)szdup(buffer));
+			else {
+				auto pv = szdup(buffer);
+				req->set(p, (int)pv);
+				if(validate_text) {
+					auto error_code = validate_text(req->id, pv);
+					if(error_code != NoParserError)
+						warning(error_code, req->id, pv);
+				}
+			}
 		} else if(req->type == number_type)
 			req->set(p, value);
 		else if(req->type->reference)
@@ -547,4 +555,8 @@ void bsdata::read(const char* url) {
 
 void bsdata::setparser(void(*callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param)) {
 	error_callback = callback;
+}
+
+void bsdata::setparser(bsparse_error_s(*callback)(const char* id, const char* value)) {
+	validate_text = callback;
 }

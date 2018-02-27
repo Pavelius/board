@@ -44,7 +44,7 @@ rect			hot::hilite; // Event rectange (optional)
 bool			sys_optimize_mouse_move = true;
 rect			sys_static_area;
 // Locale draw variables
-static draw::surface	current_surface;
+static draw::surface current_surface;
 draw::surface*	draw::canvas = &current_surface;
 static bool		line_antialiasing = true;
 static bool		break_modal;

@@ -245,9 +245,6 @@
     <ClInclude Include="color.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="bsdoc.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="stringtree.h">
       <Filter>System</Filter>
     </ClInclude>
