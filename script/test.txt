@@ -1,5 +1,3 @@
-#trace
-
 #province black_wood name("Черный лес") level(1) position(204, 495)
 #province white_harbor name("Белая гавань") level(2) position(616, 616)
 #province sunrise_hills name("Холмы Рассвета") position(476, 400)

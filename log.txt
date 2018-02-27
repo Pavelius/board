@@ -2,3 +2,4 @@ Error in 'script/test.txt', line 11, column 7: Expected identifier
 Error in 'script/test.txt', line 1, column 7: Expected identifier
 Error in 'script/test.txt', line 1, column 7: Expected identifier
 Error in 'script/test.txt', line 1, column 7: Not found database 'trace'
+Error in 'script/test.txt', line 1, column 7: Not found database 'trace'
