@@ -7,6 +7,7 @@ struct msgmenu_info {
 	const char* newgame;
 	const char* savegame;
 	const char* accept;
+	const char* cancel;
 	const char* yes;
 	const char* no;
 };

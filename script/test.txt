@@ -1,3 +1,7 @@
+#action raid name("Совершить набег")
+#action attack name("Захватить")
+#action defend name("Патрулировать")
+
 #province black_wood name("Черный лес") level(1) position(204, 495)
 #province white_harbor name("Белая гавань") level(2) position(616, 616)
 #province sunrise_hills name("Холмы Рассвета") position(476, 400)
@@ -19,6 +23,7 @@
 #gui button_width(64)
 #gui hero_window_width(200)
 #gui hero_window_border(8)
+#gui action_window_border(2)
 #gui opacity_hilighted(200)
 
 #tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили внезапную атаку в надежде рассеять противника.")

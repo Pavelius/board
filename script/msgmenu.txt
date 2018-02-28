@@ -4,5 +4,6 @@
 #msgmenu savegame("Записать игру")
 #msgmenu exit("Выход")
 #msgmenu accept("Принять")
+#msgmenu cancel("Отменить")
 #msgmenu yes("Да")
 #msgmenu no("Нет")
