@@ -46,6 +46,8 @@
 #troop parent(spearmans) owner(red) province(black_wood)
 #troop parent(spearmans) owner(red) province(black_wood)
 #troop parent(swordmans) owner(red) province(black_wood)
+#troop parent(swordmans) owner(red) province(sunrise_hills)
+#troop parent(spearmans) owner(red) province(sunrise_hills)
 
 #troop parent(spearmans) owner(green) province(black_wood)
 #troop parent(spearmans) owner(green) province(black_wood)

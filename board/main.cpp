@@ -65,7 +65,10 @@ int main() {
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
 	draw::report(temp);
-	draw::getaction(red, gordek);
+	auto action = draw::getaction(red, gordek);
+	if(action) {
+		auto province = draw::getprovince(red, gordek, action);
+	}
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

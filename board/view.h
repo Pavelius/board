@@ -15,6 +15,8 @@ namespace draw {
 void		avatar(int x, int y, const char* id);
 bool		initializemap();
 gobject*	getaction(gobject* player, gobject* hero);
+gobject*	getprovince(gobject* player, gobject* hero, gobject* action);
+areas		hilite(rect rc);
 void		report(const char* format);
 areas		window(rect rc, bool disabled = false, bool hilight = false, int border = 0);
 int			window(int x, int y, int width, const char* string);

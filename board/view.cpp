@@ -45,7 +45,12 @@ static void debug_mouse() {
 	draw::text(2, draw::getheight() - 20, temp);
 }
 
-static void render_province(rect rc, point mouse, const gobject* owner) {
+static void render_power(int x, int y, const gobject* owner, const gobject* province) {
+	draw::circlef(x, y, 4*4, colors::green, 128);
+	draw::circle(x, y, 4*4, colors::green);
+}
+
+static void render_province(rect rc, point mouse, const gobject* owner, int id) {
 	char temp[1024];
 	draw::state push;
 	draw::fore = colors::black;
@@ -60,7 +65,15 @@ static void render_province(rect rc, point mouse, const gobject* owner) {
 		point real_pos = e.getposition();
 		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
 		szprints(temp, endofs(temp), "%1", e.getname());
-		draw::text(pt.x - draw::textw(temp) / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
+		auto text_width = draw::textw(temp);
+		if(id) {
+			rect rc = {pt.x - text_width / 2, pt.y - draw::texth() / 2, pt.x + text_width / 2, pt.y + draw::texth() / 2};
+			auto a = hilite(rc);
+			if(a == AreaHilitedPressed)
+				draw::execute(id, (int)&e);
+		}
+		render_power(pt.x, pt.y, owner, &e);
+		draw::text(pt.x - text_width / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
 			//if(d < 16)
@@ -84,7 +97,7 @@ static void render_province(rect rc, point mouse, const gobject* owner) {
 	}
 }
 
-static void render_frame(rect rc, const gobject* province_owner) {
+static void render_frame(rect rc, const gobject* province_owner, int choose_province) {
 	draw::state push;
 	draw::area(rc); // Drag and drop analize this result
 	last_board = rc;
@@ -117,7 +130,7 @@ static void render_frame(rect rc, const gobject* province_owner) {
 	if(rc.width() > 0 && rc.height() > 0)
 		blit(*draw::canvas, rc.x1, rc.y1, rc.width(), rc.height(), 0, map, x1, y1);
 	if(province_owner)
-		render_province(last_board, last_mouse, province_owner);
+		render_province(last_board, last_mouse, province_owner, choose_province);
 #ifdef _DEBUG
 	debug_mouse();
 #endif
@@ -184,8 +197,8 @@ static int render_heroes(int x, int y, gobject* owner) {
 	return y - y0;
 }
 
-static void render_board(const gobject* province_owner, gobject* hero_owner) {
-	render_frame({0, 0, draw::getwidth(), draw::getheight()}, province_owner);
+static void render_board(const gobject* province_owner, gobject* hero_owner, int choose_province) {
+	render_frame({0, 0, draw::getwidth(), draw::getheight()}, province_owner, choose_province);
 	auto x = getwidth() - gui.hero_window_width - gui.border - gui.padding;
 	auto y = gui.padding + gui.border;
 	y += render_heroes(x, y, hero_owner);
@@ -222,6 +235,19 @@ static bool control_board(int id) {
 
 void gobject::setuiactive() {
 	current_player = this;
+}
+
+areas draw::hilite(rect rc) {
+	auto border = gui.border;
+	rc.offset(-border, -border);
+	color c = colors::form;
+	auto rs = draw::area(rc);
+	if(rs == AreaHilited) {
+		auto op = gui.opacity_hilighted;
+		draw::rectf(rc, c, op);
+		draw::rectb(rc, c);
+	}
+	return rs;
 }
 
 areas draw::window(rect rc, bool disabled, bool hilight, int border) {
@@ -313,7 +339,7 @@ bool draw::initializemap() {
 
 void draw::report(const char* format) {
 	while(ismodal()) {
-		render_board(current_player, current_player);
+		render_board(current_player, current_player, 0);
 		draw::window(gui.border * 2, gui.border * 2, gui.window_width, format);
 		auto id = input();
 		if(control_board(id))
@@ -323,12 +349,34 @@ void draw::report(const char* format) {
 
 gobject* draw::getaction(gobject* player, gobject* hero) {
 	while(ismodal()) {
-		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player);
+		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player, 0);
 		auto x = getwidth() - gui.hero_window_width - gui.border - gui.padding;
 		auto y = gui.padding + gui.border;
 		y += render_hero(x, y, gui.hero_window_width, hero, false, hero->isready(), 0) + 1;
 		for(auto& e : gobject::getcol(action_type))
 			y += windowb(x, y, gui.hero_window_width, e.getname(), AcceptButton, (int)&e, gui.border) + 1;
+		y += windowb(x, y, gui.hero_window_width, msgmenu.cancel, CancelButton, 0) + 1;
+		auto id = input();
+		if(control_board(id))
+			continue;
+		switch(id) {
+		case KeyEscape:
+		case CancelButton:
+			return 0;
+		case AcceptButton:
+			return (gobject*)hot::param;
+		}
+	}
+	return 0;
+}
+
+gobject* draw::getprovince(gobject* player, gobject* hero, gobject* action) {
+	while(ismodal()) {
+		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player, AcceptButton);
+		auto x = getwidth() - gui.hero_window_width - gui.border - gui.padding;
+		auto y = gui.padding + gui.border;
+		y += render_hero(x, y, gui.hero_window_width, hero, false, hero->isready(), 0) + 1;
+		y += windowb(x, y, gui.hero_window_width, action->getname(), 0, 0, gui.border) + 1;
 		y += windowb(x, y, gui.hero_window_width, msgmenu.cancel, CancelButton, 0) + 1;
 		auto id = input();
 		if(control_board(id))
