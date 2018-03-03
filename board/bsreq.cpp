@@ -2,6 +2,7 @@
 
 extern "C" int strcmp(const char* s1, const char* s2);
 
+bsreq any_type[2] = {{"any"}};
 bsreq number_type[2] = {{"number"}};
 bsreq text_type[2] = {{"text"}};
 bsreq bsreq_type[] = {

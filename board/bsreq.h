@@ -62,6 +62,7 @@ struct bsval {
 	int				get() const { return type->get(type->ptr(data)); }
 	void			set(int value) { type->set(type->ptr(data), value); }
 };
+extern bsreq		any_type[]; // any existing object type, exept number (and other integer) or text
 extern bsreq		number_type[]; // standart integer value
 extern bsreq		text_type[]; // stantart zero ending string
 extern bsreq		bsreq_type[]; // requisit metadata

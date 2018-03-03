@@ -21,6 +21,7 @@ public:
 };
 
 struct bsparse : bsfile {
+
 	char buffer[128 * 256];
 	int	value;
 	const bsreq* value_type;
@@ -28,8 +29,9 @@ struct bsparse : bsfile {
 	void* parent_object;
 	const bsreq* parent_type;
 	const char* p;
+	bsdata** custom_database;
 
-	bsparse(const char* url, const bsfile* parent = 0) : bsfile(url, parent), p(getstart()) {
+	bsparse(const char* url, const bsfile* parent = 0) : bsfile(url, parent), p(getstart()), custom_database(0) {
 		clearvalue();
 		buffer[0] = 0;
 	}
@@ -60,6 +62,33 @@ struct bsparse : bsfile {
 			break;
 		}
 		return p;
+	}
+
+	bsdata* findbase(const bsreq* type) const {
+		if(custom_database) {
+			for(auto p = custom_database; *p; p++) {
+				if((*p)->fields == type)
+					return *p;
+			}
+		}
+		return bsdata::find(type);
+	}
+
+	bsdata* findbase(const char* id) const {
+		if(custom_database) {
+			for(auto p = custom_database; *p; p++) {
+				if(strcmp((*p)->id, id)==0)
+					return *p;
+			}
+		}
+		return bsdata::find(id);
+	}
+
+	const char* getbasename(const bsreq* type) const {
+		auto p = findbase(type);
+		if(!p)
+			return "";
+		return p->id;
 	}
 
 	void getpos(const char* p, int& line, int& column) {
@@ -198,18 +227,11 @@ struct bsparse : bsfile {
 		} else
 			return false; // Not found value tag
 		if(need_identifier) {
-			auto value_data = bsdata::find(hint_type);
-			if(!value_data) {
-				for(value_data = bsdata::first; value_data; value_data = value_data->next) {
-					auto f = value_data->fields->getkey();
-					if(!f)
-						continue;
-					value_object = value_data->find(f, buffer);
-					if(value_object)
-						break;
-				}
-			} else
+			auto value_data = findbase(hint_type);
+			if(value_data)
 				value_object = value_data->find(value_data->fields->getkey(), buffer);
+			else
+				warning(ErrorNotFoundType);
 			// If not find create this
 			if(!value_object && value_data && create) {
 				auto f = value_data->fields->getkey();
@@ -227,7 +249,7 @@ struct bsparse : bsfile {
 			if(!value_object)
 				warning(ErrorNotFoundIdentifier1p, buffer);
 		} else if(create && hint_type && value_type == number_type) {
-			auto value_data = bsdata::find(hint_type);
+			auto value_data = findbase(hint_type);
 			value_type = hint_type;
 			if(value_data) {
 				if(value < (int)value_data->getmaxcount()) {
@@ -263,13 +285,6 @@ struct bsparse : bsfile {
 			req->set(p, (int)value_object);
 		else
 			storevalue((void*)req->ptr(object), req->type + index, 0);
-	}
-
-	const char* getbasename(const bsreq* type) const {
-		auto p = bsdata::find(type);
-		if(!p)
-			return "";
-		return p->id;
 	}
 
 	bool readreq(void* object, const bsreq* req, unsigned index) {
@@ -309,7 +324,7 @@ struct bsparse : bsfile {
 		}
 		skipws();
 		const bsreq* fields = 0;
-		auto pd = bsdata::find(buffer);
+		auto pd = findbase(buffer);
 		if(pd)
 			fields = pd->fields;
 		else
@@ -547,8 +562,9 @@ void bsdata::write(const char* url, const char* baseid) {
 	write(url, source);
 }
 
-void bsdata::read(const char* url) {
+void bsdata::read(const char* url, bsdata** custom) {
 	bsparse parser(url);
+	parser.custom_database = custom;
 	if(parser)
 		parser.parse();
 }

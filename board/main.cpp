@@ -41,6 +41,19 @@ static bsparse_error_s parse_validate(const char* id, const char* value) {
 	return NoParserError;
 }
 
+//struct stest {
+//	const char* name;
+//};
+//bsreq stest_type[] = {
+//	BSREQ(stest, name, text_type),
+//	{}
+//};
+//stest stest_data1[2] = {"Test1", "Test2"};
+//stest stest_data2[4] = {"Test1", "Test2"};
+//static bsdata managers[] = {{"stest", stest_data1, stest_type},
+//{"stest2", stest_data2, stest_type}
+//};
+
 int main() {
 	srand((int)time(0));
 	char temp[4096];
@@ -55,7 +68,7 @@ int main() {
 #endif
 	if(!draw::initializemap())
 		return 0;
-	draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
+	//draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
 	draw::setcaption(msgmenu.title);
 	auto black_wood = gobject::find(province_type, "black_wood");
 	auto red = gobject::find(player_type, "red");
@@ -64,11 +77,11 @@ int main() {
 	gordek->set("province", black_wood);
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
-	draw::report(temp);
-	auto action = draw::getaction(red, gordek);
-	if(action) {
-		auto province = draw::getprovince(red, gordek, action);
-	}
+	//draw::report(temp);
+	//auto action = draw::getaction(red, gordek);
+	//if(action) {
+	//	auto province = draw::getprovince(red, gordek, action);
+	//}
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

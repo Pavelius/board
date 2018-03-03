@@ -13,7 +13,7 @@ bsdata c##_manager(#c, &c, 1, sizeof(c), c##_type);
 enum bsparse_error_s {
 	NoParserError,
 	ErrorExpectedIdentifier, ErrorExpectedArrayField,
-	ErrorNotFoundBase1p, ErrorNotFoundIdentifier1p, ErrorNotFoundMember1pInBase2p,
+	ErrorNotFoundBase1p, ErrorNotFoundType, ErrorNotFoundIdentifier1p, ErrorNotFoundMember1pInBase2p,
 	ErrorFile2pNotFound,
 };
 
@@ -25,6 +25,7 @@ struct bsdata : collection {
 	bsdata*				next;
 	static bsdata*		first;
 	//
+	template<class T, unsigned N> bsdata(const char* id, T(&data)[N], const bsreq* fields) : id(id), fields(fields), data(&data), size(sizeof(T)), count(current_count), current_count(0), next(0), maximum_count(N) {}
 	bsdata(const char* id, void* data, unsigned size, unsigned maximum_count, const bsreq* fields);
 	bsdata(const char* id, void* data, unsigned& count, unsigned size, unsigned maximum_count, const bsreq* fields);
 	//
@@ -41,7 +42,7 @@ struct bsdata : collection {
 	static bsdata*		find(const bsreq* id);
 	void*				find(const bsreq* id, const char* value);
 	static bsdata*		findbyptr(const void* object);
-	static void			read(const char* url);
+	static void			read(const char* url, bsdata** custom = 0);
 	void				remove(int index, int count = 1) override;
 	void				setcount(unsigned value) { count = value; }
 	static void			setparser(void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param));
