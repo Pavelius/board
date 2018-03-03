@@ -5,7 +5,7 @@
 
 struct gui_info {
 	unsigned char border;
-	unsigned char opacity, opacity_disabled, opacity_hilighted;
+	unsigned char opacity, opacity_disabled, opacity_hilighted, opacity_hilighted_province;
 	short button_width, window_width, tips_width, hero_width, hero_window_width, control_border;
 	short padding;
 };

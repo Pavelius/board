@@ -24,6 +24,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, opacity, number_type),
 	BSREQ(gui_info, opacity_disabled, number_type),
 	BSREQ(gui_info, opacity_hilighted, number_type),
+	BSREQ(gui_info, opacity_hilighted_province, number_type),
 	BSREQ(gui_info, border, number_type),
 	BSREQ(gui_info, control_border, number_type),
 	BSREQ(gui_info, button_width, number_type),
@@ -243,7 +244,7 @@ areas draw::hilite(rect rc) {
 	color c = colors::form;
 	auto rs = draw::area(rc);
 	if(rs == AreaHilited) {
-		auto op = gui.opacity_hilighted;
+		auto op = gui.opacity_hilighted_province;
 		draw::rectf(rc, c, op);
 		draw::rectb(rc, c);
 	}

@@ -25,6 +25,7 @@
 #gui hero_window_border(8)
 #gui action_window_border(2)
 #gui opacity_hilighted(200)
+#gui opacity_hilighted_province(64)
 
 #tactic lighting_attack name("Внезапная атака") strenght(2) text("%1 применили внезапную атаку в надежде рассеять противника.")
 #tactic careful_defence name("Тщательная защита") friendly_casualties(-1) text("%1 выстроили защитное построение и приготовились отражать удар.")
