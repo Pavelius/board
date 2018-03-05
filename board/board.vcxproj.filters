@@ -245,15 +245,15 @@
     <ClInclude Include="stringtree.h">
       <Filter>System</Filter>
     </ClInclude>
+    <ClInclude Include="initializer_list.h">
+      <Filter>System</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\script\msgmenu.txt">
-      <Filter>Script</Filter>
-    </Text>
-    <Text Include="..\script\msgcombat.txt">
-      <Filter>Script</Filter>
-    </Text>
     <Text Include="..\script\test.txt">
+      <Filter>Script</Filter>
+    </Text>
+    <Text Include="..\script\msg.txt">
       <Filter>Script</Filter>
     </Text>
   </ItemGroup>

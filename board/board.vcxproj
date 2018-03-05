@@ -134,6 +134,7 @@
     <ClInclude Include="converter.h" />
     <ClInclude Include="crt.h" />
     <ClInclude Include="draw.h" />
+    <ClInclude Include="initializer_list.h" />
     <ClInclude Include="io.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="point.h" />
@@ -198,8 +199,7 @@
     <ClCompile Include="zip.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <Text Include="..\script\msgmenu.txt" />
-    <Text Include="..\script\msgcombat.txt" />
+    <Text Include="..\script\msg.txt" />
     <Text Include="..\script\test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

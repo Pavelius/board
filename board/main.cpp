@@ -41,18 +41,18 @@ static bsparse_error_s parse_validate(const char* id, const char* value) {
 	return NoParserError;
 }
 
-struct stest {
-	const char* name;
-};
-bsreq stest_type[] = {
-	BSREQ(stest, name, text_type),
-	{}
-};
-stest stest_data1[] = {"Test1", "Test2"};
-stest stest_data2[] = {"Test1", "Test2", "test3", "test4"};
-constexpr static bsdata managers[] = {{"stest", stest_data1, stest_type},
-{"stest2", stest_data2, stest_type}
-};
+//struct stest {
+//	const char* name;
+//};
+//bsreq stest_type[] = {
+//	BSREQ(stest, name, text_type),
+//	{}
+//};
+//stest stest_data1[] = {"Test1", "Test2"};
+//stest stest_data2[] = {"Test1", "Test2", "test3", "test4"};
+//constexpr static bsdata managers[] = {{"stest", stest_data1, stest_type},
+//{"stest2", stest_data2, stest_type}
+//};
 
 int main() {
 	srand((int)time(0));
@@ -61,8 +61,7 @@ int main() {
 	bsdata::setparser(parse_error);
 	bsdata::setparser(parse_validate);
 	bsdata::read("script/test.txt");
-	bsdata::read("script/msgcombat.txt");
-	bsdata::read("script/msgmenu.txt");
+	bsdata::read("script/msg.txt");
 #ifdef _DEBUG
 	generate_help();
 #endif
@@ -77,7 +76,7 @@ int main() {
 	gordek->set("province", black_wood);
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
-	//draw::report(temp);
+	draw::report(temp);
 	//auto action = draw::getaction(red, gordek);
 	//if(action) {
 	//	auto province = draw::getprovince(red, gordek, action);

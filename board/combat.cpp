@@ -12,7 +12,6 @@ class combatside {
 public:
 
 	combatside(const gobject* province, gobject* owner) : owner(owner), general(0), tactic(0), strenght(0), casualties(0) {
-		units.initialize();
 		// Get all units in province by one owner
 		for(auto& e : gobject::getcol(troop_type)) {
 			if(!e.isvalid())
