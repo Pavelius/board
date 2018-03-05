@@ -4,9 +4,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="amem.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="collection.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -178,9 +175,6 @@
   <ItemGroup>
     <ClInclude Include="main.h">
       <Filter>Logic</Filter>
-    </ClInclude>
-    <ClInclude Include="amem.h">
-      <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="collection.h">
       <Filter>Database</Filter>

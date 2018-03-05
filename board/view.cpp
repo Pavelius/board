@@ -73,7 +73,7 @@ static void render_province(rect rc, point mouse, const gobject* owner, int id) 
 			if(a == AreaHilitedPressed)
 				draw::execute(id, (int)&e);
 		}
-		render_power(pt.x, pt.y, owner, &e);
+		//render_power(pt.x, pt.y, owner, &e);
 		draw::text(pt.x - text_width / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);

@@ -123,7 +123,6 @@
     <ClInclude Include="acol.h" />
     <ClInclude Include="adat.h" />
     <ClInclude Include="amap.h" />
-    <ClInclude Include="amem.h" />
     <ClInclude Include="aref.h" />
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bsreq.h" />
@@ -148,7 +147,6 @@
   <ItemGroup>
     <ClCompile Include="action.cpp" />
     <ClCompile Include="active_enchantment.cpp" />
-    <ClCompile Include="amem.cpp" />
     <ClCompile Include="bscpp.cpp" />
     <ClCompile Include="bsdata.cpp" />
     <ClCompile Include="bsdoc.cpp" />

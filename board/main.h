@@ -113,11 +113,11 @@ struct msg_info {
 extern msg_info msg_data;
 namespace logs {
 struct driver : stringcreator {
-	const char*					name;
-	const char*					province;
-	gender_s					gender;
+	const char*	name;
+	const char*	province;
+	gender_s gender;
 	driver() : name(""), province(""), gender(Male) {}
-	void						addbutton(char* result, const char* result_max, const char* name, const char* label);
-	void						parseidentifier(char* result, const char* result_max, const char* identifier) override;
+	void addbutton(char* result, const char* result_max, const char* name, const char* label);
+	void parseidentifier(char* result, const char* result_max, const char* identifier) override;
 };
 }
