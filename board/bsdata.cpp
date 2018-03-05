@@ -4,7 +4,8 @@
 bsdata* bsdata::first;
 
 void bsdata::globalize() {
-	seqlink(this);
+	if(!find(fields))
+		seqlink(this);
 }
 
 void* bsdata::add() {

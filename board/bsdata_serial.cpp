@@ -20,7 +20,7 @@ public:
 	const char* geturl() const { return url; }
 };
 
-struct bsparse : bsfile {
+struct bsdata_serial : bsfile {
 
 	char buffer[128 * 256];
 	int	value;
@@ -31,7 +31,7 @@ struct bsparse : bsfile {
 	const char* p;
 	bsdata** custom_database;
 
-	bsparse(const char* url, const bsfile* parent = 0) : bsfile(url, parent), p(getstart()), custom_database(0) {
+	bsdata_serial(const char* url, const bsfile* parent = 0) : bsfile(url, parent), p(getstart()), custom_database(0) {
 		clearvalue();
 		buffer[0] = 0;
 	}
@@ -563,7 +563,7 @@ void bsdata::write(const char* url, const char* baseid) {
 }
 
 void bsdata::read(const char* url, bsdata** custom) {
-	bsparse parser(url);
+	bsdata_serial parser(url);
 	parser.custom_database = custom;
 	if(parser)
 		parser.parse();

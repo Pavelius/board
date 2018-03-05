@@ -25,9 +25,6 @@
     <ClCompile Include="crt_parse.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="bsparse.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="io.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -153,6 +150,9 @@
     </ClCompile>
     <ClCompile Include="stringtree.cpp">
       <Filter>System</Filter>
+    </ClCompile>
+    <ClCompile Include="bsdata_serial.cpp">
+      <Filter>Database</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
