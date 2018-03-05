@@ -31,4 +31,4 @@ bsreq* action::getmeta() const {
 	return action_type;
 }
 
-static adat<action, 32> actions; BSDATA(action, action_type);
+static adat<action, 32> action_data; BSMETA(action);

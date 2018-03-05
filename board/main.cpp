@@ -41,23 +41,23 @@ static bsparse_error_s parse_validate(const char* id, const char* value) {
 	return NoParserError;
 }
 
-//struct stest {
-//	const char* name;
-//};
-//bsreq stest_type[] = {
-//	BSREQ(stest, name, text_type),
-//	{}
-//};
-//stest stest_data1[2] = {"Test1", "Test2"};
-//stest stest_data2[4] = {"Test1", "Test2"};
-//static bsdata managers[] = {{"stest", stest_data1, stest_type},
-//{"stest2", stest_data2, stest_type}
-//};
+struct stest {
+	const char* name;
+};
+bsreq stest_type[] = {
+	BSREQ(stest, name, text_type),
+	{}
+};
+stest stest_data1[] = {"Test1", "Test2"};
+stest stest_data2[] = {"Test1", "Test2", "test3", "test4"};
+constexpr static bsdata managers[] = {{"stest", stest_data1, stest_type},
+{"stest2", stest_data2, stest_type}
+};
 
 int main() {
 	srand((int)time(0));
 	char temp[4096];
-	cpp_parsemsg("board/messages.h", "board/messages.cpp");
+	//cpp_parsemsg("board/messages.h", "board/messages.cpp");
 	bsdata::setparser(parse_error);
 	bsdata::setparser(parse_validate);
 	bsdata::read("script/test.txt");
@@ -68,8 +68,8 @@ int main() {
 #endif
 	if(!draw::initializemap())
 		return 0;
-	//draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
-	draw::setcaption(msgmenu.title);
+	draw::create(-1, -1, 800, 600, WFResize|WFMinmax, 32);
+	draw::setcaption(msg_data.title);
 	auto black_wood = gobject::find(province_type, "black_wood");
 	auto red = gobject::find(player_type, "red");
 	auto green = gobject::find(player_type, "green");

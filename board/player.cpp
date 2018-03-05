@@ -25,4 +25,4 @@ bsreq* player::getmeta() const {
 	return player_type;
 }
 
-static adat<player, player_max> players; BSDATA(player, player_type);
+static adat<player, player_max> player_data; BSMETA(player);

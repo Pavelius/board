@@ -9,7 +9,7 @@ struct gui_info {
 	short button_width, window_width, tips_width, hero_width, hero_window_width, control_border;
 	short padding;
 };
-extern gui_info gui;
+extern gui_info gui_data;
 
 namespace draw {
 void		avatar(int x, int y, const char* id);

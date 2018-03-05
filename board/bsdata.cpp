@@ -3,13 +3,7 @@
 
 bsdata* bsdata::first;
 
-bsdata::bsdata(const char* id, void* data, unsigned size, unsigned maximum_count, const bsreq* fields) :
-	id(id), fields(fields), data(data), size(size), maximum_count(maximum_count), current_count(maximum_count), count(current_count) {
-	seqlink(this);
-}
-
-bsdata::bsdata(const char* id, void* data, unsigned& count, unsigned size, unsigned maximum_count, const bsreq* fields) :
-	id(id), fields(fields), data(data), size(size), maximum_count(maximum_count), current_count(0), count(count) {
+void bsdata::globalize() {
 	seqlink(this);
 }
 

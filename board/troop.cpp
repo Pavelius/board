@@ -55,4 +55,4 @@ bsreq* troop::getmeta() const {
 	return troop_type;
 }
 
-static adat<troop, 1024> troops; BSDATA(troop, troop_type)
+static adat<troop, 1024> troop_data; BSMETA(troop)

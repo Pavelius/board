@@ -30,4 +30,4 @@ bsreq* trait::getmeta() const {
 	return trait_type;
 }
 
-static adat<trait, 128> traits; BSDATA(trait, trait_type)
+static adat<trait, 128> trait_data; BSMETA(trait)

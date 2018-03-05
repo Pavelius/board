@@ -36,4 +36,4 @@ bsreq* unit::getmeta() const {
 	return unit_type;
 }
 
-static adat<unit, 256> units; BSDATA(unit, unit_type);
+static adat<unit, 256> unit_data; BSMETA(unit);

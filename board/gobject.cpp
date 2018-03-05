@@ -180,7 +180,7 @@ char* gobject::getpresent(char* result, unsigned maximum, gobject** objects, uns
 		if(count_in_row == 1)
 			sc.prints(ps, pe, objects[i]->getname());
 		else
-			sc.prints(ps, pe, msgcombat.squads, count_in_row, objects[i]->getnameof());
+			sc.prints(ps, pe, msg_data.squads, count_in_row, objects[i]->getnameof());
 		szupper(ps, 1);
 		ps = zend(ps);
 		count_in_row = 1;

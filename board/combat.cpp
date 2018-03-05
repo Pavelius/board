@@ -61,7 +61,7 @@ public:
 		if(result[0])
 			zcat(result, " ");
 		if(general)
-			szprints(zend(result), result_max, msgcombat.lead, general->getname());
+			szprints(zend(result), result_max, msg_data.lead, general->getname());
 		return result;
 	}
 
@@ -106,8 +106,8 @@ public:
 	}
 
 	void setcasualty(char* result, const char* result_max, combatside& enemy) {
-		if(game.casualties)
-			casualties += (enemy.strenght / game.casualties);
+		if(game_data.casualties)
+			casualties += (enemy.strenght / game_data.casualties);
 		if(enemy.tactic)
 			casualties += enemy.tactic->get("enemy_casualties");
 		if(tactic)
@@ -123,7 +123,7 @@ public:
 		auto ps = result;
 		for(auto i = 0; i < casualties; i++) {
 			if(!result[0]) {
-				szprints(result, result_max, "\n%1 %2: ", msgcombat.casualties, getsideof());
+				szprints(result, result_max, "\n%1 %2: ", msg_data.casualties, getsideof());
 				ps = zend(result);
 			}
 			if(units.count>0) {
@@ -143,12 +143,12 @@ bool gobject::resolve(char* result, const char* result_max, gobject* attacker_pl
 	auto p = result;
 	combatside attackers(this, attacker_player);
 	combatside defenders(this, defender_player);
-	p = attackers.setstrenght(p, result_max, msgcombat.attacking_force, "attack", getname()); zcat(p, " ");
-	p = defenders.setstrenght(zend(p), result_max, msgcombat.defending_force, "defend", getname());
+	p = attackers.setstrenght(p, result_max, msg_data.attacking_force, "attack", getname()); zcat(p, " ");
+	p = defenders.setstrenght(zend(p), result_max, msg_data.defending_force, "defend", getname());
 	attackers.setcasualty(zend(p), result_max, defenders);
 	defenders.setcasualty(zend(p), result_max, attackers);
 	auto& winner = (attackers.getstrenght() > defenders.getstrenght()) ? attackers : defenders;
-	zcat(result, " "); szprints(zend(result), result_max, msgcombat.winner, winner.getside());
+	zcat(result, " "); szprints(zend(result), result_max, msg_data.winner, winner.getside());
 	attackers.applycasualty(zend(p), result_max);
 	defenders.applycasualty(zend(p), result_max);
 	addbutton(zend(p), result_max, "accept");

@@ -35,7 +35,7 @@ static bsreq gui_type[] = {
 	BSREQ(gui_info, padding, number_type),
 {}
 };
-gui_info gui; BSGLOB(gui);
+gui_info gui_data; BSMETA(gui);
 
 static void debug_mouse() {
 	char temp[128];
@@ -142,7 +142,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool di
 	draw::state push;
 	draw::font = metrics::font;
 	auto pa = e->getavatar();
-	int height = gui.hero_width;
+	int height = gui_data.hero_width;
 	szprints(zend(temp), endofs(temp), "###%1\n", e->getname());
 	for(auto p : e->getbonuses()) {
 		zcat(temp, p->getname());
@@ -157,8 +157,8 @@ static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool di
 	if(pa) {
 		int y1 = y;
 		avatar(x, y1, pa);
-		rectb({x, y1, x + gui.hero_width, y1 + gui.hero_width}, colors::border);
-		x1 += gui.hero_width + gui.padding;
+		rectb({x, y1, x + gui_data.hero_width, y1 + gui_data.hero_width}, colors::border);
+		x1 += gui_data.hero_width + gui_data.padding;
 	}
 	draw::textf(x1, y - 3, rc.x2 - x1, temp);
 	if(hittest == AreaHilited || hittest == AreaHilitedPressed) {
@@ -170,10 +170,10 @@ static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool di
 			auto value = e->get(text);
 			if(!value)
 				continue;
-			auto pf = msgcombat_type->find(text);
+			auto pf = msg_type->find(text);
 			if(!pf)
 				continue;
-			auto pn = (const char*)pf->get(pf->ptr(&msgcombat));
+			auto pn = (const char*)pf->get(pf->ptr(&msg_data));
 			if(!pn)
 				continue;
 			if(ps[0])
@@ -182,7 +182,7 @@ static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool di
 		}
 		tooltips(x, y, width, temp);
 	}
-	return height + gui.border * 2;
+	return height + gui_data.border * 2;
 }
 
 static int render_heroes(int x, int y, gobject* owner) {
@@ -192,16 +192,16 @@ static int render_heroes(int x, int y, gobject* owner) {
 	for(auto& e : gobject::getcol(hero_type)) {
 		if(e.getowner() != owner)
 			continue;
-		y += render_hero(x, y, gui.hero_window_width, &e, true, !e.isready(), 0);
-		y += gui.padding;
+		y += render_hero(x, y, gui_data.hero_window_width, &e, true, !e.isready(), 0);
+		y += gui_data.padding;
 	}
 	return y - y0;
 }
 
 static void render_board(const gobject* province_owner, gobject* hero_owner, int choose_province) {
 	render_frame({0, 0, draw::getwidth(), draw::getheight()}, province_owner, choose_province);
-	auto x = getwidth() - gui.hero_window_width - gui.border - gui.padding;
-	auto y = gui.padding + gui.border;
+	auto x = getwidth() - gui_data.hero_window_width - gui_data.border - gui_data.padding;
+	auto y = gui_data.padding + gui_data.border;
 	y += render_heroes(x, y, hero_owner);
 }
 
@@ -239,12 +239,12 @@ void gobject::setuiactive() {
 }
 
 areas draw::hilite(rect rc) {
-	auto border = gui.border;
+	auto border = gui_data.border;
 	rc.offset(-border, -border);
 	color c = colors::form;
 	auto rs = draw::area(rc);
 	if(rs == AreaHilited) {
-		auto op = gui.opacity_hilighted_province;
+		auto op = gui_data.opacity_hilighted_province;
 		draw::rectf(rc, c, op);
 		draw::rectb(rc, c);
 	}
@@ -253,15 +253,15 @@ areas draw::hilite(rect rc) {
 
 areas draw::window(rect rc, bool disabled, bool hilight, int border) {
 	if(border == 0)
-		border = gui.border;
+		border = gui_data.border;
 	rc.offset(-border, -border);
 	color c = colors::form;
 	auto rs = draw::area(rc);
-	auto op = gui.opacity;
+	auto op = gui_data.opacity;
 	if(disabled)
 		op = op / 2;
 	else if(hilight && !disabled && (rs == AreaHilited || rs == AreaHilitedPressed))
-		op = gui.opacity_hilighted;
+		op = gui_data.opacity_hilighted;
 	draw::rectf(rc, c, op);
 	draw::rectb(rc, c);
 	return rs;
@@ -276,7 +276,7 @@ int draw::window(int x, int y, int width, const char* string) {
 	link[0] = 0; draw::textf(x, y, rc.width(), string);
 	if(link[0])
 		tooltips(x, y, rc.width(), link);
-	return height + gui.border * 2 + gui.padding;
+	return height + gui_data.border * 2 + gui_data.padding;
 }
 
 int draw::windowb(int x, int y, int width, const char* string, int id, int param, int border) {
@@ -287,7 +287,7 @@ int draw::windowb(int x, int y, int width, const char* string, int id, int param
 	draw::text(rc, string, AlignCenterCenter);
 	if(id && ra == AreaHilitedPressed && hot::key == MouseLeft)
 		draw::execute(id, param);
-	return rc.height() + gui.border * 2;
+	return rc.height() + gui_data.border * 2;
 }
 
 void draw::tooltips(int x1, int y1, int width, const char* format, ...) {
@@ -304,14 +304,14 @@ COMMAND(after_render) {
 	draw::font = metrics::font;
 	if(draw::font) {
 		rect rc;
-		rc.x1 = tooltips_point.x + tooltips_width + gui.border * 2 + gui.padding;
+		rc.x1 = tooltips_point.x + tooltips_width + gui_data.border * 2 + gui_data.padding;
 		rc.y1 = tooltips_point.y;
-		rc.x2 = rc.x1 + gui.tips_width;
+		rc.x2 = rc.x1 + gui_data.tips_width;
 		rc.y2 = rc.y1;
 		draw::textf(rc, tooltips_text);
-		if(rc.x2 > getwidth() - gui.border - gui.padding) {
+		if(rc.x2 > getwidth() - gui_data.border - gui_data.padding) {
 			auto w = rc.width();
-			rc.x1 = tooltips_point.x - gui.border * 2 - gui.padding - w;
+			rc.x1 = tooltips_point.x - gui_data.border * 2 - gui_data.padding - w;
 			rc.x2 = rc.x1 + w;
 		}
 		// Correct border
@@ -329,10 +329,10 @@ COMMAND(after_render) {
 }
 
 bool draw::initializemap() {
-	if(!game.map || !game.map[0])
+	if(!game_data.map || !game_data.map[0])
 		return false;
 	char temp[260];
-	if(!map.read(szurl(temp, "maps", game.map)))
+	if(!map.read(szurl(temp, "maps", game_data.map)))
 		return false;
 	map.convert(-32, 0);
 	return true;
@@ -341,7 +341,7 @@ bool draw::initializemap() {
 void draw::report(const char* format) {
 	while(ismodal()) {
 		render_board(current_player, current_player, 0);
-		draw::window(gui.border * 2, gui.border * 2, gui.window_width, format);
+		draw::window(gui_data.border * 2, gui_data.border * 2, gui_data.window_width, format);
 		auto id = input();
 		if(control_board(id))
 			continue;
@@ -351,12 +351,12 @@ void draw::report(const char* format) {
 gobject* draw::getaction(gobject* player, gobject* hero) {
 	while(ismodal()) {
 		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player, 0);
-		auto x = getwidth() - gui.hero_window_width - gui.border - gui.padding;
-		auto y = gui.padding + gui.border;
-		y += render_hero(x, y, gui.hero_window_width, hero, false, hero->isready(), 0) + 1;
+		auto x = getwidth() - gui_data.hero_window_width - gui_data.border - gui_data.padding;
+		auto y = gui_data.padding + gui_data.border;
+		y += render_hero(x, y, gui_data.hero_window_width, hero, false, hero->isready(), 0) + 1;
 		for(auto& e : gobject::getcol(action_type))
-			y += windowb(x, y, gui.hero_window_width, e.getname(), AcceptButton, (int)&e, gui.border) + 1;
-		y += windowb(x, y, gui.hero_window_width, msgmenu.cancel, CancelButton, 0) + 1;
+			y += windowb(x, y, gui_data.hero_window_width, e.getname(), AcceptButton, (int)&e, gui_data.border) + 1;
+		y += windowb(x, y, gui_data.hero_window_width, msg_data.cancel, CancelButton, 0) + 1;
 		auto id = input();
 		if(control_board(id))
 			continue;
@@ -374,11 +374,11 @@ gobject* draw::getaction(gobject* player, gobject* hero) {
 gobject* draw::getprovince(gobject* player, gobject* hero, gobject* action) {
 	while(ismodal()) {
 		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player, AcceptButton);
-		auto x = getwidth() - gui.hero_window_width - gui.border - gui.padding;
-		auto y = gui.padding + gui.border;
-		y += render_hero(x, y, gui.hero_window_width, hero, false, hero->isready(), 0) + 1;
-		y += windowb(x, y, gui.hero_window_width, action->getname(), 0, 0, gui.border) + 1;
-		y += windowb(x, y, gui.hero_window_width, msgmenu.cancel, CancelButton, 0) + 1;
+		auto x = getwidth() - gui_data.hero_window_width - gui_data.border - gui_data.padding;
+		auto y = gui_data.padding + gui_data.border;
+		y += render_hero(x, y, gui_data.hero_window_width, hero, false, hero->isready(), 0) + 1;
+		y += windowb(x, y, gui_data.hero_window_width, action->getname(), 0, 0, gui_data.border) + 1;
+		y += windowb(x, y, gui_data.hero_window_width, msg_data.cancel, CancelButton, 0) + 1;
 		auto id = input();
 		if(control_board(id))
 			continue;
@@ -399,18 +399,18 @@ void draw::avatar(int x, int y, const char* id) {
 	if(!p) {
 		p = avatars.add(id);
 		memset(p, 0, sizeof(*p));
-		p->resize(gui.hero_width, gui.hero_width, 32, true);
+		p->resize(gui_data.hero_width, gui_data.hero_width, 32, true);
 		surface e(id, 0);
 		if(e) {
 			e.convert(-32, 0);
 			blit(*p, 0, 0, p->width, p->height, 0, e, 0, 0, e.width, e.height);
 		}
 	}
-	blit(*draw::canvas, x, y, gui.hero_width, gui.hero_width, 0, *p, 0, 0);
+	blit(*draw::canvas, x, y, gui_data.hero_width, gui_data.hero_width, 0, *p, 0, 0);
 }
 
 int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)()) {
-	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()}; rc.offset(gui.control_border, gui.control_border);
+	rect rc = {x, y, x + width, y + 4 * 2 + draw::texth()}; rc.offset(gui_data.control_border, gui_data.control_border);
 	if(buttonh(rc, ischecked(flags), isfocused(flags), isdisabled(flags), true,
 		label, 0, false, tips)
 		|| (isfocused(flags) && hot::key == KeyEnter)) {
@@ -419,7 +419,7 @@ int	draw::button(int x, int y, int width, int id, unsigned flags, const char* la
 		else
 			execute(id);
 	}
-	return rc.height() + gui.padding * 2;
+	return rc.height() + gui_data.padding * 2;
 }
 
 static void choose_accept() {
@@ -433,7 +433,7 @@ static void choose_no() {
 TEXTPLUGIN(accept) {
 	if(hot::key == KeyEnter)
 		execute(choose_accept);
-	return button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, msgmenu.accept, tips, choose_accept);
+	return button(x + width - gui_data.button_width, y, gui_data.button_width, AcceptButton, 0, msg_data.accept, tips, choose_accept);
 }
 
 TEXTPLUGIN(yesno) {
@@ -441,8 +441,8 @@ TEXTPLUGIN(yesno) {
 		execute(choose_accept);
 	else if(hot::key == Alpha + 'N')
 		execute(choose_no);
-	auto height = button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, msgmenu.yes, tips, choose_accept);
-	width -= gui.button_width + gui.padding;
-	button(x + width - gui.button_width, y, gui.button_width, AcceptButton, 0, msgmenu.no, tips, choose_no);
+	auto height = button(x + width - gui_data.button_width, y, gui_data.button_width, AcceptButton, 0, msg_data.yes, tips, choose_accept);
+	width -= gui_data.button_width + gui_data.padding;
+	button(x + width - gui_data.button_width, y, gui_data.button_width, AcceptButton, 0, msg_data.no, tips, choose_no);
 	return height;
 }

@@ -26,12 +26,11 @@ bsreq* active_enchantment::getmeta() const {
 	return active_enchantment_type;
 }
 
-static adat<active_enchantment, 256> active_enchantments;
-BSDATA(active_enchantment, active_enchantment_type);
+static adat<active_enchantment, 256> active_enchantment_data; BSMETA(active_enchantment);
 
 int gobject::getbonus(const char* id) const {
 	auto result = 0;
-	for(auto& e : active_enchantments) {
+	for(auto& e : active_enchantment_data) {
 		if(!e.target)
 			continue;
 		if(!((e.target == this)

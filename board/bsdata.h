@@ -1,14 +1,11 @@
+#include "adat.h"
 #include "bsreq.h"
 #include "collection.h"
 
 #pragma once
 
 #define BSMETA(c) \
-bsdata c##_manager(#c, c##_data, sizeof(c##_data[0]), sizeof(c##_data)/sizeof(c##_data[0]), c##_type);
-#define BSDATA(c, c_type) \
-bsdata c##_manager(#c, c##s.data, c##s.count, sizeof(c##s.data[0]), sizeof(c##s.data)/sizeof(c##s.data[0]), c_type);
-#define BSGLOB(c) \
-bsdata c##_manager(#c, &c, 1, sizeof(c), c##_type);
+bsdata c##_manager(#c, c##_data, c##_type, true);
 
 enum bsparse_error_s {
 	NoParserError,
@@ -25,18 +22,22 @@ struct bsdata : collection {
 	bsdata*				next;
 	static bsdata*		first;
 	//
-	template<class T, unsigned N> bsdata(const char* id, T(&data)[N], const bsreq* fields) : id(id), fields(fields), data(&data), size(sizeof(T)), count(current_count), current_count(0), next(0), maximum_count(N) {}
-	bsdata(const char* id, void* data, unsigned size, unsigned maximum_count, const bsreq* fields);
-	bsdata(const char* id, void* data, unsigned& count, unsigned size, unsigned maximum_count, const bsreq* fields);
+	template<class T, unsigned N> bsdata(const char* id, T(&data)[N], const bsreq* fields, bool make_global) : id(id), fields(fields), data(&data), size(sizeof(T)), count(current_count), current_count(N), next(0), maximum_count(N) { globalize(); }
+	template<class T, unsigned N> constexpr bsdata(const char* id, T(&data)[N], const bsreq* fields) : id(id), fields(fields), data(&data), size(sizeof(T)), count(current_count), current_count(N), next(0), maximum_count(N) {}
+	template<class T> bsdata(const char* id, T& data, const bsreq* fields, bool make_global) : id(id), fields(fields), data(&data), size(sizeof(T)), count(current_count), current_count(0), next(0), maximum_count(1) { globalize(); }
+	template<class T> constexpr bsdata(const char* id, T& data, const bsreq* fields) : id(id), fields(fields), data(&data), size(sizeof(T)), count(current_count), current_count(0), next(0), maximum_count(1) {}
+	template<class T, unsigned N> bsdata(const char* id, adat<T, N>& data, const bsreq* fields, bool make_global) : id(id), fields(fields), data(&data.data), size(sizeof(T)), count(data.count), current_count(0), next(0), maximum_count(N) { globalize(); }
+	template<class T, unsigned N> constexpr bsdata(const char* id, adat<T, N>& data, const bsreq* fields) : id(id), fields(fields), data(&data.data), size(sizeof(T)), count(data.count), current_count(0), next(0), maximum_count(N) {}
 	//
 	void*				add() override;
 	char*				begin() const { return (char*)data; }
 	void				clear() override { count = 0; }
-	char*				end() const { return (char*)data + size*count; }
-	void*				get(int index) const override { return (char*)data + index*size; }
+	char*				end() const { return (char*)data + size * count; }
+	void*				get(int index) const override { return (char*)data + index * size; }
 	unsigned			getcount() const override { return count; }
 	unsigned			getmaxcount() const override { return maximum_count; }
 	unsigned			getsize() const override { return size; }
+	void				globalize();
 	int					indexof(const void* element) const override;
 	static bsdata*		find(const char* id);
 	static bsdata*		find(const bsreq* id);

@@ -1,29 +1,25 @@
-﻿#include "bsdata.h"
-#include "messages.h"
+﻿#include "main.h"
 
-bsreq msgmenu_type[] = {
-	BSREQ(msgmenu_info, title, text_type),
-	BSREQ(msgmenu_info, exit, text_type),
-	BSREQ(msgmenu_info, loadgame, text_type),
-	BSREQ(msgmenu_info, newgame, text_type),
-	BSREQ(msgmenu_info, savegame, text_type),
-	BSREQ(msgmenu_info, accept, text_type),
-	BSREQ(msgmenu_info, cancel, text_type),
-	BSREQ(msgmenu_info, yes, text_type),
-	BSREQ(msgmenu_info, no, text_type),
+bsreq msg_type[] = {
+	BSREQ(msg_info, attacking_force, text_type),
+	BSREQ(msg_info, casualties, text_type),
+	BSREQ(msg_info, defending_force, text_type),
+	BSREQ(msg_info, winner, text_type),
+	BSREQ(msg_info, lead, text_type),
+	BSREQ(msg_info, attack, text_type),
+	BSREQ(msg_info, defence, text_type),
+	BSREQ(msg_info, raid, text_type),
+	BSREQ(msg_info, squads, text_type),
+	//
+	BSREQ(msg_info, title, text_type),
+	BSREQ(msg_info, exit, text_type),
+	BSREQ(msg_info, loadgame, text_type),
+	BSREQ(msg_info, newgame, text_type),
+	BSREQ(msg_info, savegame, text_type),
+	BSREQ(msg_info, accept, text_type),
+	BSREQ(msg_info, cancel, text_type),
+	BSREQ(msg_info, yes, text_type),
+	BSREQ(msg_info, no, text_type),
 {},
 };
-msgmenu_info msgmenu; BSGLOB(msgmenu);
-bsreq msgcombat_type[] = {
-	BSREQ(msgcombat_info, attacking_force, text_type),
-	BSREQ(msgcombat_info, casualties, text_type),
-	BSREQ(msgcombat_info, defending_force, text_type),
-	BSREQ(msgcombat_info, winner, text_type),
-	BSREQ(msgcombat_info, lead, text_type),
-	BSREQ(msgcombat_info, attack, text_type),
-	BSREQ(msgcombat_info, defence, text_type),
-	BSREQ(msgcombat_info, raid, text_type),
-	BSREQ(msgcombat_info, squads, text_type),
-{},
-};
-msgcombat_info msgcombat; BSGLOB(msgcombat);
+msg_info msg_data; BSMETA(msg);

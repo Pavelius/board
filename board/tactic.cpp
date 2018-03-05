@@ -25,4 +25,4 @@ bsreq* tactic::getmeta() const {
 	return tactic_type;
 }
 
-static adat<tactic, 3> tactics; BSDATA(tactic, tactic_type)
+static adat<tactic, 3> tactic_data; BSMETA(tactic)

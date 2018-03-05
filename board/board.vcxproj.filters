@@ -212,9 +212,6 @@
     <ClInclude Include="stringcreator.h">
       <Filter>System</Filter>
     </ClInclude>
-    <ClInclude Include="messages.h">
-      <Filter>View</Filter>
-    </ClInclude>
     <ClInclude Include="draw.h">
       <Filter>View</Filter>
     </ClInclude>

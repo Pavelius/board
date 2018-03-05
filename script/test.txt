@@ -22,8 +22,6 @@
 #gui hero_width(64)
 #gui button_width(64)
 #gui hero_window_width(200)
-#gui hero_window_border(8)
-#gui action_window_border(2)
 #gui opacity_hilighted(200)
 #gui opacity_hilighted_province(64)
 

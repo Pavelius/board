@@ -1,10 +1,8 @@
 #include "acol.h"
-#include "adat.h"
 #include "amap.h"
 #include "aref.h"
 #include "bsdata.h"
 #include "crt.h"
-#include "messages.h"
 #include "point.h"
 #include "stringcreator.h"
 
@@ -15,7 +13,7 @@ bsreq action_type[];
 bsreq enchantment_type[];
 bsreq event_type[];
 bsreq hero_type[];
-bsreq msgcombat_type[];
+bsreq msg_type[];
 bsreq point_type[];
 bsreq province_type[];
 bsreq player_type[];
@@ -88,10 +86,31 @@ struct combatable : gobject {
 	gobject*					traits[5];
 };
 struct game_info {
-	char						casualties; // One casualties per this strenght value
-	const char*					map;
+	char casualties; // One casualties per this strenght value
+	const char* map;
 };
-extern game_info game;
+extern game_info game_data;
+struct msg_info {
+	const char* attacking_force;
+	const char* defending_force;
+	const char* casualties;
+	const char* winner;
+	const char* lead;
+	const char* attack;
+	const char* defence;
+	const char* raid;
+	const char* squads;
+	const char* title;
+	const char* exit;
+	const char* loadgame;
+	const char* newgame;
+	const char* savegame;
+	const char* accept;
+	const char* cancel;
+	const char* yes;
+	const char* no;
+};
+extern msg_info msg_data;
 namespace logs {
 struct driver : stringcreator {
 	const char*					name;
