@@ -67,13 +67,20 @@ static void render_province(rect rc, point mouse, const gobject* owner, int id) 
 		point pt = {(short)(real_pos.x - rc.x1 - camera.x), (short)(real_pos.y - rc.y1 - camera.y)};
 		szprints(temp, endofs(temp), "%1", e.getname());
 		auto text_width = draw::textw(temp);
+		auto a = AreaNormal;
 		if(id) {
 			rect rc = {pt.x - text_width / 2, pt.y - draw::texth() / 2, pt.x + text_width / 2, pt.y + draw::texth() / 2};
-			auto a = hilite(rc);
+			a = draw::area(rc);
 			if(a == AreaHilitedPressed)
 				draw::execute(id, (int)&e);
 		}
 		//render_power(pt.x, pt.y, owner, &e);
+		if(a == AreaHilited || a == AreaHilitedPressed) {
+			draw::fore_stroke = colors::red.mix(colors::white);
+			hot::cursor = CursorHand;
+		}
+		else
+			draw::fore_stroke = colors::white;
 		draw::text(pt.x - text_width / 2, pt.y - draw::texth() / 2, temp, -1, TextStroke);
 		if(hot::key == MouseLeft && hot::pressed) {
 			auto d = distance(mouse, real_pos);
