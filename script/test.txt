@@ -8,6 +8,7 @@
 #province deadly_swamp name("Болота погибели") position(509, 276)
 
 #trait general name("Генерал") defend(1)
+#trait diplomat name("Дипломат") defend(1)
 #trait hireling name("Наемник") attack(1)
 #trait carefull name("Осторожный") defend(1)
 #trait bloody name("Кровожадный") attack(1)
@@ -36,6 +37,7 @@
 #player green name("Орки") nameof("орков")
 
 #hero gordek name("Гордек") nameof("Гордека") avatar("art/portraits/gordek.bmp") traits(bloody, hireling) owner(red)
+#hero mistra name("Мистра") nameof("Мистры") avatar("art/portraits/mistra.bmp") traits(carefull, diplomat) owner(red)
 
 #unit spearmans name("копейщики") nameof("копейщиков") attack(1) defend(2) gold(3) gold_upkeep(1)
 #unit archers name("лучники") nameof("лучников") attack(2) defend(1) gold(3) gold_upkeep(1)

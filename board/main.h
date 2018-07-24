@@ -1,6 +1,5 @@
 #include "acol.h"
 #include "amap.h"
-#include "aref.h"
 #include "bsdata.h"
 #include "crt.h"
 #include "point.h"

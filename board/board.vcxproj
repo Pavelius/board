@@ -121,9 +121,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="acol.h" />
-    <ClInclude Include="adat.h" />
     <ClInclude Include="amap.h" />
-    <ClInclude Include="aref.h" />
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />

@@ -4,9 +4,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
-    <ClCompile Include="collection.cpp">
-      <Filter>Database</Filter>
-    </ClCompile>
     <ClCompile Include="bsdata.cpp">
       <Filter>Database</Filter>
     </ClCompile>
@@ -151,6 +148,9 @@
     <ClCompile Include="bsdata_serial.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="collection.cpp">
+      <Filter>Database</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">
@@ -176,16 +176,7 @@
     <ClInclude Include="main.h">
       <Filter>Logic</Filter>
     </ClInclude>
-    <ClInclude Include="collection.h">
-      <Filter>Database</Filter>
-    </ClInclude>
     <ClInclude Include="acol.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="adat.h">
-      <Filter>Database</Filter>
-    </ClInclude>
-    <ClInclude Include="aref.h">
       <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="bsdata.h">
@@ -241,6 +232,9 @@
     </ClInclude>
     <ClInclude Include="initializer_list.h">
       <Filter>System</Filter>
+    </ClInclude>
+    <ClInclude Include="collection.h">
+      <Filter>Database</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -1,4 +1,3 @@
-#include "adat.h"
 #include "bsreq.h"
 #include "collection.h"
 

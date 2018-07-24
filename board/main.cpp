@@ -55,6 +55,7 @@ static bsparse_error_s parse_validate(const char* id, const char* value) {
 //};
 
 int main() {
+	return 0;
 	srand((int)time(0));
 	char temp[4096];
 	//cpp_parsemsg("board/messages.h", "board/messages.cpp");
