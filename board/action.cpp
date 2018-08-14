@@ -5,6 +5,7 @@ struct action : gobject {
 	const char*	id;
 	const char*	name;
 	const char*	text;
+	const char*	nameact;
 	char attack, defend, gold, recruit, support, upgrade;
 	char conquer, placeable;
 
@@ -24,6 +25,7 @@ bsreq action_type[] = {
 	BSREQ(action, upgrade, number_type),
 	BSREQ(action, conquer, number_type),
 	BSREQ(action, placeable, number_type),
+	BSREQ(action, nameact, text_type),
 {0}
 };
 

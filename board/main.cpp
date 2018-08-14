@@ -41,21 +41,7 @@ static bsparse_error_s parse_validate(const char* id, const char* value) {
 	return NoParserError;
 }
 
-//struct stest {
-//	const char* name;
-//};
-//bsreq stest_type[] = {
-//	BSREQ(stest, name, text_type),
-//	{}
-//};
-//stest stest_data1[] = {"Test1", "Test2"};
-//stest stest_data2[] = {"Test1", "Test2", "test3", "test4"};
-//constexpr static bsdata managers[] = {{"stest", stest_data1, stest_type},
-//{"stest2", stest_data2, stest_type}
-//};
-
 int main() {
-	return 0;
 	srand((int)time(0));
 	char temp[4096];
 	//cpp_parsemsg("board/messages.h", "board/messages.cpp");
@@ -78,10 +64,11 @@ int main() {
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
 	draw::report(temp);
-	auto action = draw::getaction(red, gordek);
-	if(action) {
-		auto province = draw::getprovince(red, gordek, action);
-	}
+	//auto action = draw::getaction(red, gordek);
+	//if(action) {
+	//	auto province = draw::getprovince(red, gordek, action);
+	//}
+	draw::makemove(red);
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

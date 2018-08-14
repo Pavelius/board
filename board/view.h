@@ -14,6 +14,7 @@ extern gui_info gui_data;
 namespace draw {
 void		avatar(int x, int y, const char* id);
 bool		initializemap();
+void		makemove(gobject* player);
 gobject*	getaction(gobject* player, gobject* hero);
 gobject*	getprovince(gobject* player, gobject* hero, gobject* action);
 areas		hilite(rect rc);

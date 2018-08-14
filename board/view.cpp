@@ -3,7 +3,8 @@
 
 enum command_s {
 	NoCommand,
-	AcceptButton, YenButton, NoButton, CancelButton
+	AcceptButton, YenButton, NoButton, CancelButton,
+	ChooseHero
 };
 
 using namespace draw;
@@ -17,7 +18,7 @@ static short tooltips_width;
 static char tooltips_text[4096];
 static surface map;
 static gobject* current_player;
-static gobject* current_province;
+//static gobject* current_province;
 extern rect sys_static_area;
 
 static bsreq gui_type[] = {
@@ -92,7 +93,11 @@ static void render_province(rect rc, point mouse, const gobject* owner, int id) 
 		unsigned count;
 		count = owner->getheroes(objects, 1, &e);
 		if(count) {
-			szprints(temp, endofs(temp), "%1", objects[0]->getname());
+			auto action = (gobject*)objects[0]->get("action");
+			if(action)
+				szprints(temp, endofs(temp), "%1 %2", objects[0]->getname(), action->gets("nameact"));
+			else
+				szprints(temp, endofs(temp), "%1", objects[0]->getname());
 			rect rc = {0, 0, 200, 0}; draw::textw(rc, temp);
 			pt.y += draw::text({pt.x - rc.width() / 2, pt.y, pt.x + rc.width() / 2, pt.y + rc.height()}, temp, AlignCenter);
 		}
@@ -144,7 +149,7 @@ static void render_frame(rect rc, const gobject* province_owner, int choose_prov
 #endif
 }
 
-static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool disabled, const char* disable_text) {
+static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool disabled, const char* disable_text, int choose_hero = 0) {
 	char temp[2048]; temp[0] = 0;
 	draw::state push;
 	draw::font = metrics::font;
@@ -188,28 +193,30 @@ static int render_hero(int x, int y, int width, gobject* e, bool hilite, bool di
 			szprints(zend(temp), endofs(temp), "%+2i %1", pn, value);
 		}
 		tooltips(x, y, width, temp);
+		if(hittest == AreaHilitedPressed && choose_hero)
+			execute(choose_hero, (int)e);
 	}
 	return height + gui_data.border * 2;
 }
 
-static int render_heroes(int x, int y, gobject* owner) {
+static int render_heroes(int x, int y, gobject* owner, int choose_hero) {
 	auto y0 = y;
 	if(!owner)
 		return 0;
 	for(auto& e : gobject::getcol(hero_type)) {
 		if(e.getowner() != owner)
 			continue;
-		y += render_hero(x, y, gui_data.hero_window_width, &e, true, !e.isready(), 0);
+		y += render_hero(x, y, gui_data.hero_window_width, &e, true, !e.isready(), 0, choose_hero);
 		y += gui_data.padding;
 	}
 	return y - y0;
 }
 
-static void render_board(const gobject* province_owner, gobject* hero_owner, int choose_province) {
+static void render_board(const gobject* province_owner, gobject* hero_owner, int choose_province, int choose_hero) {
 	render_frame({0, 0, draw::getwidth(), draw::getheight()}, province_owner, choose_province);
 	auto x = getwidth() - gui_data.hero_window_width - gui_data.border - gui_data.padding;
 	auto y = gui_data.padding + gui_data.border;
-	y += render_heroes(x, y, hero_owner);
+	y += render_heroes(x, y, hero_owner, choose_hero);
 }
 
 static bool control_board(int id) {
@@ -347,7 +354,7 @@ bool draw::initializemap() {
 
 void draw::report(const char* format) {
 	while(ismodal()) {
-		render_board(current_player, current_player, 0);
+		render_board(current_player, current_player, 0, 0);
 		draw::window(gui_data.border * 2, gui_data.border * 2, gui_data.window_width, format);
 		auto id = input();
 		if(control_board(id))
@@ -360,7 +367,7 @@ gobject* draw::getaction(gobject* player, gobject* hero) {
 		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player, 0);
 		auto x = getwidth() - gui_data.hero_window_width - gui_data.border - gui_data.padding;
 		auto y = gui_data.padding + gui_data.border;
-		y += render_hero(x, y, gui_data.hero_window_width, hero, false, hero->isready(), 0) + 1;
+		y += render_hero(x, y, gui_data.hero_window_width, hero, false, !hero->isready(), 0) + 1;
 		for(auto& e : gobject::getcol(action_type))
 			y += windowb(x, y, gui_data.hero_window_width, e.getname(), AcceptButton, (int)&e, gui_data.border) + 1;
 		y += windowb(x, y, gui_data.hero_window_width, msg_data.cancel, CancelButton, 0) + 1;
@@ -383,7 +390,7 @@ gobject* draw::getprovince(gobject* player, gobject* hero, gobject* action) {
 		render_frame({0, 0, draw::getwidth(), draw::getheight()}, player, AcceptButton);
 		auto x = getwidth() - gui_data.hero_window_width - gui_data.border - gui_data.padding;
 		auto y = gui_data.padding + gui_data.border;
-		y += render_hero(x, y, gui_data.hero_window_width, hero, false, hero->isready(), 0) + 1;
+		y += render_hero(x, y, gui_data.hero_window_width, hero, false, !hero->isready(), 0) + 1;
 		y += windowb(x, y, gui_data.hero_window_width, action->getname(), 0, 0, gui_data.border) + 1;
 		y += windowb(x, y, gui_data.hero_window_width, msg_data.cancel, CancelButton, 0) + 1;
 		auto id = input();
@@ -398,6 +405,30 @@ gobject* draw::getprovince(gobject* player, gobject* hero, gobject* action) {
 		}
 	}
 	return 0;
+}
+
+bool make_action(gobject* player, gobject* hero) {
+	gobject* province = 0;
+	auto action = getaction(player, hero);
+	if(!action)
+		return false;
+	if(action->get("placeable"))
+		province = getprovince(player, hero, action);
+	return true;
+}
+
+void draw::makemove(gobject* player) {
+	while(ismodal()) {
+		render_board(player, player, 0, ChooseHero);
+		auto id = input();
+		if(control_board(id))
+			continue;
+		switch(id) {
+		case ChooseHero:
+			make_action(player, (gobject*)hot::param);
+			break;
+		}
+	}
 }
 
 void draw::avatar(int x, int y, const char* id) {
