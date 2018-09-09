@@ -9,6 +9,7 @@
 
 const int player_max = 8;
 bsreq action_type[];
+bsreq combatable_type[];
 bsreq enchantment_type[];
 bsreq event_type[];
 bsreq hero_type[];

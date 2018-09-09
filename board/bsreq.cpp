@@ -73,3 +73,63 @@ bool bsreq::match(const void* p, const char* name) const {
 	}
 	return true;
 }
+
+bsval bsval::ptr(const char* name) const {
+	if(data && type) {
+		for(auto p = type; p->id; p++) {
+			if(p->id[0] == 0) {
+				bsval v1 = {p->type, (char*)data + p->offset};
+				bsval v2 = v1.ptr(name);
+				if(v2)
+					return v2;
+			} else if(strcmp(p->id, name) == 0) {
+				bsval v1;
+				v1.type = p->type;
+				v1.data = (char*)data + p->offset;
+				if(p->reference && p->type != text_type)
+					v1.data = *((void**)v1.data);
+				return v1;
+			}
+		}
+	}
+	return {0, 0};
+}
+
+bool bsval::has(const char* name) const {
+	if(data && type) {
+		for(auto p = type; p->id; p++) {
+			if(p->id[0] == 0) {
+				bsval b1 = {p->type, (char*)data + p->offset};
+				if(b1.has(name))
+					return true;
+			} else if(strcmp(p->id, name) == 0)
+				return true;
+		}
+	}
+	return false;
+}
+
+int bsval::get() const {
+	if(!type || !data)
+		return 0;
+	switch(type->size) {
+	case sizeof(char) : return *((char*)data);
+	case sizeof(short) : return *((short*)data);
+	default: return *((int*)data);
+	}
+}
+
+void bsval::set(int value) {
+	if(!type || !data)
+		return;
+	switch(type->size) {
+	case sizeof(char) : *((char*)data) = value; break;
+	case sizeof(short) : *((short*)data) = value; break;
+	default: *((int*)data) = value; break;
+	}
+}
+
+const char* bsval::gets(const char* name) const {
+	auto p = (const char*)get(name);
+	return p ? p : "";
+}

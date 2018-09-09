@@ -41,7 +41,46 @@ static bsparse_error_s parse_validate(const char* id, const char* value) {
 	return NoParserError;
 }
 
+void test_data() {
+	struct base {
+		const char*		parent;
+	};
+	struct test : base {
+		const char*		name;
+		int				value;
+		base*			base;
+		virtual void dostuff() {
+			value = 10;
+		}
+	};
+	static bsreq base_type[] = {
+		BSREQ(base, parent, text_type),
+	{0}};
+	static bsreq test_type[] = {
+		BSREQ(test, name, text_type),
+		BSREQ(test, value, number_type),
+		BSREQ(test, base, base_type),
+		BSINH(test, base),
+	{0}};
+	base base_instance;
+	test instance;
+	base_instance.parent = "Base Another";
+	instance.parent = "Base";
+	instance.name = "Inhert";
+	instance.base = &base_instance;
+	instance.value = 12;
+	bsval var = {test_type, &instance};
+	auto v1 = var.gets("name");
+	auto v2 = var.get("value");
+	auto v3 = var.gets("parent");
+	var.set("name", "Ivan");
+	var.ptr("base").set("parent", "Ivan Base");
+	v1 = var.gets("name");
+	instance.dostuff();
+}
+
 int main() {
+	test_data();
 	srand((int)time(0));
 	char temp[4096];
 	//cpp_parsemsg("board/messages.h", "board/messages.cpp");
@@ -64,10 +103,6 @@ int main() {
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
 	draw::report(temp);
-	//auto action = draw::getaction(red, gordek);
-	//if(action) {
-	//	auto province = draw::getprovince(red, gordek, action);
-	//}
 	draw::makemove(red);
 }
 

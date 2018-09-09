@@ -8,6 +8,8 @@ bsreq::info<decltype(cls::field)>::count,\
 type,\
 bsreq::refi<decltype(cls::field)>::count,\
 bsreq::enmi<decltype(cls::field)>::value}
+#define BSINH(cls, base) {"", (unsigned)static_cast<base*>((cls*)0),\
+sizeof(base), sizeof(base), 1, base##_type, 0, 0}
 
 const int bsreq_max_text = 8192;
 
@@ -46,21 +48,25 @@ struct bsreq {
 	const bsreq*	find(const char* name) const;
 	const bsreq*	find(const char* name, const bsreq* type) const;
 	int				get(const void* p) const;
-	const char*		getdata(char* result, const char* id, const void* object, bool tobuffer) const;
 	const bsreq*	getkey() const;
 	bool			issimple() const { return type == 0; }
 	bool			match(const void* p, const char* name) const;
 	const char*		ptr(const void* data) const { return (const char*)data + offset; }
 	const char*		ptr(const void* data, int index) const { return (const char*)data + offset + index*size; }
 	void			set(const void* p, int value) const;
-	void			setdata(const char* result, const char* id, void* object) const;
 };
 struct bsval {
 	const bsreq*	type;
 	void*			data;
 	operator bool() const { return data != 0; }
-	int				get() const { return type->get(type->ptr(data)); }
-	void			set(int value) { type->set(type->ptr(data), value); }
+	int				get() const;
+	int				get(const char* name) const { return ptr(name).get(); }
+	const char*		gets(const char* name) const;
+	bool			has(const char* name) const;
+	bsval			ptr(const char* name) const;
+	void			set(int value);
+	void			set(const char* name, int value) { ptr(name).set(value); }
+	void			set(const char* name, const char* value) { ptr(name).set((int)value); }
 };
 extern bsreq		any_type[]; // any existing object type, exept number (and other integer) or text
 extern bsreq		number_type[]; // standart integer value

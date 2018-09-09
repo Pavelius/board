@@ -15,11 +15,25 @@ struct unit : combatable {
 
 };
 
+bsreq combatable_type[] = {
+	BSREQ(combatable, attack, number_type),
+	BSREQ(combatable, defend, number_type),
+	BSREQ(combatable, gold, number_type),
+	BSREQ(combatable, gold_upkeep, number_type),
+	BSREQ(combatable, support, number_type),
+	BSREQ(combatable, support_upkeep, number_type),
+	BSREQ(combatable, enemy_casualties, number_type),
+	BSREQ(combatable, firendly_casualties, number_type),
+	BSREQ(combatable, traits, number_type),
+{0}
+};
+
 bsreq unit_type[] = {
 	BSREQ(unit, id, text_type),
 	BSREQ(unit, name, text_type),
 	BSREQ(unit, nameof, text_type),
 	BSREQ(unit, text, text_type),
+	//BSINH(unit, combatable),
 	BSREQ(combatable, attack, number_type),
 	BSREQ(combatable, defend, number_type),
 	BSREQ(combatable, gold, number_type),
