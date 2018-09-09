@@ -31,6 +31,17 @@ struct tipinfo {
 	const char*					separator;
 	tipinfo(char* result, const char* result_max) :result(result), result_max(result_max), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
 };
+struct combatinfo {
+	char						attack; // Сила армии при захвате
+	char						defence; // Сила армии при защите
+	char						raid; // Добавляется к атаке при рейде
+	char						sword; // Потери врага
+	char						shield; // Аннулирование своих потерь
+};
+struct costinfo {
+	int							gold; // Золото
+	int							influence; // Влияние
+};
 struct gobject {
 	void						act(char* result, const char* format, ...) const;
 	void						actv(char* result, const char* format, const char* param) const;
