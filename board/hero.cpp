@@ -11,6 +11,7 @@ struct hero : gobject {
 	gobject* tactic;
 	gobject* owner;
 	gobject* province;
+	gobject* action;
 
 	bsreq* getmeta() const override;
 
@@ -43,6 +44,11 @@ struct hero : gobject {
 
 	gobject* getprovince() const override {
 		return province;
+	}
+
+	virtual void refresh() override {
+		action = 0;
+		province = 0;
 	}
 
 };

@@ -652,7 +652,7 @@ static void rle832m(unsigned char* p1, int d1, unsigned char* s, int h, const un
 	}
 }
 
-static void alc32(unsigned char* d, int d_scan, const unsigned char* s, int height, const unsigned char* clip_x1, const unsigned char* clip_x2, color c1, bool italic) {
+static void alc32(unsigned char* d, int d_scan, const unsigned char* s, int height, const unsigned char* clip_x1, const unsigned char* clip_x2, color c1, bool italic, unsigned char alpha) {
 	const int cbs = 3;
 	const int cbd = 4;
 	unsigned char* p = d;
@@ -680,15 +680,30 @@ static void alc32(unsigned char* d, int d_scan, const unsigned char* s, int heig
 				c -= sk;
 			}
 			// visible part
-			do {
-				if(p >= clip_x2)
-					break;
-				p[0] = ((p[0] * (255 - s[0])) + (c1.b*(s[0]))) >> 8;
-				p[1] = ((p[1] * (255 - s[1])) + (c1.g*(s[1]))) >> 8;
-				p[2] = ((p[2] * (255 - s[2])) + (c1.r*(s[2]))) >> 8;
-				p += cbd;
-				s += cbs;
-			} while(--c);
+			if(alpha == 0xFF) {
+				do {
+					if(p >= clip_x2)
+						break;
+					p[0] = ((p[0] * (255 - s[0])) + (c1.b*(s[0]))) >> 8;
+					p[1] = ((p[1] * (255 - s[1])) + (c1.g*(s[1]))) >> 8;
+					p[2] = ((p[2] * (255 - s[2])) + (c1.r*(s[2]))) >> 8;
+					p += cbd;
+					s += cbs;
+				} while(--c);
+			} else {
+				do {
+					if(p >= clip_x2)
+						break;
+					unsigned char s0 = (s[0] * (255 - alpha)) >> 8;
+					unsigned char s1 = (s[1] * (255 - alpha)) >> 8;
+					unsigned char s2 = (s[2] * (255 - alpha)) >> 8;
+					p[0] = ((p[0] * (255 - s0)) + (c1.b*(s0))) >> 8;
+					p[1] = ((p[1] * (255 - s1)) + (c1.g*(s1))) >> 8;
+					p[2] = ((p[2] * (255 - s2)) + (c1.r*(s2))) >> 8;
+					p += cbd;
+					s += cbs;
+				} while(--c);
+			}
 			// right clip part
 			if(c) {
 				p += c*cbd;
@@ -1461,7 +1476,7 @@ int draw::texth(const char* string, int width) {
 	return y1;
 }
 
-void draw::text(int x, int y, const char* string, int count, unsigned flags) {
+void draw::text(int x, int y, const char* string, int count, unsigned flags, unsigned char alpha) {
 	if(!font)
 		return;
 	int dy = texth();
@@ -1474,7 +1489,7 @@ void draw::text(int x, int y, const char* string, int count, unsigned flags) {
 	while(s1 < s2) {
 		int sm = szget(&s1);
 		if(sm >= 0x21)
-			glyph(x, y, sm, flags);
+			glyph(x, y, sm, flags, alpha);
 		x += textw(sm);
 	}
 }
@@ -1512,7 +1527,7 @@ int draw::textbc(const char* string, int width) {
 	return p;
 }
 
-int	draw::text(rect rc, const char* string, unsigned state, int* max_width) {
+int	draw::text(rect rc, const char* string, unsigned state, int* max_width, unsigned char alpha) {
 	if(!string || string[0] == 0)
 		return 0;
 	int x1 = rc.x1;
@@ -1522,7 +1537,7 @@ int	draw::text(rect rc, const char* string, unsigned state, int* max_width) {
 		*max_width = 0;
 	if(state&TextSingleLine) {
 		text(aligned(x1, rc.width(), state, draw::textw(string)), y1,
-			string, -1, state);
+			string, -1, state, alpha);
 		return dy;
 	} else {
 		int w1 = rc.width();
@@ -1533,7 +1548,7 @@ int	draw::text(rect rc, const char* string, unsigned state, int* max_width) {
 			int w = textw(string, c);
 			if(max_width && *max_width < w)
 				*max_width = w;
-			text(aligned(x1, w1, state, w), y1, string, c, state);
+			text(aligned(x1, w1, state, w), y1, string, c, state, alpha);
 			y1 += dy;
 			string = skiptr(string + c);
 		}
@@ -1879,15 +1894,15 @@ void draw::image(int x, int y, const sprite* e, int id, int flags, unsigned char
 			alc32(ptr(x, sy - 1), wd, s, y2 - y,
 				ptr(clipping.x1, sy - 1),
 				ptr(clipping.x2, sy - 1),
-				fore, (flags&TextItalic) != 0);
+				fore, (flags&TextItalic) != 0, alpha);
 		if(flags&TextBold)
 			alc32(ptr(x, sy - 1), wd, s, y2 - y,
 				ptr(clipping.x1, sy - 1),
 				ptr(clipping.x2, sy - 1),
-				fore, (flags&TextItalic) != 0);
+				fore, (flags&TextItalic) != 0, alpha);
 		alc32(ptr(x, sy), wd, s, y2 - y,
 			ptr(clipping.x1, sy), ptr(clipping.x2, sy),
-			fore, (flags&TextItalic) != 0);
+			fore, (flags&TextItalic) != 0, alpha);
 		break;
 	default:
 		break;

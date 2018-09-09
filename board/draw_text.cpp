@@ -20,7 +20,7 @@ int draw::textw(sprite* font) {
 	return fwidth(font)[wsymbol(font, 'A')];
 }
 
-void draw::glyph(int x, int y, int sym, unsigned flags) {
+void draw::glyph(int x, int y, int sym, unsigned flags, unsigned char alpha) {
 	static unsigned char koeff[] = {128, 160};
 	int id = font->glyph(sym);
 	if(sym >= 0x21) {
@@ -30,7 +30,7 @@ void draw::glyph(int x, int y, int sym, unsigned flags) {
 			stroke(x, y + font->ascend, font, id, flags, 2, koeff);
 			fore = push_fore;
 		}
-		image(x, y + font->ascend, font, id, flags, 0);
+		image(x, y + font->ascend, font, id, flags, alpha);
 	}
 }
 

@@ -55,6 +55,7 @@ static void render_power(int x, int y, const gobject* owner, const gobject* prov
 static void render_province(rect rc, point mouse, const gobject* owner, int id) {
 	char temp[1024];
 	draw::state push;
+	//draw::fore = colors::black;
 	draw::fore = colors::black;
 	draw::fore_stroke = colors::white;
 	if(!draw::font)
@@ -407,13 +408,15 @@ gobject* draw::getprovince(gobject* player, gobject* hero, gobject* action) {
 	return 0;
 }
 
-bool make_action(gobject* player, gobject* hero) {
+static bool makeaction(gobject* player, gobject* hero) {
 	gobject* province = 0;
 	auto action = getaction(player, hero);
 	if(!action)
 		return false;
 	if(action->get("placeable"))
 		province = getprovince(player, hero, action);
+	hero->set("action", action);
+	hero->set("province", province);
 	return true;
 }
 
@@ -425,7 +428,7 @@ void draw::makemove(gobject* player) {
 			continue;
 		switch(id) {
 		case ChooseHero:
-			make_action(player, (gobject*)hot::param);
+			makeaction(player, (gobject*)hot::param);
 			break;
 		}
 	}

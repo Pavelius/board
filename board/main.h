@@ -44,6 +44,7 @@ struct costinfo {
 	int							influence; // Влияние
 };
 struct gobject {
+	virtual explicit operator bool() const { return true; }
 	void						act(char* result, const char* format, ...) const;
 	void						actv(char* result, const char* format, const char* param) const;
 	void						add(const char* id, int value);
@@ -82,6 +83,7 @@ struct gobject {
 	bool						is(bsreq* type) const;
 	bool						isready() const { return getprovince() == 0; }
 	virtual bool				isvalid() const { return this != 0; }
+	virtual void				refresh() {}
 	bool						resolve(char* result, const char* result_max, gobject* attacker_player, gobject* defender_player) const;
 	void						set(const char* id, int value);
 	void						set(const char* id, int value, int index);
@@ -97,12 +99,12 @@ struct combatable : gobject {
 	gobject*					traits[5];
 };
 struct game_info {
-	char casualties; // One casualties per this strenght value
-	const char* map;
+	char						casualties; // One casualties per this strenght value
+	const char*					map;
 };
 extern game_info game_data;
 struct msg_info {
-	const char* attacking_force;
+	const char*	attacking_force;
 	const char* defending_force;
 	const char* casualties;
 	const char* winner;
@@ -122,6 +124,10 @@ struct msg_info {
 	const char* no;
 };
 extern msg_info msg_data;
+namespace game {
+void							refresh();
+void							turn();
+}
 namespace logs {
 struct driver : stringcreator {
 	const char*					name;
