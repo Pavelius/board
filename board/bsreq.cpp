@@ -95,20 +95,6 @@ bsval bsval::ptr(const char* name) const {
 	return {0, 0};
 }
 
-bool bsval::has(const char* name) const {
-	if(data && type) {
-		for(auto p = type; p->id; p++) {
-			if(p->id[0] == 0) {
-				bsval b1 = {p->type, (char*)data + p->offset};
-				if(b1.has(name))
-					return true;
-			} else if(strcmp(p->id, name) == 0)
-				return true;
-		}
-	}
-	return false;
-}
-
 int bsval::get() const {
 	if(!type || !data)
 		return 0;
@@ -129,7 +115,7 @@ void bsval::set(int value) {
 	}
 }
 
-const char* bsval::gets(const char* name) const {
+const char* bsval::getstr(const char* name) const {
 	auto p = (const char*)get(name);
 	return p ? p : "";
 }

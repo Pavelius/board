@@ -61,12 +61,11 @@ struct bsval {
 	operator bool() const { return data != 0; }
 	int				get() const;
 	int				get(const char* name) const { return ptr(name).get(); }
-	const char*		gets(const char* name) const;
-	bool			has(const char* name) const;
+	const char*		getstr(const char* name) const;
 	bsval			ptr(const char* name) const;
 	void			set(int value);
 	void			set(const char* name, int value) { ptr(name).set(value); }
-	void			set(const char* name, const char* value) { ptr(name).set((int)value); }
+	template<typename T> void set(const char* name, T value) { ptr(name).set((int)value); }
 };
 extern bsreq		any_type[]; // any existing object type, exept number (and other integer) or text
 extern bsreq		number_type[]; // standart integer value
