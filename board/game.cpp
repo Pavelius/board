@@ -9,7 +9,7 @@ game_info game_data; BSMETA(game);
 
 void game::refresh() {
 	// Обновим все подчиненные объекты
-	const bsreq* game_types[] = {hero_type};
+	const bsreq* game_types[] = {hero_type, player_type};
 	for(auto pt : game_types) {
 		for(auto& e : gobject::getcol(pt)) {
 			if(!e)

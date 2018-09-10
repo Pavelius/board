@@ -170,12 +170,14 @@
     <ClCompile Include="gobject.cpp" />
     <ClCompile Include="hero.cpp" />
     <ClCompile Include="io.cpp" />
+    <ClCompile Include="landscape.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="messages.cpp" />
     <ClCompile Include="png.cpp" />
     <ClCompile Include="point.cpp" />
     <ClCompile Include="point_type.cpp" />
     <ClCompile Include="print.cpp" />
+    <ClCompile Include="resource.cpp" />
     <ClCompile Include="stringtree.cpp" />
     <ClCompile Include="surface.cpp" />
     <ClCompile Include="surface_serial.cpp" />

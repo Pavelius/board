@@ -6,9 +6,22 @@ struct player : gobject {
 	const char*	name;
 	const char*	nameof;
 	const char*	text;
-	int	gold;
+	int			gold;
 
 	bsreq* getmeta() const override;
+
+	void refresh_resource() {
+		for(auto& e : getcol(province_type)) {
+			if(!e)
+				continue;
+			if(e.getowner() != this)
+				continue;
+		}
+	}
+
+	void refresh() override {
+		refresh_resource();
+	}
 
 };
 

@@ -19,12 +19,12 @@ struct bsdoc {
 
 };
 
-static const char* index_header = "<h1>File format description</h1>"
-"<p>Each line of description file consist of one entity decriptor.</p>"
-"<p>Entity descriptor start line with symbol '#' and then name of entity.</p>"
-"<p>Several entities has big text description which used to display tooltips and other text multiline controls. This special text lines can be after entity block and before next entitity.</p>"
-"<h2>Entity list</h2>";
-static const char* text_description = "Entity description text. Start with new line after entiry.";
+static const char* index_header = "<h1>Описание формата файла</h1>"
+"<p>Каждая строка файла содержит описание одного объекта.</p>"
+"<p>Каждое описание сущности начинает строку с символа '#' сразу за которым следует идентификатор типа объекта.</p>"
+"<p>Некоторые из объектов могут иметь описание, которое может отображаться в подсказке или других элементах, содержащих много текста. Эта специальная строка текста добавляется сразу после описания объекта и перед следующим объектом.</p>"
+"<h2>Список объектов</h2>";
+static const char* text_description = "Описание объекта. Начинается с новой строки следующей сразу за объектом.";
 
 static void opentag(io::stream& e, const char* name) {
 	e << "<" << name << ">";
@@ -67,9 +67,9 @@ static void write_ref(io::stream& e, bsdata& m, const char* path = 0) {
 
 static void write_type(io::stream& e, const bsreq* f) {
 	if(f == number_type)
-		e << "number";
+		e << "число";
 	else if(f == text_type)
-		e << "string";
+		e << "строка";
 	else {
 		auto m = bsdata::find(f);
 		if(m)
@@ -158,7 +158,7 @@ static void write_examples(io::stream& e, bsdata& m) {
 		return;
 	opentag(e, "section");
 	opentag(e, "h3");
-	e << "Examples";
+	e << "Пример";
 	closetag(e, "h3");
 	int start = 0;
 	if(m.fields->find("id") == 0)
@@ -183,7 +183,7 @@ static void write_header(io::stream& e, bsdata& m, bsdoc& doc) {
 	szupper(temp, 1);
 	e << temp;
 	closetag(e, "h1");
-	e << "This is entity represent " << m.id << ".";
+	e << "Этот объект используется для отображения " << m.id << ".";
 	auto p = doc.comments->find(m.id);
 	if(p && p->text && p->text[0])
 		e << " " << p->text;
@@ -208,7 +208,7 @@ static void write_syntaxis(io::stream& e, bsdata& m) {
 		return;
 	opentag(e, "section");
 	opentag(e, "h3");
-	e << "Syntaxis";
+	e << "Синтаксис";
 	closetag(e, "h3");
 	opentag(e, "code");
 	e << "<b>#" << m.id << "</b>";
@@ -235,19 +235,19 @@ static void write_metaobject(bsdata& m, bsdoc& doc) {
 	write_syntaxis(e, m);
 	opentag(e, "section");
 	opentag(e, "h3");
-	e << "Fields description";
+	e << "Описание полей";
 	closetag(e, "h3");
 	//opentag(e, "table");
 	opentable(e, 3);
 	opentag(e, "tr");
 	opentag(e, "th");
-	e << "Name";
+	e << "Имя поля";
 	closetag(e, "th");
 	opentag(e, "th");
-	e << "Type";
+	e << "Тип";
 	closetag(e, "th");
 	opentag(e, "th");
-	e << "Description";
+	e << "Описание";
 	closetag(e, "th");
 	closetag(e, "tr");
 	for(auto f = m.fields; *f; f++) {
@@ -260,9 +260,9 @@ static void write_metaobject(bsdata& m, bsdoc& doc) {
 		closetag(e, "td");
 		opentag(e, "td");
 		if(strcmp(f->id, "id") == 0)
-			e << "Use this value to make reference on this element in another objects.";
+			e << "Используйте этот идентификатор, когда хотите указать ссылку на данный объект.";
 		else if(strcmp(f->id, "name") == 0)
-			e << "Name used to display element.";
+			e << "Наименование, используемое для отображения объекта.";
 		else if(strcmp(f->id, "text") == 0)
 			e << text_description;
 		else {
@@ -274,7 +274,7 @@ static void write_metaobject(bsdata& m, bsdoc& doc) {
 			if(p && p->text && p->text[0])
 				e << p->text << " ";
 			if(f->count > 1)
-				e << "Maximum " << f->count << " elements. ";
+				e << "Максимум " << f->count << " элементов. ";
 		}
 		closetag(e, "td");
 		closetag(e, "tr");

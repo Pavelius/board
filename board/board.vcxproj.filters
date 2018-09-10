@@ -151,6 +151,12 @@
     <ClCompile Include="collection.cpp">
       <Filter>Database</Filter>
     </ClCompile>
+    <ClCompile Include="resource.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
+    <ClCompile Include="landscape.cpp">
+      <Filter>Logic</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

@@ -9,14 +9,15 @@
 
 const int player_max = 8;
 bsreq action_type[];
-bsreq combatable_type[];
 bsreq enchantment_type[];
 bsreq event_type[];
 bsreq hero_type[];
+bsreq landscape_type[];
 bsreq msg_type[];
 bsreq point_type[];
 bsreq province_type[];
 bsreq player_type[];
+bsreq resource_type[];
 bsreq tactic_type[];
 bsreq trait_type[];
 bsreq troop_type[];
@@ -76,6 +77,7 @@ struct gobject {
 	virtual point				getposition() const { return {0, 0}; }
 	static char*				getpresent(char* result, unsigned maximum, gobject** objects, unsigned count);
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
+	virtual gobject*			getresource() const { return (gobject*)get("resource"); }
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
 	virtual const char*			gettext() const { return gets("text"); }
