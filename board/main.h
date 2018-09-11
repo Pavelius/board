@@ -63,6 +63,7 @@ struct gobject {
 	virtual const char*			getavatar() const { return gets("avatar");; }
 	int							getbonus(const char* id) const;
 	virtual aref<gobject*>		getbonuses() const { return aref<gobject*>(); }
+	int							getcount(const bsreq* type, gobject* (gobject::*proc)()  const, gobject* value) const;
 	virtual gender_s			getgender() const { return Male; }
 	unsigned					getheroes(gobject** result, unsigned maximum, gobject* province) const { return getobjects(hero_type, result, maximum, province); }
 	const char*					getid() const { return gets("id"); }
@@ -79,6 +80,7 @@ struct gobject {
 	virtual gobject*			getprovince() const { return (gobject*)get("province"); }
 	virtual gobject*			getresource() const { return (gobject*)get("resource"); }
 	virtual aref<gobject*>		getprovinces() const { return aref<gobject*>(); }
+	int							getsumm(const bsreq* type, int (gobject::*proc)() const) const;
 	virtual gobject*			gettactic() const { return (gobject*)get("tactic"); }
 	virtual const char*			gettext() const { return gets("text"); }
 	unsigned					gettropps(gobject** result, unsigned maximum, gobject* province) const { return getobjects(troop_type, result, maximum, province); }

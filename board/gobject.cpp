@@ -191,3 +191,28 @@ char* gobject::getpresent(char* result, unsigned maximum, gobject** objects, uns
 void gobject::addbutton(char* result, const char* result_max, const char* name) {
 	szprints(result, result_max, "\n$(%1)", name);
 }
+
+int gobject::getcount(const bsreq* type, gobject* (gobject::*proc)() const, gobject* value) const {
+	auto result = 0;
+	for(auto& e : getcol(type)) {
+		if(!e)
+			continue;
+		if(e.getowner() != this)
+			continue;
+		if((e.*proc)() == value)
+			result++;
+	}
+	return result;
+}
+
+int gobject::getsumm(const bsreq* type, int (gobject::*proc)() const) const {
+	auto result = 0;
+	for(auto& e : getcol(type)) {
+		if(!e)
+			continue;
+		if(e.getowner() != this)
+			continue;
+		result += (e.*proc)();
+	}
+	return result;
+}

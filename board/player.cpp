@@ -10,22 +10,9 @@ struct player : gobject {
 
 	bsreq* getmeta() const override;
 
-	int get(gobject* resource, bsreq* type) {
-		auto result = 0;
-		for(auto& e : getcol(type)) {
-			if(!e)
-				continue;
-			if(e.getowner() != this)
-				continue;
-			if(e.getresource() == resource)
-				result++;
-		}
-		return result;
-	}
-
 	void refresh_resource(gobject* resource) {
-		auto available = get(resource, province_type);
-		auto used = get(resource, troop_type);
+		auto available = getcount(province_type, &gobject::getresource, resource);
+		auto used = getcount(troop_type, &gobject::getresource, resource);
 		gold += resource->get("gold") * (available - used);
 	}
 
