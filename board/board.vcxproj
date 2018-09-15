@@ -163,6 +163,7 @@
     <ClCompile Include="draw.cpp" />
     <ClCompile Include="draw_button.cpp" />
     <ClCompile Include="draw_control.cpp" />
+    <ClCompile Include="draw_grid.cpp" />
     <ClCompile Include="draw_icons.cpp" />
     <ClCompile Include="draw_input.cpp" />
     <ClCompile Include="draw_list.cpp" />
