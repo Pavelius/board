@@ -102,6 +102,8 @@ struct combatable : gobject {
 	char						gold, gold_upkeep, support, support_upkeep;
 	gobject*					traits[5];
 };
+struct armyinfo : adat<gobject*, 32> {
+};
 struct game_info {
 	char						casualties; // One casualties per this strenght value
 	const char*					map;

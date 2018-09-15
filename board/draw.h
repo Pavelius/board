@@ -26,12 +26,14 @@ enum draw_event_s {
 	Ctrl = 0x00010000,
 	Alt = 0x00020000,
 	Shift = 0x00040000,
-	// control visual flags
+	// control's special behaivor
+	HideZero = 0x00010000,
+	// control's visual flags
 	NoBorder = 0x01000000,
 	NoBackground = 0x02000000,
 	NoToolbar = 0x04000000,
 	NoFocus = 0x08000000,
-	// state flags
+	// state's flags
 	Focused = 0x10000000, // Control has keyboard input and can change visual form.
 	Checked = 0x20000000, // Use in background virtual method.
 	Disabled = 0x40000000, // Control not grant any input.
@@ -275,6 +277,8 @@ int						button(int x, int y, int width, int id, unsigned flags, const char* lab
 bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, color value, const char* string, int key, bool press, const char* tips = 0);
 bool					buttonh(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false, const char* tips = 0);
 bool					buttonv(rect rc, bool checked, bool focused, bool disabled, bool border, const char* string, int key = 0, bool press = false);
+void					scrollh(int id, const struct rect& scroll, int& origin, int count, int maximum, bool focused);
+void					scrollv(int id, const rect& scroll, int& origin, int count, int maximum, bool focused);
 void					tooltips(int x, int y, int width, const char* format, ...);
 }
 int						distance(point p1, point p2);

@@ -29,3 +29,7 @@ void game::turn() {
 		draw::makemove(&e);
 	}
 }
+
+static bool dialog(const char* header, armyinfo& v1, armyinfo& v2) {
+
+}

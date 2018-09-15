@@ -70,12 +70,12 @@ void test_data() {
 	instance.base = &base_instance;
 	instance.value = 12;
 	bsval var = {test_type, &instance};
-	auto v1 = var.getstr("name");
+	auto v1 = var.gets("name");
 	auto v2 = var.get("value");
-	auto v3 = var.getstr("parent");
+	auto v3 = var.gets("parent");
 	var.set("name", "Ivan");
 	var.ptr("base").set("parent", "Ivan Base");
-	v1 = var.getstr("name");
+	v1 = var.gets("name");
 	instance.dostuff();
 }
 

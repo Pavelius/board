@@ -115,7 +115,7 @@ void bsval::set(int value) {
 	}
 }
 
-const char* bsval::getstr(const char* name) const {
+const char* bsval::gets(const char* name) const {
 	auto p = (const char*)get(name);
 	return p ? p : "";
 }

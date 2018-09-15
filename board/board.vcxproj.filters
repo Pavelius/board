@@ -157,6 +157,18 @@
     <ClCompile Include="landscape.cpp">
       <Filter>Logic</Filter>
     </ClCompile>
+    <ClCompile Include="draw_control.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_list.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_table.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
+    <ClCompile Include="draw_scroll.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">
@@ -241,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="collection.h">
       <Filter>Database</Filter>
+    </ClInclude>
+    <ClInclude Include="draw_controls.h">
+      <Filter>View</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
