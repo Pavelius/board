@@ -1,9 +1,5 @@
 #include "initializer_list.h"
 
-extern "C" int				rand(void);
-extern "C" void*			realloc(void *ptr, unsigned size);
-extern "C" int				strcmp(const char* p1, const char* p2);
-
 #pragma once
 
 // Abstract collection
@@ -16,9 +12,11 @@ struct collection {
 	virtual unsigned		getmaxcount() const = 0; // Get maximum possible elements
 	virtual unsigned		getcount() const = 0; // Get count of elements in collection
 	virtual unsigned		getsize() const = 0; // Get size of one element in collection
-	virtual int				indexof(const void* element) const = 0; // Get index of element (-1 if not in collection)
+	virtual int				indexof(const void* element) const;
+	void*					insert(int index, const void* object); // Insert new element to collection by specific index
 	bool					read(const char* url, const struct bsreq* fields);
-	virtual void			remove(int index, int count = 1) = 0; // Remove element from collection
+	virtual void			remove(int index, int count = 1); // Remove element from collection
+	virtual void			setcount(unsigned value) = 0;
 	void					sort(int i1, int i2, int(*compare)(const void* p1, const void* p2, void* param), void* param);	// Sort collection
 	void					swap(int i1, int i2); // Swap elements
 	bool					write(const char* url, const struct bsreq* fields);
@@ -47,7 +45,6 @@ struct adat {
 	int						indexof(const T* e) const { if(e >= data && e <= data + count) return e - data; return -1; }
 	int						indexof(const T t) const { for(unsigned i = 0; i < count; i++) if(data[i] == t) return i; return -1; }
 	bool					is(const T t) const { for(unsigned i = 0; i < count; i++) if(data[i] == t) return true; return false; }
-	T						random() const { return count ? data[rand() % count] : T(); }
 	void					remove(int index, int remove_count = 1) { if(index < 0) return; if(index<int(count - 1)) memcpy(data + index, data + index + 1, sizeof(data[0])*(count - index - 1)); count--; }
 };
 // Reference to array with dymanic size
@@ -55,9 +52,9 @@ template<class T> struct aref {
 	T*						data;
 	unsigned				count;
 	constexpr aref() = default;
-	constexpr aref(T* data, unsigned count) : data(data), count(count) {}
 	template<unsigned N> constexpr aref(T(&data)[N]) : data(data), count(N) {}
 	template<unsigned N> constexpr aref(adat<T, N>& source) : data(source.data), count(source.count) {}
+	constexpr aref(T& value) : data(&value), count(1) {}
 	constexpr T& operator[](int index) { return data[index]; }
 	constexpr const T& operator[](int index) const { return data[index]; }
 	explicit operator bool() const { return count != 0; }
@@ -71,32 +68,7 @@ template<class T> struct aref {
 	int						indexof(const T* t) const { if(t<data || t>data + count) return -1; return t - data; }
 	int						indexof(const T t) const { for(unsigned i = 0; i < count; i++) if(data[i] == t) return i; return -1; }
 	bool					is(const T value) const { return indexof(value) != -1; }
-	T						random() const { return count ? data[rand() % count] : T(); }
 	void					remove(int index, int elements_count = 1) { if(index < 0 || index >= count) return; count -= elements_count; if(index >= count) return; memmove(data + index, data + index + elements_count, sizeof(data[0])*(count - index)); }
-};
-// Dynamic array collection
-template<class T> struct avec : aref<T> {
-	constexpr avec() : aref<T>(0, 0), count_max() {}
-	constexpr avec(avec&& that) : count_max(that.count_max) { data = that.data; count = that.count; that.data = 0; that.count = 0; that.count_max = 0; }
-	~avec() { this->clear(); if(this->data) delete[] this->data; this->data = 0; }
-	T* add() {
-		if(this->count < count_max)
-			return aref<T>::add();
-		if(!count_max) {
-			count_max = 32;
-			this->data = new T[count_max];
-		} else {
-			if(count_max < 256 * 256 * 4)
-				count_max = count_max * 2;
-			else
-				count_max += 256 * 256 * 4;
-			this->data = (T*)realloc(this->data, count_max * sizeof(T));
-		}
-		return aref<T>::add();
-	}
-	void add(const T& e) { *add() = e; }
-private:
-	unsigned				count_max;
 };
 // Abstract flag data bazed on enumerator
 template<typename T, typename DT = unsigned> class cflags {
@@ -124,4 +96,40 @@ public:
 	iter					end() const { return iter(maximum, data); }
 	constexpr bool			is(T id) const { return (data & (1 << id)) != 0; }
 	constexpr void			remove(T id) { data &= ~(1 << id); }
+};
+struct amem : collection {
+	constexpr amem(unsigned size = 0) : data(0), size(size), count(0), count_maximum(0) {}
+	~amem();
+	virtual void*			add() override;
+	virtual void			clear() override;
+	virtual void*			get(int index) const override { return (char*)data + size * index; }
+	virtual unsigned		getmaxcount() const override { return count_maximum; }
+	virtual unsigned		getcount() const override { return count; }
+	virtual unsigned		getsize() const override { return size; }
+	void					reserve(unsigned new_count);
+	virtual void			setcount(unsigned value) { count = value;  }
+	void					setup(unsigned size);
+private:
+	void*					data;
+	unsigned				size;
+	unsigned				count;
+	unsigned				count_maximum;
+};
+struct avec : collection {
+	template<typename T, unsigned N> constexpr avec(adat<T, N>& e) : data(e.data), size(sizeof(T)), count(e.count), count_maximum(N), count_value(0) {}
+	template<typename T> constexpr avec(aref<T>& e) : data(e.data), size(sizeof(T)), count(e.count), count_maximum(e.count), count_value(0) {}
+	template<typename T, unsigned N> constexpr avec(T e[N]) : data(e), size(sizeof(T)), count(count_value), count_maximum(N), count_value(0) {}
+	virtual void*			add() override { return (char*)data + getsize()*((count < count_maximum) ? count++ : 0); }
+	virtual void			clear() override { count = 0; }
+	virtual void*			get(int index) const override { return (char*)data + size * index; }
+	virtual unsigned		getmaxcount() const override { return count_maximum; }
+	virtual unsigned		getcount() const override { return count; }
+	virtual unsigned		getsize() const override { return size; }
+	virtual void			setcount(unsigned value) { count = value; }
+private:
+	void*					data;
+	unsigned				size;
+	unsigned&				count;
+	unsigned				count_maximum;
+	unsigned				count_value;
 };

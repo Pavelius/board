@@ -4,7 +4,7 @@
 static bsreq game_type[] = {
 	BSREQ(game_info, casualties, number_type),
 	BSREQ(game_info, map, text_type),
-};
+{}};
 game_info game_data; BSMETA(game);
 
 void game::refresh() {
@@ -31,5 +31,11 @@ void game::turn() {
 }
 
 static bool dialog(const char* header, armyinfo& v1, armyinfo& v2) {
-
+	static draw::controls::column column_left[] = {
+		{Text, "name"},
+	{}};
+	static draw::controls::column column_right[] = {
+		{Text, "name"},
+	{}};
+	draw::dialogs::units dlg(column_left, column_right);
 }

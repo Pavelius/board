@@ -10,7 +10,10 @@ struct unit : combatable {
 	bsreq* getmeta() const override;
 
 	aref<gobject*> getbonuses() const override {
-		return {(gobject**)traits, zlen(traits)};
+		aref<gobject*> result;
+		result.data = (gobject**)traits;
+		result.count = zlen(traits);
+		return result;
 	}
 
 };

@@ -19,6 +19,23 @@ struct grid : table {
 	virtual const char* getname(char* result, const char* result_max, int line, int column) const override;
 };
 }
+namespace dialogs {
+struct dialog {
+	int				width;
+	int				height;
+	constexpr dialog() : width(700), height(400) {}
+	virtual char*	getfooter(char* result, const char* result_maximum) { return result; }
+	virtual char*	getheader(char* result, const char* result_maximum) { return result; }
+	virtual void	render() {}
+};
+struct units : dialog {
+	armyinfo		a1, a2;
+	controls::grid	g1, g2;
+	units(controls::column* c1, controls::column* c2);
+private:
+	avec			d1, d2;
+};
+}
 void				avatar(int x, int y, const char* id);
 bool				initializemap();
 void				makemove(gobject* player);

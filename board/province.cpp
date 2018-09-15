@@ -14,7 +14,10 @@ struct province : gobject {
 	bsreq* getmeta() const override;
 
 	aref<gobject*> getbonuses() const {
-		return {(gobject**)&resource, 1};
+		aref<gobject*> result;
+		result.data = (gobject**)&result;
+		result.count = 1;
+		return result;
 	}
 
 	point getposition() const override {

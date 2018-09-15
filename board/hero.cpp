@@ -35,7 +35,10 @@ struct hero : gobject {
 	}
 
 	aref<gobject*> getbonuses() const override {
-		return {(gobject**)traits, zlen(traits)};
+		aref<gobject*> result;
+		result.data = (gobject**)traits;
+		result.count = zlen(traits);
+		return result;
 	}
 
 	gobject* getowner() const override {
