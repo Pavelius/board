@@ -175,6 +175,9 @@
     <ClCompile Include="dialog_units.cpp">
       <Filter>View</Filter>
     </ClCompile>
+    <ClCompile Include="dialog.cpp">
+      <Filter>View</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Database">

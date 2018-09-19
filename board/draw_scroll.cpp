@@ -61,7 +61,7 @@ void draw::scrollh(int id, const struct rect& scroll, int& origin, int count, in
 		return;
 	int p = (origin*ds) / dr + scroll.x1;
 	areas a = area(scroll);
-	/*if(drag::active(id, DragScrollH)) {
+	if(drag::active(id, DragScrollH)) {
 		a = AreaHilitedPressed;
 		p1 = hot::mouse.x - drag::value;
 		origin = ((p1 - scroll.x1)*dr) / ds;
@@ -69,7 +69,7 @@ void draw::scrollh(int id, const struct rect& scroll, int& origin, int count, in
 			origin = 0;
 		if(origin + count > maximum)
 			origin = maximum - count;
-	} else*/ if(a == AreaHilitedPressed && hot::key == MouseLeft) {
+	} else if(a == AreaHilitedPressed && hot::key == MouseLeft) {
 		if(hot::mouse.x < p)
 			origin -= count;
 		else if(hot::mouse.x > p + ss)

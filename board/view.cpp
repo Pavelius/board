@@ -7,6 +7,8 @@ enum command_s {
 	ChooseHero
 };
 
+const int board_id = 0x1000;
+
 using namespace draw;
 
 static point camera;
@@ -232,13 +234,13 @@ static bool control_board(int id) {
 	case MouseLeft:
 		if(hot::pressed) {
 			if(last_board == hot::hilite) {
-				draw::drag::begin("board");
+				draw::drag::begin(board_id);
 				camera_drag = camera;
 			}
 		}
 		break;
 	default:
-		if(draw::drag::active("board")) {
+		if(draw::drag::active(board_id)) {
 			hot::cursor = CursorAll;
 			if(hot::mouse.x >= 0 && hot::mouse.y >= 0)
 				camera = camera_drag + (draw::drag::mouse - hot::mouse);
@@ -351,6 +353,16 @@ bool draw::initializemap() {
 		return false;
 	map.convert(-32, 0);
 	return true;
+}
+
+void draw::render(draw::controls::control& element, rect rc) {
+	while(ismodal()) {
+		render_board(current_player, current_player, 0, 0);
+		element.view(rc);
+		auto id = input();
+		if(control_board(id))
+			continue;
+	}
 }
 
 void draw::report(const char* format) {

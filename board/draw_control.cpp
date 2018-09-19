@@ -77,10 +77,10 @@ void control::view(rect rc) {
 	//	if(!getfocus())
 	//		setfocus((int)this, true);
 	//}
-	//if(areb(rc))
-	//	current_hilite = this;
+	if(areb(rc))
+		current_hilite = this;
 	//if((control*)getfocus() == this)
 	//	current_focus = this;
-	//if(show_border)
-	//	rectb(rc, colors::border);
+	if(show_border)
+		rectb(rc, colors::border);
 }

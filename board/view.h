@@ -20,18 +20,19 @@ struct grid : table {
 };
 }
 namespace dialogs {
-struct dialog {
+struct dialog : draw::controls::control {
 	int				width;
 	int				height;
-	constexpr dialog() : width(700), height(400) {}
+	dialog() : width(700), height(400) {}
 	virtual char*	getfooter(char* result, const char* result_maximum) { return result; }
 	virtual char*	getheader(char* result, const char* result_maximum) { return result; }
-	virtual void	render() {}
+	void			view(rect rc) override;
 };
 struct units : dialog {
 	armyinfo		a1, a2;
 	controls::grid	g1, g2;
 	units(controls::column* c1, controls::column* c2);
+	void			view(rect rc) override;
 private:
 	avec			d1, d2;
 };
@@ -42,6 +43,7 @@ void				makemove(gobject* player);
 gobject*			getaction(gobject* player, gobject* hero);
 gobject*			getprovince(gobject* player, gobject* hero, gobject* action);
 areas				hilite(rect rc);
+void				render(draw::controls::control& element, rect rc);
 void				report(const char* format);
 areas				window(rect rc, bool disabled = false, bool hilight = false, int border = 0);
 int					window(int x, int y, int width, const char* string);

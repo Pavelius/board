@@ -78,6 +78,9 @@ enum iflags {
 	AlignWidth = 0xE000,
 	AlignMask = 0xF000,
 };
+enum drag_part_s {
+	DragControl, DragScrollH, DragScrollV
+};
 struct pma {
 	char				name[4]; // Identifier of current block
 	int					size; // Size of all block
@@ -157,10 +160,11 @@ extern int				scroll;
 }
 namespace draw {
 namespace drag {
-extern point			mouse;
-bool					active(const char* id);
+bool					active(int id, drag_part_s part = DragControl);
 bool					active();
-void					begin(const char* id);
+void					begin(int id, drag_part_s part = DragControl);
+extern point			mouse;
+extern int				value;
 }
 struct state // Push state in stack
 {

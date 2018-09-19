@@ -79,6 +79,17 @@ void test_data() {
 	instance.dostuff();
 }
 
+static void test_dialog() {
+	static draw::controls::column c1[] = {
+		{Text, "name", "Название", 64},
+	{}};
+	static draw::controls::column c2[] = {
+		{Text, "name", "Название", 64},
+	{}};
+	draw::dialogs::units test(c1, c2);
+	draw::render(test, {40, 40, 300, 300});
+}
+
 int main() {
 	test_data();
 	srand((int)time(0));
@@ -103,7 +114,8 @@ int main() {
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
 	draw::report(temp);
-	game::turn();
+	test_dialog();
+	//game::turn();
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

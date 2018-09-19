@@ -50,8 +50,9 @@ static bool		line_antialiasing = true;
 static bool		break_modal;
 static int		break_result;
 // Drag
-static const char* drag_id;
+static int		drag_id;
 point			draw::drag::mouse;
+int				draw::drag::value;
 // Metrics
 rect			metrics::edit = {4, 4, -4, -4};
 sprite*			metrics::font = (sprite*)loadb("art/fonts/font.pma");
@@ -866,7 +867,7 @@ draw::state::~state() {
 	draw::canvas = this->canvas;
 }
 
-void draw::drag::begin(const char* id) {
+void draw::drag::begin(int id, drag_part_s part) {
 	drag_id = id;
 	drag::mouse = hot::mouse;
 }
@@ -875,7 +876,7 @@ bool draw::drag::active() {
 	return drag_id != 0;
 }
 
-bool draw::drag::active(const char* id) {
+bool draw::drag::active(int id, drag_part_s part) {
 	if(drag_id == id) {
 		if(!hot::pressed || hot::key == KeyEscape) {
 			drag_id = 0;
