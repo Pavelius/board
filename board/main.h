@@ -26,23 +26,30 @@ bsreq unit_type[];
 enum gender_s : unsigned char {
 	Male, Female,
 };
-struct tipinfo {
+struct tip_info {
 	char*						result;
 	const char*					result_max;
 	const char*					text;
 	const char*					separator;
-	tipinfo(char* result, const char* result_max) :result(result), result_max(result_max), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
+	tip_info(char* result, const char* result_max) :result(result), result_max(result_max), text("%+1i %2"), separator("\r\n:::") { result[0] = 0; }
 };
-struct combatinfo {
+struct combat_info {
 	char						attack; // Сила армии при захвате
-	char						defence; // Сила армии при защите
+	char						defend; // Сила армии при защите
 	char						raid; // Добавляется к атаке при рейде
 	char						sword; // Потери врага
 	char						shield; // Аннулирование своих потерь
 };
-struct costinfo {
+struct cost_info {
 	int							gold; // Золото
 	int							influence; // Влияние
+};
+struct bsenum {
+	constexpr bsenum() : id(0), name(0), text(0) {}
+	constexpr bsenum(const char* id) : id(id), name(0), text(0) {}
+	const char*					id;
+	const char*					name;
+	const char*					text;
 };
 struct gobject {
 	virtual explicit operator bool() const { return true; }
@@ -54,7 +61,7 @@ struct gobject {
 	static gobject*				create(const bsreq* meta);
 	static gobject*				create(const bsreq* meta, const char* id);
 	static gobject*				find(bsreq* type, const char* id);
-	int							fix(tipinfo* ti, int value) const;
+	int							fix(tip_info* ti, int value) const;
 	virtual int					get(const char* id) const;
 	virtual int					get(const char* id, int index) const;
 	const char*					gets(const char* id) const;

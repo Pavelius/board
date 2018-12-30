@@ -1,10 +1,6 @@
 #include "main.h"
 
-struct province : gobject {
-
-	const char*		id;
-	const char*		name;
-	const char*		text;
+struct province : gobject, bsenum {
 	gobject*		landscape;
 	gobject*		resource;
 	gobject*		owner;

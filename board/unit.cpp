@@ -1,11 +1,7 @@
 #include "main.h"
 
-struct unit : combatable {
-
-	const char* id;
-	const char* name;
-	const char* nameof;
-	const char* text;
+struct unit : combatable, bsenum {
+	const char*			nameof;
 
 	bsreq* getmeta() const override;
 

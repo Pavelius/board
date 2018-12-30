@@ -1,17 +1,13 @@
 #include "main.h"
 
-struct hero : gobject {
-
-	const char*	id;
-	const char*	name;
-	const char*	nameof;
-	const char*	text;
-	const char*	avatar;
-	gobject* traits[5];
-	gobject* tactic;
-	gobject* owner;
-	gobject* province;
-	gobject* action;
+struct hero : gobject, bsenum {
+	const char*		nameof;
+	const char*		avatar;
+	gobject*		traits[5];
+	gobject*		tactic;
+	gobject*		owner;
+	gobject*		province;
+	gobject*		action;
 
 	bsreq* getmeta() const override;
 

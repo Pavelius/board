@@ -35,7 +35,7 @@ int	gobject::getindex() const {
 	return m->indexof(this);
 }
 
-int gobject::fix(tipinfo* ti, int value) const {
+int gobject::fix(tip_info* ti, int value) const {
 	if(ti && value) {
 		char temp[260];
 		zcpy(temp, getname());

@@ -1,10 +1,7 @@
 #include "main.h"
 
-struct tactic : gobject {
+struct tactic : gobject, bsenum {
 	
-	const char* id;
-	const char* name;
-	const char* text;
 	char strenght, enemy_casualties, friendly_casualties;
 
 	bsreq* getmeta() const override;

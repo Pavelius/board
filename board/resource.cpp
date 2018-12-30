@@ -1,15 +1,9 @@
 #include "main.h"
 
-struct resource : gobject {
-
-	const char*		id;
-	const char*		name;
-	const char*		text;
+struct resource : gobject, bsenum {
 	int				cost;
 	int				total;
-
 	bsreq* getmeta() const override;
-
 };
 
 bsreq resource_type[] = {

@@ -40,7 +40,7 @@ public:
 		return units.getcount();
 	}
 
-	int get(const char* id, tipinfo* ti, bool include_number = true) const {
+	int get(const char* id, tip_info* ti, bool include_number = true) const {
 		auto r = 0;
 		if(ti && include_number)
 			zcpy(ti->result, "[\"");
@@ -67,7 +67,7 @@ public:
 	char* setstrenght(char* result, const char* result_max, const char* format, const char* id, const char* province_name) {
 		char text_lead[260]; text_lead[0] = 0;
 		char text_tips[2048]; text_tips[0] = 0;
-		tipinfo ti(text_tips, endofs(text_tips));
+		tip_info ti(text_tips, endofs(text_tips));
 		if(general)
 			tactic = general->gettactic();
 		if(!tactic) {

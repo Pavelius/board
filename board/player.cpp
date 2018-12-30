@@ -1,12 +1,7 @@
 #include "main.h"
 
-struct player : gobject {
-
-	const char*	id;
-	const char*	name;
+struct player : gobject, bsenum, cost_info {
 	const char*	nameof;
-	const char*	text;
-	int			gold;
 
 	bsreq* getmeta() const override;
 
@@ -29,6 +24,7 @@ bsreq player_type[] = {
 	BSREQ(player, nameof, text_type),
 	BSREQ(player, text, text_type),
 	BSREQ(player, gold, number_type),
+	BSREQ(player, influence, number_type),
 	{0}
 };
 

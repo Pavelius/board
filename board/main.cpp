@@ -114,8 +114,7 @@ int main() {
 	black_wood->resolve(temp, endofs(temp), red, green);
 	red->setuiactive();
 	draw::report(temp);
-	test_dialog();
-	//game::turn();
+	game::turn();
 }
 
 int _stdcall WinMain(void* ci, void* pi, char* cmd, int sw) {

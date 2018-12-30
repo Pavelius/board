@@ -1,18 +1,11 @@
 #include "main.h"
 
-struct action : gobject {
-
-	const char*	id;
-	const char*	name;
-	const char*	text;
-	const char*	nameact;
-	char attack, defend, gold, recruit, support, upgrade;
-	char conquer, placeable;
-
-	bsreq* getmeta() const override;
-
+struct action : gobject, bsenum {
+	const char*		nameact;
+	char			attack, defend, gold, recruit, support, upgrade;
+	char			conquer, placeable;
+	bsreq*			getmeta() const override;
 };
-
 bsreq action_type[] = {
 	BSREQ(action, id, text_type),
 	BSREQ(action, name, text_type),

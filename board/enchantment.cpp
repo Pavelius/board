@@ -1,16 +1,8 @@
 #include "main.h"
 
-struct enchantment : gobject {
-
-	const char*	id;
-	const char*	name;
-	const char*	text;
-	char		attack, defend, raid;
-
+struct enchantment : gobject, bsenum, combat_info {
 	bsreq* getmeta() const override;
-
 };
-
 bsreq enchantment_type[] = {
 	BSREQ(enchantment, id, text_type),
 	BSREQ(enchantment, name, text_type),
@@ -18,6 +10,8 @@ bsreq enchantment_type[] = {
 	BSREQ(enchantment, attack, number_type),
 	BSREQ(enchantment, defend, number_type),
 	BSREQ(enchantment, raid, number_type),
+	BSREQ(enchantment, sword, number_type),
+	BSREQ(enchantment, shield, number_type),
 	{0}
 };
 
