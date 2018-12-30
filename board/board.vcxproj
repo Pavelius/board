@@ -121,7 +121,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="acol.h" />
-    <ClInclude Include="amap.h" />
     <ClInclude Include="bsdata.h" />
     <ClInclude Include="bsreq.h" />
     <ClInclude Include="bstream.h" />
@@ -158,7 +157,6 @@
     <ClCompile Include="command.cpp" />
     <ClCompile Include="converter.cpp" />
     <ClCompile Include="crt.cpp" />
-    <ClCompile Include="crt_memory.cpp" />
     <ClCompile Include="crt_parse.cpp" />
     <ClCompile Include="dialog.cpp" />
     <ClCompile Include="dialog_units.cpp" />

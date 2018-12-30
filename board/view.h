@@ -14,8 +14,8 @@ extern gui_info		gui_data;
 namespace draw {
 namespace controls {
 struct grid : table {
-	grid(collection& source, column* columns) : source(source), table(columns) {}
-	collection&		source;
+	grid(array& source, column* columns) : source(source), table(columns) {}
+	array&			source;
 	virtual const char* getname(char* result, const char* result_max, int line, int column) const override;
 };
 }
@@ -34,7 +34,7 @@ struct units : dialog {
 	units(controls::column* c1, controls::column* c2);
 	void			view(rect rc) override;
 private:
-	avec			d1, d2;
+	array			d1, d2;
 };
 }
 void				avatar(int x, int y, const char* id);

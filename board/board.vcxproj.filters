@@ -13,9 +13,6 @@
     <ClCompile Include="crt.cpp">
       <Filter>System</Filter>
     </ClCompile>
-    <ClCompile Include="crt_memory.cpp">
-      <Filter>System</Filter>
-    </ClCompile>
     <ClCompile Include="crt_parse.cpp">
       <Filter>System</Filter>
     </ClCompile>
@@ -247,9 +244,6 @@
     </ClInclude>
     <ClInclude Include="converter.h">
       <Filter>System</Filter>
-    </ClInclude>
-    <ClInclude Include="amap.h">
-      <Filter>Database</Filter>
     </ClInclude>
     <ClInclude Include="color.h">
       <Filter>System</Filter>

@@ -8,12 +8,6 @@ void bsdata::globalize() {
 		seqlink(this);
 }
 
-void* bsdata::add() {
-	if(getcount() >= getmaxcount())
-		return get(0);
-	return get(count++);
-}
-
 bsdata* bsdata::find(const char* id) {
 	if(!id || !id[0])
 		return 0;
@@ -32,22 +26,6 @@ bsdata* bsdata::find(const bsreq* type) {
 			return p;
 	}
 	return 0;
-}
-
-int bsdata::indexof(const void* object) const {
-	if(object >= data && object <= (char*)data + maximum_count*size)
-		return ((char*)object - (char*)data) / size;
-	return -1;
-}
-
-void bsdata::remove(int index, int elements_count) {
-	if(((unsigned)index) >= getcount())
-		return;
-	if((unsigned)index < getcount() - 1)
-		memcpy((char*)data + index*size,
-		(char*)data + (index + elements_count)*size,
-			(getcount() - (index + elements_count))*size);
-	count -= elements_count;
 }
 
 bsdata* bsdata::findbyptr(const void* object) {

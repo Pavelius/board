@@ -1,72 +1,75 @@
+#include "collection.h"
+
 #pragma once
 
-#define FO(c,f) (const int)&((c*)0)->f
-#define	BSREQ(cls, field, type) {#field, FO(cls,field),\
-bsreq::info<decltype(cls::field)>::size,\
-sizeof(cls::field),\
-bsreq::info<decltype(cls::field)>::count,\
-type,\
-bsreq::refi<decltype(cls::field)>::count,\
-bsreq::enmi<decltype(cls::field)>::value}
-#define BSINH(cls, base) {"", (unsigned)static_cast<base*>((cls*)0),\
-sizeof(base), sizeof(base), 1, base##_type, 0, 0}
-
-const int bsreq_max_text = 8192;
+#define	BSREQ(c, f, t) {#f, (unsigned)&((c*)0)->f,\
+bsreq::isize<decltype(c::f)>::value,\
+sizeof(c::f),\
+bsreq::icount<decltype(c::f)>::value,\
+t,\
+bsreq::iref<decltype(c::f)>::value,\
+bsreq::isubtype<decltype(c::f)>::value}
 
 // Metadata field descriptor
 struct bsreq {
-	template<class T> struct refi { static constexpr int count = 0; };
-	template<class T> struct refi<T*> { static constexpr int count = 1 + refi<T>::count; };
-	template<class T, int N> struct refi<T[N]> { static constexpr int count = refi<T>::count; };
-	template<class T> struct refi<T[]> { static constexpr int count = refi<T>::count; };
-	template<class T> struct enmi { static constexpr bool value = __is_enum(T); };
-	template<class T> struct enmi<T*> { static constexpr bool value = __is_enum(T); };
-	template<class T, int N> struct enmi<T[N]> { static constexpr bool value = __is_enum(T); };
-	template<class T> struct info {
-		static constexpr int size = sizeof(T);
-		static constexpr int count = 1;
-	};
-	template<class T, unsigned N> struct info<T[N]> {
-		static constexpr int size = sizeof(T);
-		static constexpr int count = N;
-	};
-	template<class T> struct info<T[]> {
-		static constexpr int size = sizeof(T);
-		static constexpr int count = 0;
-	};
-	const char*		id; // field identifier
-	unsigned		offset; // offset from begin of class or object
-	unsigned		size; // size of single element
-	unsigned		lenght; // total size in bytes of all field (array has size*count)
-	unsigned		count; // count of elements
-	const bsreq*	type; // metadata of element
-	unsigned char	reference; // 1+ is reference
-	unsigned char	isenum;
-	//
+	enum subtype_s : unsigned char { Scalar, Enum, ADat, ARef, ARem, CFlags };
+	// Get count of reference
+	template<class T> struct iref : static_int<0> {};
+	template<class T> struct iref<T*> : static_int<1 + iref<T>::value> {};
+	template<class T, int N> struct iref<T[N]> : static_int<iref<T>::value> {};
+	template<class T> struct iref<T[]> : static_int<iref<T>::value> {};
+	// Get type size
+	template<class T> struct isize : static_int<sizeof(T)> {};
+	template<class T, unsigned N> struct isize<T[N]> : static_int<sizeof(T)> {};
+	template<class T> struct isize<T[]> : static_int<sizeof(T)> {};
+	// Get type count
+	template<class T> struct icount : static_int<1> {};
+	template<class T, unsigned N> struct icount<T[N]> : static_int<N> {};
+	template<class T> struct icount<T[]> : static_int<0> {};
+	template<class T, unsigned N> struct icount<adat<T, N>> : static_int<N> {};
+	// Get subtype
+	template<class T> struct isubtype : static_value<subtype_s, __is_enum(T) ? Enum : Scalar> {};
+	template<class T> struct isubtype<T*> : static_value<subtype_s, isubtype<T>::value> {};
+	template<class T, unsigned N> struct isubtype<T[N]> : static_value<subtype_s, isubtype<T>::value> {};
+	template<class T, unsigned N> struct isubtype<adat<T, N>> : static_value<subtype_s, ADat> {};
+	template<class T> struct isubtype<aref<T>> : static_value<subtype_s, ARef> {};
+	template<class T, class DT> struct isubtype<cflags<T, DT>> : static_value<subtype_s, CFlags> {};
+	const char*			id; // field identifier
+	unsigned			offset; // offset from begin of class or object
+	unsigned			size; // size of single element
+	unsigned			lenght; // total size in bytes of all field (array has size*count)
+	unsigned			count; // count of elements
+	const bsreq*		type; // metadata of element
+	unsigned char		reference; // 1+ if reference
+	subtype_s			subtype; // name of subtype (like 'enum') or emphty string for scalar
+								 //
 	operator bool() const { return id != 0; }
 	//
-	const bsreq*	find(const char* name) const;
-	const bsreq*	find(const char* name, const bsreq* type) const;
-	int				get(const void* p) const;
-	const bsreq*	getkey() const;
-	bool			issimple() const { return type == 0; }
-	bool			match(const void* p, const char* name) const;
-	const char*		ptr(const void* data) const { return (const char*)data + offset; }
-	const char*		ptr(const void* data, int index) const { return (const char*)data + offset + index*size; }
-	void			set(const void* p, int value) const;
+	const bsreq*		find(const char* name) const;
+	const bsreq*		find(const char* name, unsigned count) const;
+	const bsreq*		find(const char* name, const bsreq* type) const;
+	int					get(const void* p) const;
+	const bsreq*		getkey() const;
+	bool				issimple() const { return type == 0; }
+	bool				match(const void* p, const char* name) const;
+	inline const char*	ptr(const void* data) const { return (const char*)data + offset; }
+	inline const char*	ptr(const void* data, int index) const { return (const char*)data + offset + index * size; }
+	void				set(const void* p, int value) const;
 };
+extern bsreq			number_type[]; // standart integer value
+extern bsreq			text_type[]; // stantart zero ending string
 struct bsval {
-	const bsreq*	type;
-	void*			data;
-	operator bool() const { return data != 0; }
-	int				get() const;
-	int				get(const char* name) const { return ptr(name).get(); }
-	const char*		gets(const char* name) const;
-	bsval			ptr(const char* name) const;
-	void			set(int value);
-	template<typename T> void set(const char* name, T value) { ptr(name).set((int)value); }
+	const bsreq*		type;
+	void*				data;
+	constexpr bsval() : type(0), data(0) {}
+	constexpr bsval(void* data, const bsreq* type) : type(type), data(data) {}
+	explicit operator bool() const { return data != 0; }
+	bsval&				dereference();
+	int					get() const;
+	bsval&				get(const char* id);
+	const char*			getname() const;
+	bsval				ptr(const char* name) const;
+	void				set(int value) const;
+private:
+	const char*			findpart(const char* id);
 };
-extern bsreq		any_type[]; // any existing object type, exept number (and other integer) or text
-extern bsreq		number_type[]; // standart integer value
-extern bsreq		text_type[]; // stantart zero ending string
-extern bsreq		bsreq_type[]; // requisit metadata

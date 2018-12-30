@@ -450,16 +450,15 @@ void draw::avatar(int x, int y, const char* id) {
 	static amap<const char*, surface> avatars;
 	auto p = avatars.find(id);
 	if(!p) {
-		p = avatars.add(id);
-		memset(p, 0, sizeof(*p));
-		p->resize(gui_data.hero_width, gui_data.hero_width, 32, true);
+		p = avatars.add(id, surface());
+		p->value.resize(gui_data.hero_width, gui_data.hero_width, 32, true);
 		surface e(id, 0);
 		if(e) {
 			e.convert(-32, 0);
-			blit(*p, 0, 0, p->width, p->height, 0, e, 0, 0, e.width, e.height);
+			blit(p->value, 0, 0, p->value.width, p->value.height, 0, e, 0, 0, e.width, e.height);
 		}
 	}
-	blit(*draw::canvas, x, y, gui_data.hero_width, gui_data.hero_width, 0, *p, 0, 0);
+	blit(*draw::canvas, x, y, gui_data.hero_width, gui_data.hero_width, 0, p->value, 0, 0);
 }
 
 int	draw::button(int x, int y, int width, int id, unsigned flags, const char* label, const char* tips, void(*callback)()) {

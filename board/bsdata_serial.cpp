@@ -359,7 +359,7 @@ struct bsdata_serial : bsfile {
 			}
 			if(parent_field->count <= 1 // Only array may be defined as ##
 				|| parent_field->reference // No reference allowed
-				|| parent_field->isenum // Enumeratior must be initialized in row
+				|| parent_field->subtype==bsreq::Enum // Enumeratior must be initialized in row
 				|| parent_field->type->issimple()) { // No Simple type
 				error(ErrorExpectedArrayField);
 			}
@@ -489,7 +489,7 @@ static void write_value(io::stream& e, const void* object, const bsreq* req, int
 	} else if(req->reference) {
 		auto value = (const void*)req->get(object);
 		write_key(e, value, req->type);
-	} else if(req->isenum) {
+	} else if(req->subtype==bsreq::Enum) {
 		auto value = req->get(object);
 		auto pd = bsdata::find(req->type);
 		if(pd)
@@ -562,17 +562,9 @@ void bsdata::write(const char* url, const char* baseid) {
 	write(url, source);
 }
 
-void bsdata::read(const char* url, bsdata** custom) {
+void bsdata::read(const char* url, bsdata** custom, parser* callback) {
 	bsdata_serial parser(url);
 	parser.custom_database = custom;
 	if(parser)
 		parser.parse();
-}
-
-void bsdata::setparser(void(*callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param)) {
-	error_callback = callback;
-}
-
-void bsdata::setparser(bsparse_error_s(*callback)(const char* id, const char* value)) {
-	validate_text = callback;
 }

@@ -78,7 +78,7 @@ bsval bsval::ptr(const char* name) const {
 	if(data && type) {
 		for(auto p = type; p->id; p++) {
 			if(p->id[0] == 0) {
-				bsval v1 = {p->type, (char*)data + p->offset};
+				bsval v1 = {(char*)data + p->offset, p->type};
 				bsval v2 = v1.ptr(name);
 				if(v2)
 					return v2;
@@ -105,7 +105,7 @@ int bsval::get() const {
 	}
 }
 
-void bsval::set(int value) {
+void bsval::set(int value) const {
 	if(!type || !data)
 		return;
 	switch(type->size) {
@@ -113,9 +113,4 @@ void bsval::set(int value) {
 	case sizeof(short) : *((short*)data) = value; break;
 	default: *((int*)data) = value; break;
 	}
-}
-
-const char* bsval::gets(const char* name) const {
-	auto p = (const char*)get(name);
-	return p ? p : "";
 }
