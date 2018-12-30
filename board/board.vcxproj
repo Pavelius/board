@@ -204,6 +204,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\script\msg.txt" />
+    <Text Include="..\script\msg_ru.txt" />
     <Text Include="..\script\test.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

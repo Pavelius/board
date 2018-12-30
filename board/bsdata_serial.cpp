@@ -2,36 +2,29 @@
 #include "crt.h"
 #include "io.h"
 
-static void(*error_callback)(bsparse_error_s id, const char* url, int line, int column, const char** format_param);
-static bsparse_error_s(*validate_text)(const char* id, const char* value);
-
 class bsfile {
-	const bsfile* parent;
-	const char* url;
-	const char* start;
+	const bsfile*	parent;
+	const char*		url;
+	const char*		start;
 public:
-	bsfile(const char* url, const bsfile* parent = 0) : parent(0), url(url), start(loadt(url)) {
-	}
-	~bsfile() {
-		delete start;
-	}
+	bsfile(const char* url, const bsfile* parent = 0) : parent(0), url(url), start(loadt(url)) {}
+	~bsfile() {delete start; }
 	operator bool() const { return start != 0; }
-	const char* getstart() const { return start; }
-	const char* geturl() const { return url; }
+	const char*		getstart() const { return start; }
+	const char*		geturl() const { return url; }
 };
 
 struct bsdata_serial : bsfile {
+	const char*		p;
+	char			buffer[128 * 256];
+	int				value;
+	const bsreq*	value_type;
+	void*			value_object;
+	void*			parent_object;
+	const bsreq*	parent_type;
+	bsdata::parser*	parser;
 
-	char buffer[128 * 256];
-	int	value;
-	const bsreq* value_type;
-	void* value_object;
-	void* parent_object;
-	const bsreq* parent_type;
-	const char* p;
-	bsdata** custom_database;
-
-	bsdata_serial(const char* url, const bsfile* parent = 0) : bsfile(url, parent), p(getstart()), custom_database(0) {
+	bsdata_serial(const char* url, const bsfile* parent = 0, bsdata::parser* parser = 0) : bsfile(url, parent), p(getstart()), parser(parser) {
 		clearvalue();
 		buffer[0] = 0;
 	}
@@ -65,8 +58,8 @@ struct bsdata_serial : bsfile {
 	}
 
 	bsdata* findbase(const bsreq* type) const {
-		if(custom_database) {
-			for(auto p = custom_database; *p; p++) {
+		if(parser && parser->custom_database) {
+			for(auto p = parser->custom_database; *p; p++) {
 				if((*p)->fields == type)
 					return *p;
 			}
@@ -75,8 +68,8 @@ struct bsdata_serial : bsfile {
 	}
 
 	bsdata* findbase(const char* id) const {
-		if(custom_database) {
-			for(auto p = custom_database; *p; p++) {
+		if(parser && parser->custom_database) {
+			for(auto p = parser->custom_database; *p; p++) {
 				if(strcmp((*p)->id, id)==0)
 					return *p;
 			}
@@ -107,20 +100,20 @@ struct bsdata_serial : bsfile {
 	}
 
 	void error(bsparse_error_s id, ...) {
-		if(!error_callback)
+		if(!parser)
 			return;
 		int line, column;
 		getpos(p, line, column);
-		error_callback(id, geturl(), line, column, (const char**)xva_start(id));
+		parser->error(id, geturl(), line, column, (const char**)xva_start(id));
 		skipline();
 	}
 
 	void warning(bsparse_error_s id, ...) {
-		if(!error_callback)
+		if(!parser)
 			return;
 		int line, column;
 		getpos(p, line, column);
-		error_callback(id, geturl(), line, column, (const char**)xva_start(id));
+		parser->error(id, geturl(), line, column, (const char**)xva_start(id));
 	}
 
 	void clearvalue() {
@@ -273,8 +266,8 @@ struct bsdata_serial : bsfile {
 			else {
 				auto pv = szdup(buffer);
 				req->set(p, (int)pv);
-				if(validate_text) {
-					auto error_code = validate_text(req->id, pv);
+				if(parser) {
+					auto error_code = parser->validate(req->id, pv);
 					if(error_code != NoParserError)
 						warning(error_code, req->id, pv);
 				}
@@ -562,9 +555,9 @@ void bsdata::write(const char* url, const char* baseid) {
 	write(url, source);
 }
 
-void bsdata::read(const char* url, bsdata** custom, parser* callback) {
+void bsdata::read(const char* url, parser* callback) {
 	bsdata_serial parser(url);
-	parser.custom_database = custom;
+	parser.parser = callback;
 	if(parser)
 		parser.parse();
 }

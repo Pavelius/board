@@ -41,10 +41,8 @@ struct bsreq {
 	unsigned			count; // count of elements
 	const bsreq*		type; // metadata of element
 	unsigned char		reference; // 1+ if reference
-	subtype_s			subtype; // name of subtype (like 'enum') or emphty string for scalar
-								 //
+	subtype_s			subtype; // name of subtype
 	operator bool() const { return id != 0; }
-	//
 	const bsreq*		find(const char* name) const;
 	const bsreq*		find(const char* name, unsigned count) const;
 	const bsreq*		find(const char* name, const bsreq* type) const;

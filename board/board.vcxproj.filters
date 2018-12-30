@@ -268,5 +268,8 @@
     <Text Include="..\script\msg.txt">
       <Filter>Script</Filter>
     </Text>
+    <Text Include="..\script\msg_ru.txt">
+      <Filter>Script</Filter>
+    </Text>
   </ItemGroup>
 </Project>
